@@ -133,56 +133,35 @@
     </v-form>
     
     <v-card flat class="ma-2" v-show="active"><form>
-    <v-simple-table>
-    <template v-slot:default>
-      <thead class="light-green lighten-3">
-        <tr>
-          <th> <v-checkbox
-              v-model="ex4"
-              color="success"
-              hide-details
-            ></v-checkbox></th>
-          <th>
-           رقم المحضر
-          </th>
-          <th>
-            نوع المحضر
-          </th><th>
-            <v-text-field class="mt-6" label="رقم محضر الضابطة القضائية"
-          outlined dense></v-text-field>
-          </th><th>
-            تاريخ التسجيل
-          </th><th>
-            موضوع المحضر
-          </th><th></th><th>
-            المصدر
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="item in pv"
-          :key="item.text"
-        >
-        <td> <v-checkbox
-              v-model="ex5"
-              color="success"
-              hide-details
-            ></v-checkbox></td>
-          <td>{{ item.name }}</td> <td>{{ item.num_pv }}</td> 
-          <td>{{ item.type_pv }}</td> <td>{{ item.num_pv_police_judi }}</td>
-          <td>{{ item.date_enreg }}</td> <td>{{ item.sujet_pv }}</td>
-          <td>{{ item.source_pv }}</td>
-        </tr>
-      </tbody>
+    <v-data-table
+    v-model="selected"
+    :headers="headers"
+    :items="desserts"
+    :single-select="singleSelect"
+    item-key="name" no-data-text="معلومات غير متاحة"
+    show-select hide-default-footer
+    class="elevation-1"
+  >
+    <template v-slot:top>
+      <v-switch
+        v-model="singleSelect"
+        label="إختيار وحيد"
+        class="pa-3"
+      ></v-switch>
     </template>
-  </v-simple-table>
+  </v-data-table>
   <v-row><v-col cols="12" sm="3">
    <div class="font-weight-bold darkgrey--text mx-15">ممثل النيابة</div>
-          <v-text-field 
-            single-line
+          <v-autocomplete
+            ref="ممثل النيابة"
+            v-model="represantant"
+            :rules="[() => !!represantant || 'المرجوا ملأ هذا الحقل']"
+            :items="represantant"
+            label="represantant"
+            placeholder="مساعدة في البحث"
+            required single-line
             outlined dense
-          ></v-text-field></v-col>
+          ></v-autocomplete></v-col>
           <v-col cols="12" sm="4">
            <div class="font-weight-bold darkgrey--text mx-15">تاريخ الاحالة</div>
       <v-menu
@@ -258,6 +237,7 @@ export default {
         menu1: false, modal1: false, menu2: false, modal2: false,menu3: false, modal3: false,
         singleSelect: false,
         selected: [],
+         represantant: ['rep1', '2rep','r1ep','ts1','t5'],
         active: false,
         headers: [
           {
@@ -267,12 +247,12 @@ export default {
             value: 'name',
           },
           { text: 'نوع المحضر', value: 'type_pv',sortable: false, },
-          { text: 'رقم محضر الضابطة القضائية', value: 'num_pv_police_judi', sortable: false,},
+          { text: 'رقم محضر الضابطة القضائية', value: 'type_pv', sortable: false,},
           { text: 'تاريخ التسجيل', value: 'date_enreg', sortable: false,},
           { text: 'موضوع المحضر', value: 'sujet_pv' ,sortable: false,},
           { text: 'المصدر', value: 'source_pv' ,sortable: false,},
         ],
-        pv: [
+        pvs: [
           {
             name: '2015/880/2021',
             num_pv: 10,
@@ -291,15 +271,5 @@ export default {
 
 <style scoped>
 
-thead {
-  background-color: rgb(112, 240, 180) ;
-  text-align:justify;
-}
-th{
-  font-size: 17px !important;
-  padding: 17px;
-}
-td{
-  padding-left:40px;
-}
+
 </style>

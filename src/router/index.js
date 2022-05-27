@@ -12,6 +12,7 @@ import TraitePv from '../views/Traiter_Plaint_Pv/Traiter_Pv.vue'
 import statPv from '../views/stats/stat_pv.vue'
 import statPlaint from '../views/stats/stat_plaint.vue'
 import gestUser from '../views/gest_users.vue'
+import viceProc from '../views/vice_proc.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -69,6 +70,11 @@ const routes = [
         path: '/gestUser',
         name: 'gestUser',
         component: gestUser
+      },
+      {
+        path: '/viceProc',
+        name: 'viceProc',
+        component: viceProc
       },
     ]
   },

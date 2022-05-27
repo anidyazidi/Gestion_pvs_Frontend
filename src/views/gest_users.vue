@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="user"
+    :items="user" no-data-text="معلومات غير متاحة"
     sort-by="numUser"
     class="elevation-1 font-weight-black text-h7"
   >

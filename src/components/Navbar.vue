@@ -1,6 +1,6 @@
 <template>
 <nav>
-    <v-app-bar flat dense clipped-right dark class="nvbar" app height="60px"
+    <v-app-bar flat dense clipped-right dark  class="aliceblue" app height="60px"
     tile>
         <v-app-bar-nav-icon class="font-weight-bold"
            @click="drawer = !drawer"
@@ -113,6 +113,14 @@ export default{
           ],
           title: 'الحسابات',
            affich:this.$store.state.showNavBar_role.comptes,
+        },
+        {
+          action: 'mdi-shield-star',
+           items: [
+          {icon: 'mdi-account-edit', title: 'الاطلاع على الاحالة' ,route:'/viceProc'},
+          ],
+          title: 'الانابات',
+          affich:this.$store.state.showNavBar_role.statistique,//pour le test
         }
       ],
         }
@@ -128,7 +136,15 @@ background: linear-gradient(to right, #3a7bd5, #00d2ff) !important;
 
 }
 .nvbar{
-  background: rgb(2,0,36);
-background: linear-gradient(120deg, rgba(2,0,36,0.8799894957983193) 2%, rgba(5,105,143,1) 24%, rgba(49,159,175,0.958420868347339) 48%, rgba(2,0,36,0.8127626050420168) 97%);
+
+
+background: rgb(52,52,54);
+background: -moz-linear-gradient(139deg, rgba(52,52,54,1) 0%, rgba(106,94,80,1) 99%);
+background: -webkit-linear-gradient(139deg, rgba(52,52,54,1) 0%, rgba(106,94,80,1) 99%);
+background: linear-gradient(139deg, rgba(52,52,54,1) 0%, rgba(106,94,80,1) 99%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#343436",endColorstr="#6a5e50",GradientType=1);
+
+
 }
+
 </style>

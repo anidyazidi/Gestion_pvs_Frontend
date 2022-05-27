@@ -137,7 +137,7 @@
      <v-data-table
      v-show="cherche"
     :headers="headers"
-    :items="pvs"
+    :items="pvs" no-data-text="معلومات غير متاحة"
      class="elevation-1 font-weight-black"
     hide-default-footer
     >

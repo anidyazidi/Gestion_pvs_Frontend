@@ -39,7 +39,7 @@
   <div>
     <v-data-table
     :headers="headers"
-    :items="plaint"
+    :items="plaint" no-data-text="معلومات غير متاحة"
      class="elevation-1 font-weight-black"
     hide-default-footer
     >

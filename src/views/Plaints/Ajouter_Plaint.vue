@@ -26,12 +26,14 @@
             <div class="font-weight-bold darkgrey--text mx-15">نوع الشكاية</div>
             <v-select
             v-model="plaint.TypePlaintID"
-            class="py-0 mx-15"
-            :items="serv_plaint[1]"
+            class="py-0 mx-15" 
+            :items="serv_plaint[1]" 
             item-text="nom"
-            item-value="id" 
-             dense
+            item-value="id" :rules="rules.name"
+            required 
+             dense 
             outlined
+            placeholder="نوع الشكاية"
             >
             </v-select>
           </v-col>
@@ -42,10 +44,12 @@
             v-model="plaint.SourcePlaintID"
             class="py-0 mx-15"
             :items="serv_plaint[0]"
-            item-text="nom"
+            item-text="nom" 
             item-value="id" 
-            dense
+            dense :rules="rules.name"
+            required 
             outlined
+            placeholder="مصدر الشكاية"
             >
             </v-select>
           </v-col>
@@ -55,7 +59,9 @@
           class="py-0 mx-15"
             single-line dense
             v-model="plaint.referencePlaints"
-            outlined
+            outlined   :rules="rules.name"
+            required 
+            placeholder="مرجع الشكاية"
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="5" class="mx-5">
@@ -64,7 +70,9 @@
           class="py-0 mx-15"
             single-line dense
             v-model="plaint.EmplaceFaits"
-            outlined
+            outlined :rules="rules.name"
+            required 
+            placeholder="مكان الوقائع"
           ></v-text-field>
         </v-col>
           <v-col
@@ -86,11 +94,12 @@
           <v-text-field
             v-model="plaint.datePlaints"
             prepend-icon="mdi-calendar"
-            readonly
+            readonly :rules="rules.name"
             v-bind="attrs" dense
             v-on="on"
             class="py-0 mr-12"
-            outlined
+            outlined required 
+            placeholder="تاريخ الشكاية"
           ></v-text-field>
         </template>
         <v-date-picker
@@ -135,9 +144,10 @@
           <v-text-field
             v-model="plaint.dateEnregPlaints" dense
             prepend-icon="mdi-calendar"
-            readonly
+            readonly :rules="rules.name"
             v-bind="attrs"
-            v-on="on"
+            v-on="on" required 
+            placeholder="تسجيل الشكاية"
             class="py-0 mx-10"
             outlined
           ></v-text-field>
@@ -185,9 +195,10 @@
           <v-text-field
             v-model="plaint.dateFaits" dense
             prepend-icon="mdi-calendar"
-            readonly
+            readonly :rules="rules.name"
             v-bind="attrs"
-            v-on="on"
+            v-on="on" required 
+            placeholder="تاريخ الوقائع"
             outlined
             class="py-0 mx-10"
           ></v-text-field>
@@ -239,7 +250,7 @@
     :headers="headers"
     :items="datapartie_tab"
     class="elevation-1 font-weight-black"
-    hide-default-footer             
+    hide-default-footer  no-data-text="معلومات غير متاحة"           
   >
   
     <template v-slot:top>
@@ -272,7 +283,7 @@
   <DataPartie v-show="enable"></DataPartie>
   
   <v-spacer></v-spacer>
-
+  <v-row><v-col cols="12" sm="6"></v-col>
    <v-card-actions>
               <v-btn
                text
@@ -281,12 +292,22 @@
               class="my-2 blue font-weight-black"
               elevation="2" 
               :loading="load"
+               :disabled="!formIsValid"
             >
             <v-icon left >mdi-notebook-plus-outline</v-icon>             
                تسجيل الشكاية
               </v-btn>
-              
-              </v-card-actions>
+              <v-btn
+          text
+          @click="resetForm"
+          dark
+              class="my-2 red font-weight-black"
+              elevation="2"
+        >
+          إلغاء
+        </v-btn>
+        <v-spacer></v-spacer>
+              </v-card-actions></v-row>
           </v-form>
   </v-card>
 </div>
@@ -303,20 +324,36 @@ export default {
     DataPartie
   },
    data () {
+     const defaultForm = Object.freeze({
+         contreInconnu:false,
+        TypePlaintID:null,
+        SourcePlaintID: null,
+        referencePlaints:"",
+        datePlaints:"",
+        dateEnregPlaints:"",
+        dateFaits:"",
+        EmplaceFaits: "",
+        sujetPlaints:""
+      })
        return {
+         plaint: Object.assign({}, defaultForm),
+         rules: {
+          name: [val => (val || '').length > 0 || 'المرجوا ملأ هذا الحقل'],
+        },
+        snackbar: false,
          load:false,
         plaint:{
         contreInconnu:false,
         TypePlaintID:null,
         SourcePlaintID: null,
-        referencePlaints:"problem",
-        datePlaints:"2022-04-20",
-        dateEnregPlaints:"2022-04-25",
-        dateFaits:"2022-04-30",
-        EmplaceFaits: "bm",
-        sujetPlaints:"!!!سرقة"
+        referencePlaints:"",
+        datePlaints:"",
+        dateEnregPlaints:"",
+        dateFaits:"",
+        EmplaceFaits: "",
+        sujetPlaints:""
         },
-
+        defaultForm,
         datePlaints: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         dateEnregPlaints: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         dateFaits: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
@@ -332,23 +369,6 @@ export default {
         { text: 'تغيير', value: 'actions', sortable: false },
       ],
       data_partie:[],
-      data_partieEdit: -1,
-      edited_data_partie: {
-        nom_data_partie: '',
-        type: '',
-        genre: '',
-        avocat_partie: '',
-        representant_legal: '',
-        type_representant_legal: '',
-      },
-      defaultItem: {
-        nom_data_partie: '',
-        type: '',
-        genre: '',
-        avocat_partie: '',
-        representant_legal: '',
-        type_representant_legal: '',
-      }
        }
        },
     computed: {
@@ -368,7 +388,18 @@ export default {
       },
       enable(){
         return this.get_show_form;
-      }
+      },
+       formIsValid () {
+        return (
+        this.plaint.TypePlaintID &&
+        this.plaint.SourcePlaintID &&
+       this.plaint.referencePlaints &&
+        this.plaint.datePlaints &&
+        this.plaint.dateEnregPlaints &&
+        this.plaint.dateFaits &&
+        this.plaint.EmplaceFaits 
+        )
+      },
     },
       
     
@@ -400,7 +431,13 @@ export default {
             }
         
       },
-
+    resetForm () {
+        this.plaint = Object.assign({}, this.defaultForm)
+        this.$refs.plaint.reset()
+      },
+      submit () {
+        this.resetForm()
+      },
     },
     
     created(){

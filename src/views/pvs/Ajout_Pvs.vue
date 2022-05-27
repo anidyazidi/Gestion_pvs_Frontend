@@ -30,7 +30,7 @@
      <v-toolbar dark class="blue-grey darken-1 mb-3" flat height="45px" app>
   <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">المرجع</v-toolbar-title>
   </v-toolbar>
-        <v-form class="px-5">
+        <v-form class="px-5" ref="pv">
           <v-row>
                
           <v-col cols="12" sm="4">
@@ -39,7 +39,8 @@
             :items="serv_pvs[0]" v-model="pv.TypeSourcePvsID"
             item-text="nom"
             item-value="id"
-            outlined
+            outlined :rules="rules.name"
+            required placeholder="نوع المصدر"
             >
             </v-select>
           </v-col>
@@ -47,7 +48,8 @@
            <v-col cols="12" sm="3" >
             <div class="font-weight-bold darkgrey--text mx-10">صنف الضابطة القضائية</div>
             <v-select v-model="pv.typePoliceJudicID"
-            outlined dense 
+            outlined dense  :rules="rules.name"
+            required placeholder="صنف الضابطة القضائية"
             item-text="nom"
             item-value="id" :items="serv_pvs[1]"
             >
@@ -57,14 +59,16 @@
         <div class="font-weight-bold darkgrey--text mx-15">الضابطة القضائية</div>
           <v-text-field 
             single-line v-model="pv.policeJudics"
-            outlined dense 
+            outlined dense :rules="rules.name"
+            required placeholder="الضابطة القضائية"
           ></v-text-field>
         </v-col>
          <v-col cols="12" sm="3">
         <div class="font-weight-bold darkgrey--text mx-15">رقم الارسالية</div>
           <v-text-field 
             single-line v-model="pv.numEnvoi"
-            outlined dense
+            outlined dense :rules="rules.name"
+            required placeholder="رقم الارسالية"
           ></v-text-field>
         </v-col>
         <v-col
@@ -88,7 +92,8 @@
             readonly dense
             v-bind="attrs"
             v-on="on"
-            outlined
+            outlined :rules="rules.name"
+            required placeholder="تاريخ المحضر"
           ></v-text-field>
         </template>
         <v-date-picker
@@ -136,7 +141,8 @@
             v-model="pv.heureRealisation"
             prepend-icon="mdi-clock-time-four-outline"
             readonly outlined
-            v-bind="attrs"
+            v-bind="attrs" :rules="rules.name"
+            required placeholder="ساعة الانجاز"
             v-on="on" dense
           ></v-text-field>
         </template>
@@ -166,7 +172,8 @@
             <v-select
             :items="serv_pvs[2]" v-model="pv.typepvsID"
             outlined dense item-text="nom"
-            item-value="id"
+            item-value="id" :rules="rules.name"
+            required placeholder="نوع المحضر"
             >
             </v-select>
           </v-col>
@@ -189,7 +196,8 @@
           <v-text-field
             v-model="pv.dateEnregPvs"
             prepend-icon="mdi-calendar"
-            readonly dense
+            readonly dense :rules="rules.name"
+            required placeholder="تاريخ التسجيل"
             v-bind="attrs"
             v-on="on"
             outlined
@@ -224,8 +232,9 @@
     value="" dense
     label="موضوع المحضر"
     class="font-weight-black mx-15"
-    rows="2" v-model="pv.sujetpvs"
-    outlined
+    rows="1" v-model="pv.sujetpvs"
+    outlined :rules="rules.name"
+            required 
     no-resize
     >
     </v-textarea>
@@ -237,7 +246,7 @@
         <v-form>
          
          <v-data-table
-    :headers="headers"
+    :headers="headers" no-data-text="معلومات غير متاحة"
     :items="datapartie_tab"
     class="elevation-1"
     hide-default-footer
@@ -276,6 +285,7 @@
    
     </v-data-table>
   <DataPartie v-show="enable"></DataPartie>
+    <v-row><v-col cols="12" sm="4"></v-col>
   <v-card-actions class="mx-15">
               <v-btn
                 text
@@ -283,12 +293,20 @@
               dark
               class="my-2 blue"
               elevation="2"
-              :loading="load"
+              :loading="load"  :disabled="!formIsValid"
             >
             <v-icon right >mdi-notebook-plus-outline</v-icon>             
                إضافة محضر
-              </v-btn>           
-              </v-card-actions></v-form></v-card>
+              </v-btn>     <v-btn
+          text
+          @click="resetForm"
+          dark
+              class="my-2 red font-weight-black"
+              elevation="2"
+        >
+          إلغاء
+        </v-btn>             
+              </v-card-actions></v-row></v-form></v-card>
       </v-tab-item>
       <v-tab-item
       >
@@ -334,7 +352,7 @@
             >
             <v-icon right >mdi-notebook-plus-outline</v-icon>             
               حفظ
-              </v-btn>           
+              </v-btn>     
               </v-card-actions></v-col>
       </v-row></v-form></v-card>
 </template>
@@ -356,7 +374,24 @@ export default {
     DataPartie
   },
    data () {
+   const defaultForm = Object.freeze({
+            typepvsID: null,
+            sujetpvs: '',
+            dateEnregPvs: '',
+            policeJudics: '',
+
+            TypeSourcePvsID: null,
+            typePoliceJudicID:null,
+            numEnvoi:"",
+            datePvs:"",
+            heureRealisation:"",
+            contreInnconue:false
+      })
        return {
+          pv: Object.assign({}, defaultForm),
+         rules: {
+          name: [val => (val || '').length > 0 || 'المرجوا ملأ هذا الحقل'],
+        },
          load:false,
          tab: null,
          enablee: false,
@@ -366,6 +401,7 @@ export default {
          time: null,
         menu3: false,
         modal3: false,
+        defaultForm,
       headers: [
         { text: 'اسم الطرف', align: 'start',sortable: false,value: 'nom_data'},
         { text: 'صفته', value: 'type_data', sortable: false},
@@ -378,36 +414,20 @@ export default {
       data_partie: [],
       
       pv:{
-            
-            typepvsID: 1,
-            sujetpvs: 'sjt',
-            dateEnregPvs: '2022-08-02',
-            policeJudics: 'police',
+            typepvsID: null,
+            sujetpvs: '',
+            dateEnregPvs: '',
+            policeJudics: '',
 
-            TypeSourcePvsID: 1,
-            typePoliceJudicID:1,
-            numEnvoi:"2022-02-22",
-            datePvs:"2022-02-23",
-            heureRealisation:"11:00",
+            TypeSourcePvsID: null,
+            typePoliceJudicID:null,
+            numEnvoi:"",
+            datePvs:"",
+            heureRealisation:"",
             contreInnconue:false
     },
-      data_partieEdit: -1,
-      edited_data_partie: {
-        nom_data_partie: '',
-        type: '',
-        genre: '',
-        avocat_partie: '',
-        representant_legal: '',
-        type_representant_legal: '',
-      },
-      defaultItem: {
-        nom_data_partie: '',
-        type: '',
-        genre: '',
-        avocat_partie: '',
-        representant_legal: '',
-        type_representant_legal: '',
-      }
+      
+      
        }
    },
    computed: {
@@ -426,7 +446,19 @@ export default {
       },
       enable(){
         return this.get_show_form;
-      }
+      },
+       formIsValid () {
+        return (
+          this.pv.typepvsID &&
+          this.pv.dateEnregPvs &&
+          this.pv.policeJudics &&
+          this.pv.TypeSourcePvsID &&
+          this.pv.typePoliceJudicID &&
+          this.pv.numEnvoi &&
+          this.pv.datePvs &&
+          this.pv.heureRealisation 
+        )
+      },
     },
 
     
@@ -456,8 +488,11 @@ export default {
           this.openSnackbar(" تاكد من جميع المعلومات !!");
     
             }
-      }
-
+      },
+     resetForm () {
+        this.pv = Object.assign({}, this.defaultForm)
+        this.$refs.pv.reset()
+      },
       },
     created(){
       this.servall_pvs();
