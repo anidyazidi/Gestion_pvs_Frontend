@@ -19,14 +19,14 @@
         ref="menu1"
         v-model="menu1"
         :close-on-content-click="false"
-        :return-value.sync="date1"
+        :return-value.sync="date_cher"
         transition="scale-transition"
         offset-y
         min-width="auto"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field dense
-            v-model="date1"
+            v-model="date_cher"
             prepend-icon="mdi-calendar"
             readonly
             v-bind="attrs"
@@ -35,7 +35,7 @@
           ></v-text-field>
         </template>
         <v-date-picker
-          v-model="date1"
+          v-model="date_cher"
           no-title
           scrollable
         >
@@ -50,7 +50,7 @@
           <v-btn
             text
             color="primary"
-            @click="$refs.menu1.save(date1)"
+            @click="$refs.menu1.save(date_cher)"
           >
             OK
           </v-btn>
@@ -61,10 +61,11 @@
            <v-card-actions>
               <v-btn
                 text
-               @click="active = !active"
+               @click="chercher_plaint"
               dark
               class="my-2 blue font-weight-bold"
               elevation="2"
+              :loading="load"
             >
             <v-icon right >mdi-magnify</v-icon>             
                بحث
@@ -77,28 +78,24 @@
     <v-data-table
     v-model="selected"
     :headers="headers"
-    :items="desserts"
-    :single-select="singleSelect"
-    item-key="name" no-data-text="معلومات غير متاحة"
+    :items="plaint"
+    item-key="id" 
+    no-data-text="معلومات غير متاحة"
     show-select hide-default-footer
-    class="elevation-1"
+    class="elevation-1 mb-4"
+
   >
-    <template v-slot:top>
-      <v-switch
-        v-model="singleSelect"
-        label="إختيار وحيد"
-        class="pa-3"
-      ></v-switch>
-    </template>
   </v-data-table>
+
   <v-row><v-col cols="12" sm="3">
    <div class="font-weight-bold darkgrey--text mx-15">ممثل النيابة</div>
           <v-autocomplete
             ref="ممثل النيابة"
-            v-model="represantant"
-            :rules="[() => !!represantant || 'المرجوا ملأ هذا الحقل']"
-            :items="represantant"
-            label="represantant"
+            v-model="userhasplaint.userID"
+            :rules="[() => !!viceProc || 'المرجوا ملأ هذا الحقل']"
+            :items="viceProc"
+            item-text="nom"
+            item-value="id"
             placeholder="مساعدة في البحث"
             required single-line
             outlined dense
@@ -109,14 +106,14 @@
         ref="menu3"
         v-model="menu3"
         :close-on-content-click="false"
-        :return-value.sync="date3"
+        :return-value.sync="userhasplaint.dateMission"
         transition="scale-transition"
         offset-y
         min-width="auto"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field dense
-            v-model="date3"
+            v-model="userhasplaint.dateMission"
             prepend-icon="mdi-calendar"
             readonly
             v-bind="attrs"
@@ -125,7 +122,7 @@
           ></v-text-field>
         </template>
         <v-date-picker
-          v-model="date3"
+          v-model="userhasplaint.dateMission"
           no-title
           scrollable
         >
@@ -140,7 +137,7 @@
           <v-btn
             text
             color="primary"
-            @click="$refs.menu3.save(date3)"
+            @click="$refs.menu3.save(userhasplaint.dateMission)"
           >
             OK
           </v-btn>
@@ -151,11 +148,11 @@
            <v-card-actions>
               <v-btn
                 text
-               @click="save"
+               @click="affecter_plaints"
               dark
               class="my-2 green darken-1 font-weight-black"
               elevation="2"
-               
+              :loading="load2"
             >
             <v-icon right >mdi-note-check-outline</v-icon>             
               إضافة
@@ -170,38 +167,94 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+import axios from 'axios'
 export default {
     data(){
         return {
-        date1: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        menu1: false, modal1: false, menu2: false, modal2: false,
-    singleSelect: false,
+          load:false,
+          load2:false,
         selected: [],
-         represantant: ['rep1', '2rep','r1ep','ts1','t5'],
+         viceProc: this.$store.state.viceProc,
         active: false,
+
+          userhasplaint:{
+          userID:[],
+          plaintID:1,
+          traitID:false,
+       dateMission:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+        },
+        
+        date_cher: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        menu1: false, modal1: false, menu2: false, modal2: false,
+         
+
         headers: [
-          {
-            text: 'مرجع الشكاية',
-            align: 'start',
-            sortable: false,
-            value: 'name',
-          },
-          { text: 'نوع الشكاية', value: 'type_plaint',sortable: false, },
-          { text: 'مصدر الشكاية', value: 'source_pl', sortable: false,},
-          { text: 'تاريخ التسجيل', value: 'date_enreg', sortable: false,},
-          { text: 'موضوع المحضر', value: 'sujet_pl' ,sortable: false,},
+          {text: 'مرجع الشكاية',align: 'start',sortable: false,value: 'referencePlaints'},
+
+          { text: 'نوع الشكاية', value: 'TypePlaintID',sortable: false, },
+          { text: 'مصدر الشكاية', value: 'SourcePlaintID', sortable: false,},
+          { text: 'تاريخ التسجيل', value: 'dateEnregPlaints', sortable: false,},
+          { text: 'موضوع الشكاية', value: 'sujetPlaints' ,sortable: false,},
         ],
-        plaint: [
-          {
-            name: '320',
-          type_plaint:'typ2',
-          source_pl: 'src2',
-          date_enreg:"2022-08-02",
-          sujetPlaints:"sujet2"
-          },
-        ],
-       }}}
+        plaint: [],
+        
+       }},
+       methods:{
+         ...mapMutations(["openSnackbar"]),
+
+         async chercher_plaint(load_value=true){
+          this.load=load_value;
+          let token = localStorage.getItem("token");
+            axios.post('http://127.0.0.1:8000/api/plaint/Bydate',{
+               dateEnrg:this.date_cher
+            },{
+              headers:  
+               {Authorization: `Bearer ${token}`}
+
+          }).then(response => {
+                  let plnt = response.data;
+                  for(let i=0;i<plnt.length;i++){
+                    plnt[i].TypePlaintID = plnt[i].type_source_plaint.nom;
+                    plnt[i].SourcePlaintID = plnt[i].source_plaint.nom;
+                  }     this.plaint = plnt;
+                  this.load=false;
+                  this.active=true;
+                  return response;
+                }).catch(err=>{
+                  this.load=false;
+                  return err;
+                })
+        },
+        async affecter_plaints(){
+          this.load2=true;
+          let IDs=[];
+         for(let i=0;i<this.selected.length;i++){
+           IDs.push(this.selected[i].id);
+            console.log(this.selected[i].id);
+        }   this.userhasplaint.plaintID=IDs;
+
+          let token = localStorage.getItem("token");
+           await axios.post('http://127.0.0.1:8000/api/users/hasplaints/store',{
+              userhasplaint:this.userhasplaint
+            },{ headers:{Authorization: `Bearer ${token}`}
+
+           }).then(async response => {
+                  this.selected = [];
+                  await this.chercher_plaint(false);
+                  this.openSnackbar("تمت الإحالة بنجاح");
+
+                  this.load2=false;
+                  return response;
+                }).catch(err=>{
+                  this.load2=false;
+                  this.openSnackbar("تأكد من صحة المعلومات");
+                  return err;
+                })
+        }
+       }
+       
+    }
 
 </script>
 

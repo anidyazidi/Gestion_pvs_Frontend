@@ -12,6 +12,9 @@ const store = new Vuex.Store({
     return {
       //data of user 
       user : {},
+      //vice proc
+      viceProc:[],
+
       showNavBar_role:{
         plaints:true,
         pvs:true,
@@ -100,6 +103,16 @@ const store = new Vuex.Store({
       
   },
   actions:{
+    async getviceProc(){
+      var token = localStorage.getItem("token");
+      const response = await axios.get('http://127.0.0.1:8000/api/users/viceProc',{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      });  
+      this.state.viceProc = response.data;
+      return response;
+    },
     //********************** ACTION API POUR PLAINT **********************//
      // close snackbar
    

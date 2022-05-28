@@ -66,7 +66,7 @@ export default({
         model: null,
         email:"admin@gmail.com",
         pass:"admin",
-        message:"" ,
+        message:"password or email incorrect" ,
         loading:false
       }
     },
@@ -86,10 +86,10 @@ export default({
               this.loading=false;
 
                    switch(response.data.user.role.nom) {
-                   case "وكيل الملك": { this.profile(false,true,true,true,false);
+                   case "وكيل الملك": { this.profile(true,true,true,true,false);
                                         this.$router.push('stat/pv');  
                                           break;}
-                   case "admin1": { this.profile(true,true,true,true,true);
+                   case "admin": { this.profile(true,true,true,true,true);
                                   this.$router.push('Plaint/Ajout');  
                                   break;}
                      }

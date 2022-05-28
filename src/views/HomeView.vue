@@ -47,7 +47,7 @@ import { mapGetters, mapMutations ,mapActions} from 'vuex'
       },
       methods:{
         ...mapMutations(["closeSnackbar"]),
-        ...mapActions(["getall_serv_data"]),
+        ...mapActions(["getall_serv_data","getviceProc"]),
         fermer(){
           this.closeSnackbar();
         }
@@ -55,6 +55,7 @@ import { mapGetters, mapMutations ,mapActions} from 'vuex'
       created(){
         
         this.getall_serv_data();
+        this.getviceProc();
       }
   }
 </script>

@@ -19,14 +19,14 @@
         ref="menu1"
         v-model="menu1"
         :close-on-content-click="false"
-        :return-value.sync="date1"
+        :return-value.sync="cher.de"
         transition="scale-transition"
         offset-y
         min-width="auto"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field dense
-            v-model="date1"
+            v-model="cher.de"
             prepend-icon="mdi-calendar"
             readonly
             v-bind="attrs"
@@ -35,7 +35,7 @@
           ></v-text-field>
         </template>
         <v-date-picker
-          v-model="date1"
+          v-model="cher.de"
           no-title
           scrollable
         >
@@ -50,7 +50,7 @@
           <v-btn
             text
             color="primary"
-            @click="$refs.menu1.save(date1)"
+            @click="$refs.menu1.save(cher.de)"
           >
             OK
           </v-btn>
@@ -67,14 +67,14 @@
         ref="menu2"
         v-model="menu2"
         :close-on-content-click="false"
-        :return-value.sync="date2"
+        :return-value.sync="cher.a"
         transition="scale-transition"
         offset-y
         min-width="auto"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field dense
-            v-model="date2"
+            v-model="cher.a"
             prepend-icon="mdi-calendar"
             readonly
             v-bind="attrs"
@@ -83,7 +83,7 @@
           ></v-text-field>
         </template>
         <v-date-picker
-          v-model="date2"
+          v-model="cher.a"
           no-title
           scrollable
         >
@@ -98,7 +98,7 @@
           <v-btn
             text
             color="primary"
-            @click="$refs.menu2.save(date2)"
+            @click="$refs.menu2.save(cher.a)"
           >
             OK
           </v-btn>
@@ -108,9 +108,12 @@
      <v-col cols="12" sm="4">
             <div class="font-weight-bold darkgrey--text mx-15">نوع المحضر</div>
             <v-select
+            v-model="cher.id_type"
             class="py-0 mx-15"
             :items="type"
-            outlined dense
+            item-text="nom"
+            item-value="id"
+             outlined dense
             >
             </v-select>
           </v-col>
@@ -118,10 +121,11 @@
            <v-card-actions>
               <v-btn
                 text
-               @click="active = !active"
+               @click="chercher_pvs"
               dark
               class="my-2 blue font-weight-bold"
               elevation="2"
+              :loading="load"
             >
             <v-icon right >mdi-magnify</v-icon>             
                بحث
@@ -136,32 +140,26 @@
     <v-data-table
     v-model="selected"
     :headers="headers"
-    :items="desserts"
-    :single-select="singleSelect"
-    item-key="name" no-data-text="معلومات غير متاحة"
-    show-select hide-default-footer
+    :items="pvs"
+    item-key="id" no-data-text="معلومات غير متاحة"
+     show-select hide-default-footer
     class="elevation-1"
   >
-    <template v-slot:top>
-      <v-switch
-        v-model="singleSelect"
-        label="إختيار وحيد"
-        class="pa-3"
-      ></v-switch>
-    </template>
   </v-data-table>
   <v-row><v-col cols="12" sm="3">
    <div class="font-weight-bold darkgrey--text mx-15">ممثل النيابة</div>
           <v-autocomplete
             ref="ممثل النيابة"
-            v-model="represantant"
-            :rules="[() => !!represantant || 'المرجوا ملأ هذا الحقل']"
-            :items="represantant"
-            label="represantant"
+            v-model="userhaspvs.userID"
+            :rules="[() => !!viceProc || 'المرجوا ملأ هذا الحقل']"
+            :items="viceProc"
+            item-text="nom"
+            item-value="id"
             placeholder="مساعدة في البحث"
             required single-line
             outlined dense
-          ></v-autocomplete></v-col>
+          ></v-autocomplete>
+          </v-col>
           <v-col cols="12" sm="4">
            <div class="font-weight-bold darkgrey--text mx-15">تاريخ الاحالة</div>
       <v-menu
@@ -210,11 +208,11 @@
            <v-card-actions>
               <v-btn
                 text
-               @click="save"
+               @click="affecter_pvs"
               dark
               class="my-2 green darken-1 font-weight-black"
               elevation="2"
-               
+              :loading="load2" 
             >
             <v-icon right >mdi-note-check-outline</v-icon>             
               إضافة
@@ -227,44 +225,97 @@
 </template>
 
 <script>
-
+import axios from 'axios'
+import { mapMutations, mapGetters } from 'vuex'
 export default {
     data(){
         return {
-        date1: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        date3: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+          load:false, load2:false,
+           "cher":{
+        "id_type":1,
+        "de":(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        "a":(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+       },
+       userhaspvs:{
+       userID:1,
+       pvsID:[],
+       traitID:false,
+       dateMission:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+   },
         menu1: false, modal1: false, menu2: false, modal2: false,menu3: false, modal3: false,
-        singleSelect: false,
         selected: [],
-         represantant: ['rep1', '2rep','r1ep','ts1','t5'],
+         viceProc: this.$store.state.viceProc,
         active: false,
         headers: [
-          {
-            text: 'رقم المحضر',
-            align: 'start',
-            sortable: false,
-            value: 'name',
-          },
-          { text: 'نوع المحضر', value: 'type_pv',sortable: false, },
-          { text: 'رقم محضر الضابطة القضائية', value: 'type_pv', sortable: false,},
-          { text: 'تاريخ التسجيل', value: 'date_enreg', sortable: false,},
-          { text: 'موضوع المحضر', value: 'sujet_pv' ,sortable: false,},
-          { text: 'المصدر', value: 'source_pv' ,sortable: false,},
+          {text: 'نوع المحضر',align: 'start', sortable: false,  value: 'typepvsID'},
+          { text: 'نوع المصدر', value: 'TypeSourcePvsID',sortable: false, },
+          { text: '  الضابطة القضائية', value: 'policeJudics', sortable: false,},
+          { text: 'تاريخ المحضر', value: 'datePvs', sortable: false,},
+          { text: 'موضوع المحضر', value: 'sujetpvs' ,sortable: false,},
+          { text: '  رقم الإرسالية', value: 'numEnvoi' ,sortable: false,},
         ],
-        pvs: [
-          {
-            name: '2015/880/2021',
-            num_pv: 10,
-            type_pv: 'plaint',
-            num_pv_police_judi: 'police',
-            date_enreg: '12/05/2021',
-            sujet_pv: 'arson',
-            source_pv: 'local'
-          },
-        ],
+        pvs: [],
       }
     },
+    computed:{
+      ...mapGetters(["getServ_pvs"]),
+      type(){
+            return this.getServ_pvs[2];
+      }
+    },
+    methods:{
+      ...mapMutations(["openSnackbar"]),
+      chercher_pvs(load_value=true){
+          this.load=load_value;
+          let token = localStorage.getItem("token");
+            axios.post('http://127.0.0.1:8000/api/pvs/cherche_pv',{
+              cher:this.cher
+            },{
+              headers:  
+               {Authorization: `Bearer ${token}`}
+
+          }).then(response => {
+             let pvv= response.data;
+                  
+                  for(let i=0;i<pvv.length;i++){
+                    pvv[i].TypeSourcePvsID = pvv[i].typesourcepvs.nom;
+                    pvv[i].typepvsID = pvv[i].typepvs.nom;
+                    pvv[i].typePoliceJudicID = pvv[i].typepolicejudiciaire.nom;
+                  }
+                  
+                  this.pvs=pvv;    this.load=false;
+                          this.active=true;    
+
+                  return response;
+                });
+        },
+
+         async affecter_pvs(){
+          this.load2=true;
+          let IDs=[];
+         for(let i=0;i<this.selected.length;i++){
+           IDs.push(this.selected[i].id);
+        }   this.userhaspvs.pvsID=IDs;
+
+          let token = localStorage.getItem("token");
+           await axios.post('http://127.0.0.1:8000/api/users/haspvs/store',{
+              userhaspvs:this.userhaspvs
+            },{ headers: { Authorization: `Bearer ${token}` }
+
+          }).then(async response => {
+                    this.selected = [];
+                    await  this.chercher_pvs(false);
+
+                    this.openSnackbar("تمت الإحالة بنجاح");
+                     this.load2=false;
+                  return response;
+                }).catch(err=>{
+                  this.openSnackbar("تأكد من صحة المعلومات");
+                    this.load2=false;
+                  return err;
+                })
+        }
+    }
     }
 
 </script>
