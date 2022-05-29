@@ -4,7 +4,7 @@
 
  <v-spacer></v-spacer>
      <v-card elevation="2"
-  outlined  class="mx-auto my-auto"
+  outlined  class="mx-auto my-auto mb-2"
      >
      <v-toolbar class="blue-grey darken-1 mb-3" flat height="45px" app></v-toolbar>
     <v-form class="px-5">
@@ -13,12 +13,11 @@
       cols="12"
       sm="4"
     >
-    <div class="font-weight-bold darkgrey--text">تاريخ تسجيل المحضر من</div>
-      <v-menu
+          <v-menu
         ref="menu1"
         v-model="menu1"
         :close-on-content-click="false"
-        :return-value.sync="date1"
+        :return-value.sync="cherchant.de"
         transition="scale-transition"
         offset-y
         min-width="auto"
@@ -28,6 +27,7 @@
             v-model="cherchant.de"
             prepend-icon="mdi-calendar"
             readonly dense
+            label="تاريخ تسجيل المحضر من"
             v-bind="attrs"
             v-on="on"
             outlined 
@@ -61,8 +61,7 @@
       cols="12"
       sm="4"
     >
-    <div class="font-weight-bold darkgrey--text">إلى</div>
-      <v-menu
+     <v-menu
         ref="menu2"
         v-model="menu2"
         :close-on-content-click="false"
@@ -75,10 +74,11 @@
           <v-text-field
             v-model="cherchant.a"
             prepend-icon="mdi-calendar"
-            readonly
+            readonly dense
+            label=" إلى"
             v-bind="attrs"
             v-on="on"
-            outlined
+            outlined 
           ></v-text-field>
         </template>
         <v-date-picker
@@ -105,21 +105,12 @@
       </v-menu>
     </v-col>
     <v-col cols="12" sm="4">
-            <div class="font-weight-bold darkgrey--text mx-15">نوع محضر</div>
-            <v-select
-            class="py-0 mx-15"
-            v-model="cherchant.id_type"
-            :items="type"
-            item-text="nom"
-            item-value="id"
-            outlined
-            >
-            </v-select>
           </v-col>
+          
          <v-card-actions>
               <v-btn
                 text
-               @click="chercher_pl"
+               @click="chercher_pvs"
               dark
               class="my-2 blue"
               elevation="2"
@@ -133,15 +124,25 @@
     </v-row>
     </v-form>
      </v-card>
+
      <v-card>
      <v-data-table
-     v-show="cherche"
     :headers="headers"
+    :loading="!cherche"    
+    loading-text="إنتظر قليلا"
     :items="pvs" no-data-text="معلومات غير متاحة"
-     class="elevation-1 font-weight-black"
+     class="elevation-1 font-weight-black mb-4"
     hide-default-footer
     >
     </v-data-table>
+    <div class="text-center">
+    <v-pagination
+    v-model="pagination.current"
+    :length="pagination.total"
+    @input="onPageChange"
+    v-show="cherche"
+     ></v-pagination>
+    </div>
      </v-card>
 </div>
 </template>
@@ -152,11 +153,17 @@ import { mapGetters,mapMutations } from 'vuex'
 export default {
     data(){
         return {
-        date1: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        pagination: {
+                current: 1,
+                total: 0
+            },
+
+            pvs:[],
+         load:false,
+         cherche:false,
+
         menu1: false, modal1: false, menu2: false, modal2: false,
         cherchant:{
-          id_type:null,
           de: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
           a:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
          },
@@ -166,9 +173,7 @@ export default {
           { text: '  رقم الإرسالية', value: 'numEnvoi' },
           { text: 'موضوع المحضر', value: 'sujetpvs' },
           ],
-         pvs:[],
-         cherche:false,
-         load:false
+         
         }
     },
     computed:{
@@ -179,30 +184,56 @@ export default {
     },
     methods:{
       ...mapMutations(["openSnackbar"]),
-      chercher_pl(){
-          this.load=true;
-          let token = localStorage.getItem("token");
-            axios.post('http://127.0.0.1:8000/api/pvs/cherche_pv',{
-              cher:this.cherchant
-            },{
-              headers:  
-               {Authorization: `Bearer ${token}`}
-
-          }).then(response => {
-                  this.load=false;  let pvv= response.data;
-                  
+      async getPlaint() {
+        let token = localStorage.getItem("token");
+            await axios.post('http://127.0.0.1:8000/api/pvs/mission_pvs?page=' + this.pagination.current,{},
+            { headers:{ Authorization: `Bearer ${token}` }
+          })
+                .then(response => {
+                  let pvv= response.data.data;
                   for(let i=0;i<pvv.length;i++){
                     pvv[i].TypeSourcePvsID = pvv[i].typesourcepvs.nom;
                     pvv[i].typepvsID = pvv[i].typepvs.nom;
                     pvv[i].typePoliceJudicID = pvv[i].typepolicejudiciaire.nom;
                   }
                   
-                  this.pvs=pvv;
-                    this.cherche=true;    this.load=false;
-
-                  return response;
+                  this.pvs=pvv;    this.load=false; this.cherche=true;
+                  
+                    this.pagination.current = response.data.current_page;
+                    this.pagination.total = response.data.last_page;
                 });
+        },
+        onPageChange() {
+            this.getPlaint();
+        },
+        chercher_pvs(){
+          this.load=true;
+          let token = localStorage.getItem("token");
+            axios.post('http://127.0.0.1:8000/api/pvs/mission_pvs',{
+              cher_pv:this.cherchant
+            },{
+              headers:  
+               {Authorization: `Bearer ${token}`}
+
+          }).then(response => {
+                  let pvv= response.data;
+                  for(let i=0;i<pvv.length;i++){
+                    pvv[i].TypeSourcePvsID = pvv[i].typesourcepvs.nom;
+                    pvv[i].typepvsID = pvv[i].typepvs.nom;
+                    pvv[i].typePoliceJudicID = pvv[i].typepolicejudiciaire.nom;
+                  }    
+                  this.pvs = pvv;
+                  this.load=false;
+                   this.pagination.current=0;
+                  return response;
+                }).catch(err=>{
+                  this.load=false;
+                  return err;
+                })
         }
+    },
+    mounted(){
+      this.getPlaint();
     }
 }
 

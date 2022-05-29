@@ -117,7 +117,9 @@ export default{
         {
           action: 'mdi-shield-star',
            items: [
-          {icon: 'mdi-account-edit', title: 'الاطلاع على الاحالة' ,route:'/viceProc'},
+              {icon: 'mdi-account-edit', title: 'المحاضر' ,route:'/vicePvs'},
+              {icon: 'mdi-account-edit', title: 'الشكايات' ,route:'/vicePlaint'},
+         
           ],
           title: 'الانابات',
           affich:this.$store.state.showNavBar_role.statistique,//pour le test

@@ -86,12 +86,18 @@ export default({
               this.loading=false;
 
                    switch(response.data.user.role.nom) {
-                   case "وكيل الملك": { this.profile(true,true,true,true,false);
-                                        this.$router.push('stat/pv');  
-                                          break;}
-                   case "admin": { this.profile(true,true,true,true,true);
+                    case "user": { this.profile(true,true,true,true,true);
                                   this.$router.push('Plaint/Ajout');  
                                   break;}
+
+                   case "vice_admin": { this.profile(true,true,true,true,true);
+                                        this.$router.push('vicePvs');  
+                                          break;}
+
+                   case "admin": { this.profile(true,true,true,true,true);
+                                  this.$router.push('stat/pv');  
+                                  break;}
+                   
                      }
                    
          }

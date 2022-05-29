@@ -1,15 +1,15 @@
 <template>
+
   <v-data-table
     :headers="headers"
     :items="user" no-data-text="معلومات غير متاحة"
     sort-by="numUser"
     class="elevation-1 font-weight-black text-h7"
+     hide-default-footer
   >
    
     <template v-slot:top>
-      <v-toolbar
-        flat
-      >
+      <v-toolbar  flat>
         <v-toolbar-title>المستخدمين</v-toolbar-title>
         <v-divider
           class="mx-4"
@@ -32,6 +32,7 @@
               حساب جديد
             </v-btn>
           </template>
+
           <v-card>
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
@@ -104,6 +105,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+        
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
@@ -115,15 +117,17 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
       </v-toolbar>
     </template>
-    <template v-slot:[`item.actions`]="{ item }">
+
+    <template v-slot:[`item.axions`]="{ item }">
       <v-chip
         :color="getColor(item.numUser)"
         dark
-      >
-        
+      >   
       </v-chip>
+
       <v-icon
         small
         class="mr-2"
@@ -138,14 +142,6 @@
         mdi-delete
       </v-icon>
     </template>
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
   </v-data-table>
 </template>
 <script>
@@ -154,18 +150,12 @@
       dialog: false,
       dialogDelete: false,
       headers: [
-        {
-          text: 'إسم المستخدم',
-          align: 'start',
-          sortable: false,
-          value: 'name',
-        },
+        { text: 'إسم المستخدم', align: 'start', sortable: false, value: 'name', },
         { text: 'رقمه', value: 'numUser' },
         { text: 'البريد الالكتروني', value: 'email' },
         { text: 'دوره', value: 'role' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Actions', value: 'axions', sortable: false },
       ],
-     users: [],
       editedIndex: -1,
       editedItem: {
         name: '',
@@ -211,28 +201,26 @@
       initialize () {
         this.user = [
           {
+            id:1,
             name: 'شخص1',
             numUser: 59,
             email: 'p1@gmail.com',
             role: 'نائب وكيل الملك',
           },
           {
+            id:2,
             name: 'شخص2',
             numUser: 437,
             email: 'p2@gmail.com',
             role: 'كاتب الضبط',
           },
-          {
-            name: 'شخص3',
-            numUser: 262,
-            email: 'p3@gmail.com',
-            role: 'كاتب الضبط',
-          },
+         
         ]
       },
 
       editItem (item) {
         this.editedIndex = this.user.indexOf(item)
+        console.log('ddfd : '+item.id);
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },

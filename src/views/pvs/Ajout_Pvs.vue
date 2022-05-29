@@ -463,7 +463,7 @@ export default {
 
     
     methods: {
-      ...mapActions(["addpv","servall_pvs"]),
+      ...mapActions(["addpv"]),
       ...mapMutations(["openSnackbar","show_form"]),
 
        enableform(){
@@ -493,10 +493,7 @@ export default {
         this.pv = Object.assign({}, this.defaultForm)
         this.$refs.pv.reset()
       },
-      },
-    created(){
-      this.servall_pvs();
-    }
+      }
   } 
 </script>
 <style>
