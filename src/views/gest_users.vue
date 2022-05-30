@@ -6,6 +6,8 @@
     sort-by="numUser"
     class="elevation-1 font-weight-black text-h7"
      hide-default-footer
+     :loading="table_vide"
+     loading-text="إنتظر قليلا"
   >
    
     <template v-slot:top>
@@ -21,21 +23,9 @@
           v-model="dialog"
           max-width="500px"
         >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="green accent-3"
-              dark
-              class="mb-2 font-weight-black text-h6"
-              v-bind="attrs"
-              v-on="on"
-            >
-              حساب جديد
-            </v-btn>
-          </template>
-
           <v-card>
             <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
+              <span class="text-h5"> edit data</span>
             </v-card-title>
 
             <v-card-text>
@@ -47,8 +37,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.name"
-                      label="name"
+                      v-model="editedItem.nom"
+                      label="nom"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -76,10 +66,15 @@
                     sm="6"
                     md="4"
                   >
-                    <v-text-field
-                      v-model="editedItem.role"
-                      label="role"
-                    ></v-text-field>
+                   <v-select
+                    v-model="editedItem.idRole"
+                    :items="Role"
+                    item-value="id"
+                    item-text="nom"
+                    label="Role"
+                    dense
+                  ></v-select>
+                    
                   </v-col>
                  
                 </v-row>
@@ -89,18 +84,21 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-                color="blue darken-1"
+              dark
+              class="red lighten-3"
                 text
                 @click="close"
               >
-                Cancel
+                إلغاء
               </v-btn>
               <v-btn
-                color="blue darken-1"
+              class="blue darken-2"
+              dark
                 text
                 @click="save"
+                :loading="load_pop_edit"
               >
-                Save
+                تأكيد
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -108,11 +106,13 @@
         
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-title class="text-h5">هل ان متأكد من هذه العملية</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn class="red darken-1" dark text @click="closeDelete">إلغاء</v-btn>
+              <v-btn class="blue darken-3"
+              :loading="load_pop_delete"
+               dark text @click="deleteItemConfirm">نعم</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -121,7 +121,7 @@
       </v-toolbar>
     </template>
 
-    <template v-slot:[`item.axions`]="{ item }">
+    <template v-slot:[`item.action`]="{ item }">
       <v-chip
         :color="getColor(item.numUser)"
         dark
@@ -145,39 +145,34 @@
   </v-data-table>
 </template>
 <script>
+import axios from 'axios'
+import { mapMutations, Mutation } from 'vuex'
   export default {
     data: () => ({
       dialog: false,
       dialogDelete: false,
+      table_vide:true,
+      load_pop_edit:false,
+      load_pop_delete:false,
+      Role:[],
       headers: [
-        { text: 'إسم المستخدم', align: 'start', sortable: false, value: 'name', },
+        { text: 'إسم المستخدم', align: 'start', sortable: false, value: 'nom', },
         { text: 'رقمه', value: 'numUser' },
         { text: 'البريد الالكتروني', value: 'email' },
-        { text: 'دوره', value: 'role' },
-        { text: 'Actions', value: 'axions', sortable: false },
+        { text: 'دوره', value: 'idRole' },
+        { text: 'Actions', value: 'action', sortable: false },
       ],
       editedIndex: -1,
+      user:[],
       editedItem: {
-        name: '',
+        id:null,
+        nom: '',
         numUser: 0,
         email: 0,
-        role: 0,
-        
-      },
-      defaultItem: {
-        name: '',
-        numUser: 0,
-        email: 0,
-        role: 0,
+        idRole: 0,
         
       },
     }),
-
-    computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-      },
-    },
 
     watch: {
       dialog (val) {
@@ -188,78 +183,101 @@
       },
     },
 
-    created () {
-      this.initialize()
-    },
+    
 
     methods: {
+      ...mapMutations(["openSnackbar"]),
          getColor (numUser) {
         if (numUser > 400){ numUser="dis"; return 'red'}
-        else if (numUser > 200) return 'orange'
         else return 'green'
       },
-      initialize () {
-        this.user = [
-          {
-            id:1,
-            name: 'شخص1',
-            numUser: 59,
-            email: 'p1@gmail.com',
-            role: 'نائب وكيل الملك',
-          },
-          {
-            id:2,
-            name: 'شخص2',
-            numUser: 437,
-            email: 'p2@gmail.com',
-            role: 'كاتب الضبط',
-          },
-         
-        ]
-      },
-
+      
       editItem (item) {
         this.editedIndex = this.user.indexOf(item)
-        console.log('ddfd : '+item.id);
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
+       close () {
+        this.dialog = false
+      },
+       async save () {
+         this.load_pop_edit=true;
+         var token = localStorage.getItem("token");
+        if (this.editedIndex > -1) {
+          //Object.assign(this.user[this.editedIndex], this.editedItem)
+          await axios.put('http://127.0.0.1:8000/api/users/update/'+this.editedItem.id,{
+            users:this.editedItem
+          },{headers:{ Authorization:`Bearer ${token}` }
+         }).then(async res => {
+           this.table_vide=true;
+           await this.getUser();
+           this.table_vide=false;
+           this.load_pop_edit=false;
+           return res;
+         });
+        }
 
+        this.close()
+      },
+
+      
+      
       deleteItem (item) {
         this.editedIndex = this.user.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
       },
-
-      deleteItemConfirm () {
-        this.user.splice(this.editedIndex, 1)
-        this.closeDelete()
-      },
-
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
       closeDelete () {
         this.dialogDelete = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
+        
+      },
+      async deleteItemConfirm(){
+        this.load_pop_delete=true;
+        var token = localStorage.getItem("token");
+      console.log( this.editedItem.id)
+        await axios.delete('http://127.0.0.1:8000/api/users/delete/'+this.editedItem.id,
+        {headers:{ Authorization:`Bearer ${token}` }
+         }).then(async res => {
+           this.table_vide=true;
+           await this.getUser();
+           this.table_vide=false;
+           this.load_pop_delete=false;
+           return res;
+         }).catch(er =>{
+           this.openSnackbar("هذا المستخدم لم يكمل مهامه بعد");
+            this.load_pop_delete=false;
+         });
+         this.closeDelete();
       },
 
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.user[this.editedIndex], this.editedItem)
-        } else {
-          this.user.push(this.editedItem)
-        }
-        this.close()
+     async getUser () {
+        
+        var token = localStorage.getItem("token");
+         await axios.get('http://127.0.0.1:8000/api/users/index',{
+            headers:{
+               Authorization:`Bearer ${token}`
+              }
+         }).then(res => {
+           this.user = res.data;
+           this.table_vide=false;
+           return res;
+         });
       },
+
+    },
+
+    created () {
+      this.getUser();
+      var token = localStorage.getItem("token");
+          axios.get('http://127.0.0.1:8000/api/users/role/index',{
+            headers:{
+               Authorization:`Bearer ${token}`
+              }
+         }).then(res => {
+           this.Role = res.data;
+           console.log(res.data);
+           return res;
+         });
     },
   }
 </script>
