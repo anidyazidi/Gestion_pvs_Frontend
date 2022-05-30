@@ -2,6 +2,7 @@ import  axios from 'axios';
 import Vue from 'vue'
 import Vuex from 'vuex'
 import nomOf from './services'
+import vide from './vider_form'
 //import axios from 'axios'
 
 Vue.use(Vuex)
@@ -10,11 +11,40 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state () {
     return {
+      datap:{
+        PersonneMoraleID: null,
+        TypeCarteIdentsID: null,
+        SituationFamillID: null,
+        VilleDeNaissID: null,
+        paysID: null,
+        ProvinceID: null,
+        nationaliteID: null,
+
+        soi: false,
+        morale: false,
+        genreID: null,
+        minor:false,
+        nom: "",
+        prenom: "",
+        NumCarte: "",
+        NomDePere: "",
+        FilsDe: "",
+        NomDeMere: "",
+        FilleDe: "",
+
+        LieuNaiss: "",
+        address: "",
+
+        Profession: "",
+        LieuDeTravail: "",
+        NumFinan: "",
+        DateNaiss: "",
+      },
       //data of user 
       user : {},
-      //vice proc
+      //vice proc pour le service des mission
       viceProc:[],
-
+      //authentification
       showNavBar_role:{
         plaints:true,
         pvs:true,
@@ -34,7 +64,10 @@ const store = new Vuex.Store({
       
 
       // data partie
-      datapartie:[], // data parties qu'est stocker dans la base de donnee
+        datapartie:[],
+        editedIndex:-1,
+        editedItem:{},
+          // data parties qu'est stocker dans la base de donnee
       datapartielocal:[], //les done qui avoir user lorsque add datapartie
       serv_data:[],   //les donne de select pour data_partie
       showForm:false, //pour afficher components de datapartie
@@ -54,7 +87,9 @@ const store = new Vuex.Store({
 
     // getters pour services data partie
     getalldata:state=>{
-      return state.datapartielocal;
+      //return state.datapartielocal;
+      return state.datapartie;
+      
     },
     get_serv_data:state=>{
       return state.serv_data;
@@ -83,8 +118,21 @@ const store = new Vuex.Store({
       },
 
   // mutation of DATA PARTIE
+     delete_one_data:(state)=>{state.datapartie.splice(state.editedIndex, 1);
+                                 state.editedIndex = -1
+                                 vide.vider_data(state.datap)},
       add_data:(state,data)=> {
-        state.datapartie.push(data);
+        if(state.editedIndex > -1){
+         Object.assign(state.datapartie[state.editedIndex],data)
+         state.editedIndex = -1
+        }else{
+           state.datapartie.push(Object.assign({}, data));
+           
+        }
+        
+      
+        /*
+         state.datapartie.push(data);
         //pour data local de tableau
         let objetlocal={nom_data:'',type_data:'',genre:''};
         let i= state.datapartie.length - 1;
@@ -97,6 +145,7 @@ const store = new Vuex.Store({
          objetlocal.type_data = pers;
          
         state.datapartielocal.push(objetlocal);
+        */
       },
       //show formulaire data partie
       show_form:state=>{state.showForm = !state.showForm},

@@ -277,6 +277,22 @@
             </v-btn>
       </v-toolbar>
     </template>
+
+   <template v-slot:[`item.action`]="{ item }">
+      <v-icon
+        small
+        class="mr-2"
+        @click="editItem(item)"
+      >
+        mdi-pencil
+      </v-icon>
+      <v-icon
+        small
+        @click="deleteItem(item)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
    
     </v-data-table>
     
@@ -310,6 +326,19 @@
               </v-card-actions></v-row>
           </v-form>
   </v-card>
+
+  <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5">هل ان متأكد من هذه العملية</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="red darken-1" dark text @click="closeDelete">إلغاء</v-btn>
+              <v-btn class="blue darken-3"
+               dark text @click="deleteItemConfirm">نعم</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 </div>
 
 </template>
@@ -342,6 +371,10 @@ export default {
         },
         snackbar: false,
          load:false,
+
+         editedIndex:-1,
+         editedItem:{},
+         dialogDelete:false,
         plaint:{
         contreInconnu:false,
         TypePlaintID:null,
@@ -360,13 +393,12 @@ export default {
         menu: false, modal: false,menu1: false, modal1: false, menu2: false, modal2: false,
         
       headers: [
-        { text: 'اسم الطرف', align: 'start',sortable: false,value: 'nom_data'},
-        { text: 'صفته', value: 'type_data', sortable: false},
-        { text: 'نوعه', value: 'genre',sortable: false },
-        { text: 'محامو الطرف', value: 'avocat_partie', sortable: false},
-        { text: 'الممثل القانوني', value: 'representant_legal', sortable: false},
-        { text: 'نوع الممثل القانوني', value: 'type_representant_legal' ,sortable: false},
-        { text: 'تغيير', value: 'actions', sortable: false },
+        { text: 'اسم الطرف', align: 'start',sortable: false,value: 'nom'},
+        { text: 'صفته', value: 'PersonneMoraleID', sortable: false},
+        { text: 'نوعه', value: 'genreID',sortable: false },
+        { text: ' رقم بطاقة التعريف', value: 'NumCarte', sortable: false},
+        
+        { text: 'تغيير', value: 'action', sortable: false },
       ],
       data_partie:[],
        }
@@ -406,7 +438,15 @@ export default {
     methods: {
       ...mapActions(["addplaint","servall_plaint",
                     "add_datapart","getall_serv_data"]),
-      ...mapMutations(["show_form","openSnackbar"]),
+      ...mapMutations(["show_form","openSnackbar","delete_one_data"]),
+
+      editItem (item) {
+        this.$store.state.editedIndex = this.datapartie_tab.indexOf(item)
+        this.$store.state.datap = Object.assign({}, item)
+        this.$store.state.showForm = true;
+
+        },
+
 
       enableform(){
         this.show_form();
@@ -437,6 +477,19 @@ export default {
       },
       submit () {
         this.resetForm()
+      },
+
+      deleteItem (item) {
+        this.$store.state.editedIndex = this.datapartie_tab.indexOf(item)
+       this.$store.state.datap = Object.assign({}, item)
+        this.dialogDelete = true
+      },
+      closeDelete(){
+         this.dialogDelete = false
+      },
+      deleteItemConfirm () {
+        this.delete_one_data();
+        this.closeDelete()
       },
     },
     

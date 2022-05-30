@@ -327,35 +327,8 @@ export default{
 
       show:"true",
       tru:true,
-      datap:{
-        PersonneMoraleID: null,
-        TypeCarteIdentsID: null,
-        SituationFamillID: null,
-        VilleDeNaissID: null,
-        paysID: null,
-        ProvinceID: null,
-        nationaliteID: null,
-
-        soi: false,
-        morale: false,
-        genreID: null,
-        minor:false,
-        nom: "",
-        prenom: "",
-        NumCarte: "",
-        NomDePere: "",
-        FilsDe: "",
-        NomDeMere: "",
-        FilleDe: "",
-
-        LieuNaiss: "",
-        address: "",
-
-        Profession: "",
-        LieuDeTravail: "",
-        NumFinan: "",
-        DateNaiss: "",
-      }
+      
+      
     }
 
   },
@@ -364,7 +337,11 @@ export default{
     ...mapGetters(["get_serv_data"]),
     data_part(){
       return this.get_serv_data;
+    },
+    datap(){
+      return this.$store.state.datap;
     }
+
   },
 
     methods:{
@@ -374,11 +351,12 @@ export default{
        add_data_to_store(){
          this.add_data(this.datap);
         this.$store.state.showForm=false;
-        console.log(this.$store.state.datapartie[0]);
+        vide.vider_data(this.datap);
       },
       
       close(){
-                this.$store.state.showForm=false;
+              vide.vider_data(this.datap);
+              this.$store.state.showForm=false;
 
       }
 
