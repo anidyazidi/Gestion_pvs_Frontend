@@ -4,6 +4,7 @@
     :headers="headers"
     :items="user" no-data-text="معلومات غير متاحة"
     sort-by="numUser"
+    
     class="elevation-1 font-weight-black text-h7"
      hide-default-footer
      :loading="table_vide"
@@ -25,7 +26,7 @@
         >
           <v-card>
             <v-card-title>
-              <span class="text-h5"> edit data</span>
+              <span class="text-h5">تغير المعلومات</span>
             </v-card-title>
 
             <v-card-text>
@@ -38,7 +39,7 @@
                   >
                     <v-text-field
                       v-model="editedItem.nom"
-                      label="nom"
+                      label="إسم المستخدم"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -48,7 +49,7 @@
                   >
                     <v-text-field
                       v-model="editedItem.numUser"
-                      label="numUser"
+                      label="رقم الهاتف"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -58,7 +59,7 @@
                   >
                     <v-text-field
                       v-model="editedItem.email"
-                      label="email"
+                      label="البريد الالكتروني"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -71,9 +72,14 @@
                     :items="Role"
                     item-value="id"
                     item-text="nom"
-                    label="Role"
+                    label="دوره"
                     dense
                   ></v-select>
+                  <v-switch
+                      v-model="editedItem.active"
+                      label="نشيط"
+                    ></v-switch>
+
                     
                   </v-col>
                  
@@ -123,7 +129,7 @@
 
     <template v-slot:[`item.action`]="{ item }">
       <v-chip
-        :color="getColor(item.numUser)"
+        :color="getColor(item.active)"
         dark
       >   
       </v-chip>
@@ -156,20 +162,15 @@ import { mapMutations, Mutation } from 'vuex'
       load_pop_delete:false,
       Role:[],
       headers: [
-        { text: 'إسم المستخدم', align: 'start', sortable: false, value: 'nom', },
-        { text: 'رقمه', value: 'numUser' },
-        { text: 'البريد الالكتروني', value: 'email' },
-        { text: 'دوره', value: 'idRole' },
-        { text: 'Actions', value: 'action', sortable: false },
+        { text: 'إسم المستخدم', align: 'start', sortable: true, value: 'nom', },
+        { text: 'رقم الهاتف', value: 'numUser' , sortable: false},
+        { text: 'البريد الالكتروني', value: 'email', sortable: false },
+        { text: 'دوره', value: 'role.nom' , sortable: false},
+        { text: 'تغيير', value: 'action', sortable: false },
       ],
       editedIndex: -1,
       user:[],
       editedItem: {
-        id:null,
-        nom: '',
-        numUser: 0,
-        email: 0,
-        idRole: 0,
         
       },
     }),
@@ -187,9 +188,9 @@ import { mapMutations, Mutation } from 'vuex'
 
     methods: {
       ...mapMutations(["openSnackbar"]),
-         getColor (numUser) {
-        if (numUser > 400){ numUser="dis"; return 'red'}
-        else return 'green'
+         getColor (active) {
+        if (active == false){ active="dis"; return 'red darken-3'}
+        else return 'green lighten-1'
       },
       
       editItem (item) {
@@ -234,7 +235,6 @@ import { mapMutations, Mutation } from 'vuex'
       async deleteItemConfirm(){
         this.load_pop_delete=true;
         var token = localStorage.getItem("token");
-      console.log( this.editedItem.id)
         await axios.delete('http://127.0.0.1:8000/api/users/delete/'+this.editedItem.id,
         {headers:{ Authorization:`Bearer ${token}` }
          }).then(async res => {
@@ -275,7 +275,6 @@ import { mapMutations, Mutation } from 'vuex'
               }
          }).then(res => {
            this.Role = res.data;
-           console.log(res.data);
            return res;
          });
     },

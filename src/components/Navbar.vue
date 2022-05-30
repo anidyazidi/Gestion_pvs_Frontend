@@ -5,14 +5,14 @@
         <v-app-bar-nav-icon class="font-weight-bold"
            @click="drawer = !drawer"
             ></v-app-bar-nav-icon>
-        <v-toolbar-title >
+        <v-toolbar-title>
             <v-icon>mdi-gavel</v-icon>
             <span class="font-weight-light text--darken-4"> نظام تدبير القضايا الزجرية</span>         
         </v-toolbar-title>
         <v-spacer />
          <img  height="45px" style="border-radius:5px;" class="grey lighten-2" :src="require('../assets/mr.png')"/>
          <v-spacer />
-        <v-btn text class="font-weight-bold">
+        <v-btn @click="logout" class="font-weight-bold">
             <span>تسجيل الخروج</span>
             <v-icon right>mdi-logout</v-icon>
         </v-btn>
@@ -55,13 +55,30 @@
       </v-list-group>
     </v-list>
     </v-navigation-drawer>
+
+
+    <v-dialog v-model="dialoglogout" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5">هل ان متأكد من هذه العملية</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="red darken-1" dark text @click="closelogout">إلغاء</v-btn>
+              <v-btn class="blue darken-3"
+              :loading="load_pop_delete"
+               dark text @click="logoutConfirm">نعم</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 </nav>
+
 </template>
 <script>
 export default{
     data() {
         return {
             drawer: false,
+            dialoglogout:false,
             items: [
         {
           action: 'mdi-scale-balance',
@@ -126,6 +143,15 @@ export default{
         }
       ],
         }
+    },
+
+    methods:{
+      logout(){
+      this.dialoglogout=false;
+       window.history.back();
+      window.location.replace('http://192.168.43.119:8082/');
+    
+   }
     }
 }
 </script>

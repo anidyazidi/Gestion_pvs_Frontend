@@ -42,6 +42,8 @@
     :items="plaint" no-data-text="معلومات غير متاحة"
      class="elevation-1 font-weight-black"
     hide-default-footer
+    :loading="table_vide"
+     loading-text="إنتظر قليلا"
     >
     </v-data-table>
   </div>
@@ -65,6 +67,7 @@ export default {
     data(){
         return {
           load:false,
+          table_vide:true,
         headers: [
           { text: 'نوع الشكاية', value: 'TypePlaintID' },
           { text: 'مصدر الشكاية', value: 'SourcePlaintID' },
@@ -80,9 +83,10 @@ export default {
         }
     },
     methods:{
-      getPlaint() {
+      async getPlaint() {
+        this.table_vide=true;
         let token = localStorage.getItem("token");
-            axios.get('http://127.0.0.1:8000/api/plaint/index?page=' + this.pagination.current,{
+             await axios.get('http://127.0.0.1:8000/api/plaint/index?page=' + this.pagination.current,{
               headers:  
                { Authorization: `Bearer ${token}` }
           })
@@ -97,6 +101,7 @@ export default {
                     this.pagination.current = response.data.current_page;
                     this.pagination.total = response.data.last_page;
                 });
+                this.table_vide=false;
         },
         onPageChange() {
             this.getPlaint();
