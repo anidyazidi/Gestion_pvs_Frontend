@@ -12,6 +12,13 @@
         <v-spacer />
          <img  height="45px" style="border-radius:5px;" class="grey lighten-2" :src="require('../assets/mr.png')"/>
          <v-spacer />
+         <v-card-title>
+    
+  </v-card-title>
+         <v-btn 
+        outlined 
+         router to="/compte" text><v-icon>mdi-account-circle-outline</v-icon></v-btn>
+          <v-spacer></v-spacer>
         <v-btn @click="logout" class="font-weight-bold">
             <span>تسجيل الخروج</span>
             <v-icon right>mdi-logout</v-icon>
@@ -19,8 +26,15 @@
     </v-app-bar>
     
     <v-navigation-drawer clipped right  v-model="drawer" app class="ma-4">
-       <v-toolbar dark class="blue-grey darken-1 mb-3" flat app>
-  </v-toolbar>
+     <v-card flat class="mb-3">
+  <v-card-title>
+    <v-icon size="75px" class="mx-15">mdi-account-circle-outline</v-icon>
+  </v-card-title>
+         <v-btn  block
+        outlined light active-class="act"
+         x-large router to="/compte" 
+          class="font-weight-black text-h5"  text>حسابي</v-btn>
+  </v-card>
     <v-list>
       <v-list-group
         v-for="item in items"
@@ -40,7 +54,7 @@
           v-for="child in item.items"
           :key="child.title"
           :prepend-icon="child.icon" 
-
+          active-class="activ"
           router :to="child.route"
         >
             <v-list-title-action>
@@ -158,21 +172,27 @@ export default{
 
 <style>
 .active{
-  background: #00d2ff !important; 
-background: -webkit-linear-gradient(to right, #3a7bd5, #00d2ff) !important; 
-background: linear-gradient(to right, #3a7bd5, #00d2ff) !important; 
+  background: #a3e7f6 !important; 
+background: -webkit-linear-gradient(to right, #aceaf5, #6cc7c9) !important; 
+background: linear-gradient(to right, #a0d9eb, #78c1d1) !important; 
 
+}
+.activ{
+  background: #f9c9bc !important; 
+background: -webkit-linear-gradient(to right, #fbe5dd, #c4ebf8) !important; 
+background: linear-gradient(to rigsht, #cdeef5, #f8f9fa) !important; 
 }
 .nvbar{
 
 
-background: rgb(52,52,54);
-background: -moz-linear-gradient(139deg, rgba(52,52,54,1) 0%, rgba(106,94,80,1) 99%);
-background: -webkit-linear-gradient(139deg, rgba(52,52,54,1) 0%, rgba(106,94,80,1) 99%);
-background: linear-gradient(139deg, rgba(52,52,54,1) 0%, rgba(106,94,80,1) 99%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#343436",endColorstr="#6a5e50",GradientType=1);
-
+background: #c1eaf4 !important; 
+background: -webkit-linear-gradient(to right, #cde0f9, #c4ebf8) !important; 
+background: linear-gradient(to rigsht, #bae8f2, #e9eff0) !important; 
 
 }
-
+.act{
+  background: #c1eaf4 !important; 
+background: -webkit-linear-gradient(to right, #cde0f9, #c4ebf8) !important; 
+background: linear-gradient(to rigsht, #bae8f2, #e9eff0) !important; 
+}
 </style>

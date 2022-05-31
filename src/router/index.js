@@ -14,6 +14,7 @@ import statPlaint from '../views/stats/stat_plaint.vue'
 import gestUser from '../views/gest_users.vue'
 import vicePlaint from '../views/Mission/vice_plaint.vue'
 import vicePvs from '../views/Mission/vice_pvs.vue'
+import Compte from '../components/monCompte.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,6 +24,10 @@ const routes = [
     component: HomeView,
     children: [
       {
+        path: 'Compte',
+        name: 'Compte',
+        component: Compte
+      },{
         path: 'Plaint/Ajout',
         name: 'Plaint/Ajout',
         component: AjoutPlaint
