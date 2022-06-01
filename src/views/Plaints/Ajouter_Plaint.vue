@@ -7,7 +7,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="blue-grey darken-1 mb-3" flat height="34px" app>
+     <v-toolbar  class="nvbar mb-3" flat height="34px" app>
   <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">معطيات الشكاية</v-toolbar-title>
   </v-toolbar>
         <v-form class="px-5">
@@ -29,7 +29,8 @@
             class="py-0 mx-15" 
             :items="serv_plaint[1]" 
             item-text="nom"
-            item-value="id" :rules="rules.name"
+            item-value="id" 
+            :rules="[() => !!slct || 'المرجوا ملأ هذا الحقل']"
             required 
              dense 
             outlined
@@ -46,7 +47,8 @@
             :items="serv_plaint[0]"
             item-text="nom" 
             item-value="id" 
-            dense :rules="rules.name"
+            dense 
+            :rules="[() => !!slct || 'المرجوا ملأ هذا الحقل']"
             required 
             outlined
             placeholder="مصدر الشكاية"
@@ -255,7 +257,7 @@
   
     <template v-slot:top>
       <v-toolbar
-        flat dark class="blue-grey darken-1 mb-3" height="40px" app
+        flat  class="nvbar mb-3" height="40px" app
       ><v-icon right>mdi-account-multiple-plus</v-icon>
         <v-toolbar-title>أطراف الشكاية</v-toolbar-title>
         <v-divider
@@ -366,6 +368,7 @@ export default {
       })
        return {
          plaint: Object.assign({}, defaultForm),
+         slct: null,
          rules: {
           name: [val => (val || '').length > 0 || 'المرجوا ملأ هذا الحقل'],
         },
@@ -407,9 +410,6 @@ export default {
       ...mapGetters(["getServ_plaint",
                      "getalldata","get_show_form"]),
 
-      formTitle () {
-        return this.data_partieEdit === -1 ? 'New Item' : 'Edit Item'
-      },
 
       serv_plaint(){
         return this.getServ_plaint;

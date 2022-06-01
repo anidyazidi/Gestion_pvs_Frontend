@@ -27,7 +27,7 @@
        <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="blue-grey darken-1 mb-3" flat height="45px" app>
+     <v-toolbar  class="nvbar mb-3" flat height="45px" app>
   <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">المرجع</v-toolbar-title>
   </v-toolbar>
         <v-form class="px-5" ref="pv">
@@ -161,7 +161,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-5"
      >
-     <v-toolbar dark class="blue-grey darken-1 mb-3" flat height="45px" app>
+     <v-toolbar  class="nvbar mb-3" flat height="45px" app>
   <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">النيابة العامة</v-toolbar-title>
   </v-toolbar>
         <v-form class="px-5">
@@ -254,7 +254,7 @@
   >
     <template v-slot:top>
       <v-toolbar
-         flat dark class="blue-grey darken-1 mb-3" height="40px" app
+         flat class="nvbar mb-3" height="40px" app
       >
         <v-toolbar-title>  <v-checkbox
          v-model="pv.contreInnconue" 

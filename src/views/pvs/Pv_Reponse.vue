@@ -6,7 +6,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="blue-grey darken-1 mb-3" flat height="45px" app>بحث</v-toolbar>
+     <v-toolbar  class="nvbar mb-3" flat height="45px" app>بحث</v-toolbar>
     <v-form class="px-5">
           <v-row>
     <v-col cols="12" sm="4">

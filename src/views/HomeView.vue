@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="bg">
       <Navbar />
     <v-main class="ma-6">
       <router-view />
@@ -60,3 +60,22 @@ import { mapGetters, mapMutations ,mapActions} from 'vuex'
       }
   }
 </script>
+<style>
+.bg{background: repeating-radial-gradient(circle, transparent, transparent 5.6px, #eae8e4 5.6px, #eae8e4 7.2px), repeating-radial-gradient(circle, transparent, transparent 5.6px, #eae8e4 5.6px, #eae8e4 7.2px), #f0f0f0;
+background-size: 32px 32px;
+background-position: 0 0, 16px 16px, 32px 16px;
+background-color: #f0f0f0;
+}
+.act{
+  background: #c1eaf4 !important; 
+background: -webkit-linear-gradient(to right, #cde0f9, #c4ebf8) !important; 
+background: linear-gradient(to rigsht, #bae8f2, #e9eff0) !important; 
+}
+
+.nvbar{background: rgb(0,9,13);
+background: -moz-linear-gradient(0deg, rgba(0,9,13,1) 5%, rgba(203,234,248,1) 6%, rgba(200,234,249,1) 28%, rgba(182,226,247,1) 82%);
+background: -webkit-linear-gradient(0deg, rgba(0,9,13,1) 5%, rgba(203,234,248,1) 6%, rgba(200,234,249,1) 28%, rgba(182,226,247,1) 82%);
+background: linear-gradient(0deg, rgba(0,9,13,1) 5%, rgba(203,234,248,1) 6%, rgba(200,234,249,1) 28%, rgba(182,226,247,1) 82%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00090d",endColorstr="#b6e2f7",GradientType=1);
+}
+</style>

@@ -4,7 +4,7 @@
     tile
   >
    
-        <v-card-title dark class="act mb-3 font-weight-black text-h7">
+        <v-card-title dark class="nvbar mb-3 font-weight-black text-h7">
                 <v-icon large right>mdi-account-details-outline
             </v-icon>المعطيات الشخصية</v-card-title>
         <v-card-title class="font-weight-black text-h7">

@@ -2,7 +2,7 @@
 <div class="data_partie">
     <v-card class="mt-3">
       <v-toolbar
-        flat dark class="blue-grey darken-1 mb-3" height="40px" app
+        flat  class="nvbar mb-3" height="40px" app
       ><v-icon right>mdi-account-plus</v-icon>
        <v-toolbar-title>طرف الشكاية</v-toolbar-title></v-toolbar>
       <v-row>

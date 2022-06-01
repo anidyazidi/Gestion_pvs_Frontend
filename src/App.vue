@@ -1,5 +1,5 @@
 <template>
-  <v-app style="background-color:aliceblue;">
+    <v-app style="background-color:transparent;">
 
       <router-view />
 
@@ -22,11 +22,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-.act{
-  background: #c1eaf4 !important; 
-background: -webkit-linear-gradient(to right, #cde0f9, #c4ebf8) !important; 
-background: linear-gradient(to rigsht, #bae8f2, #e9eff0) !important; 
-}
-</style>

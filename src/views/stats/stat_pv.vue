@@ -6,7 +6,9 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar class="blue-grey darken-1 mb-3" flat height="45px" app>تاريخ تسجيل المحضر</v-toolbar>
+     <v-toolbar class="nvbar mb-3" flat height="45px" app>
+       <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">
+         تاريخ تسجيل المحضر</v-toolbar-title></v-toolbar>
     <v-form class="px-5">
           <v-row>
        <v-col
@@ -108,7 +110,7 @@
          <v-card-actions>
               <v-btn
                 text
-               @click="cherche"
+               @click="display = !display"
               dark
               class="my-2 blue"
               elevation="2"
@@ -117,33 +119,31 @@
             <v-icon right >mdi-magnify</v-icon>             
                بحث
               </v-btn>
-              <v-btn
-                text
-               @click="print"
-              dark
-              class="my-2 orange darken-2"
-              elevation="2"
-               
-            >
-            <v-icon right >mdi-printer</v-icon>             
-               طباعة
-              </v-btn>
+              
               
               </v-card-actions>
     </v-row>
     </v-form>
      </v-card>
+
+     <app-stpv v-show="display"></app-stpv>
 </div>
 </template>
 
 <script>
+import statPv from '../../components/stats/statsPv.vue'
 export default {
     data(){
         return {
         date1: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         menu1: false, modal1: false, menu2: false, modal2: false,
+        display: false,
+         
         }
+    },
+    components:{
+      'app-stpv': statPv
     }
 }
 
