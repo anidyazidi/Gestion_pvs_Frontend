@@ -12,7 +12,7 @@
   >
    
     <template v-slot:top>
-      <v-toolbar  flat>
+      <v-toolbar dark flat>
         <v-toolbar-title>المستخدمين</v-toolbar-title>
         <v-divider
           class="mx-4"

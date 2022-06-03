@@ -12,8 +12,9 @@
       <v-col cols="8">
         <v-card-title>
           <div>
-            <div class="text-h5 mt-6">
-             المحاضر&nbsp; المعالجة
+            <div class="text-h5">
+            المحاضر
+            <div>المعالجة</div>
             </div>
           </div>
         </v-card-title>
@@ -47,9 +48,8 @@
         <v-card-title>
           <div>
             <div class="text-h5">
-              &nbsp;المحاضر
-              &nbsp;في طور
-             المعالجة
+              المحاضر  في 
+             <div>طور المعالجة</div>
             </div>
           </div>
         </v-card-title>

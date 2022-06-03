@@ -6,7 +6,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar class="nvbar mb-3" flat height="45px" app></v-toolbar>
+     <v-toolbar darkclass="nvbar mb-3" flat height="45px" app></v-toolbar>
     <v-form class="px-5">
           <v-row>
        <v-col
@@ -77,7 +77,7 @@
             prepend-icon="mdi-calendar"
             readonly
             v-bind="attrs"
-            v-on="on"
+            v-on="on" dense
             outlined
           ></v-text-field>
         </template>
@@ -112,7 +112,7 @@
             :items="type"
             item-text="nom"
             item-value="id"
-            outlined
+            outlined dense
             >
             </v-select>
           </v-col>

@@ -1,6 +1,6 @@
 <template>
 <nav>
-    <v-app-bar flat dense clipped-right color="dark"  class="nvbar" app height="60px"
+    <v-app-bar flat dense clipped-right dark class="nvbar" app height="60px"
     tile>
         <v-app-bar-nav-icon 
            @click="drawer = !drawer"
@@ -10,10 +10,9 @@
             <span class="font-weight-black text-h5"> نظام تدبير القضايا الزجرية</span>         
         </v-toolbar-title>
         <v-spacer />
-         <img  height="45px" style="border-radius:5px;" class="grey lighten-2" :src="require('../assets/mr.png')"/>
+         <img  height="45px" style="border-radius:5px;"  :src="require('../assets/mr.png')"/>
          <v-spacer />
         
-          <v-spacer></v-spacer>
         <v-btn text @click="logout" class="font-weight-bold text-h8">
             <span>تسجيل الخروج</span>
             <v-icon right>mdi-logout</v-icon>
@@ -185,14 +184,8 @@ background: -webkit-linear-gradient(to right, #fbe5dd, #c4ebf8) !important;
 background: linear-gradient(to rigsht, #cdeef5, #f8f9fa) !important; 
 }
 .nvbar{
-
-  
-background: rgb(0,9,13);
-background: -moz-linear-gradient(0deg, rgba(0,9,13,1) 5%, rgba(203,234,248,1) 6%, rgba(190,227,245,1) 28%, rgba(145,212,243,1) 82%);
-background: -webkit-linear-gradient(0deg, rgba(0,9,13,1) 5%, rgba(203,234,248,1) 6%, rgba(190,227,245,1) 28%, rgba(145,212,243,1) 82%);
-background: linear-gradient(0deg, rgba(0,9,13,1) 5%, rgba(203,234,248,1) 6%, rgba(190,227,245,1) 28%, rgba(145,212,243,1) 82%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00090d",endColorstr="#91d4f3",GradientType=1);
-
+  background: rgb(2,0,36);
+background: linear-gradient(120deg, rgba(2,0,36,0.8799894957983193) 2%, rgba(5,105,143,1) 24%, rgba(49,159,175,0.958420868347339) 48%, rgba(2,0,36,0.8127626050420168) 97%);
 }
 .act{
   background: #c1eaf4 !important; 
