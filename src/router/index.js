@@ -11,10 +11,12 @@ import TraitePlaint from '../views/Traiter_Plaint_Pv/Traiter_Plaint.vue'
 import TraitePv from '../views/Traiter_Plaint_Pv/Traiter_Pv.vue'
 import statPv from '../views/stats/stat_pv.vue'
 import statPlaint from '../views/stats/stat_plaint.vue'
-import gestUser from '../views/gest_users.vue'
+import gestUser from '../views/comptes/gest_users.vue'
 import vicePlaint from '../views/Mission/vice_plaint.vue'
 import vicePvs from '../views/Mission/vice_pvs.vue'
 import Compte from '../components/monCompte.vue'
+import newCompte from '../views/comptes/newCompte.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -77,6 +79,12 @@ const routes = [
         name: 'gestUser',
         component: gestUser
       },
+      {
+        path: '/newCompte',
+        name: 'newCompte',
+        component: newCompte
+      },
+
       {
         path: '/vicePlaint',
         name: 'vicePlaint',

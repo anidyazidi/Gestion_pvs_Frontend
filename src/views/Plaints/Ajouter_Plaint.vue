@@ -10,7 +10,9 @@
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
   <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">معطيات الشكاية</v-toolbar-title>
   </v-toolbar>
-        <v-form class="px-5">
+        <v-form 
+         ref="form"
+        class="px-5">
           <v-row>
             <v-col cols="12" sm="8">
             <v-checkbox
@@ -473,8 +475,9 @@ export default {
       },
     resetForm () {
         this.plaint = Object.assign({}, this.defaultForm)
-        this.$refs.plaint.reset()
+        this.$refs.form.reset()
       },
+      
       submit () {
         this.resetForm()
       },
@@ -484,6 +487,7 @@ export default {
        this.$store.state.datap = Object.assign({}, item)
         this.dialogDelete = true
       },
+
       closeDelete(){
          this.dialogDelete = false
       },

@@ -135,6 +135,8 @@ export default{
           action: 'mdi-account-cog',
            items: [
           {icon: 'mdi-account-edit', title: 'نشاطات' ,route:'/gestUser'},
+          {icon: 'mdi-account-edit', title: 'إنشاء حساب' ,route:'/newCompte'},
+
           ],
           title: 'الحسابات',
            affich:this.$store.state.showNavBar_role.comptes,
@@ -157,7 +159,7 @@ export default{
       logout(){
       this.dialoglogout=false;
        window.history.back();
-      window.location.replace('http://192.168.43.119:8082/');
+      window.location.replace('http://192.168.43.119:8080/');
     
    }
     }
