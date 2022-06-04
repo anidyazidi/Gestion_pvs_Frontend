@@ -100,6 +100,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { mapMutations, Mutation } from 'vuex';
   export default {
     data: () => ({
       valid: true,
@@ -131,6 +132,7 @@ import axios from 'axios';
     }),
 
     methods: {
+      ...mapMutations(["openSnackbar"]),
       async validate () {
           this.$refs.form.validate();
           //this.loadValid = true
@@ -139,9 +141,10 @@ import axios from 'axios';
              users:this.user
          },{headers: { Authorization:`Bearer ${token}`} 
         }).then(reponse=>{
+          this.openSnackbar("تم إنشاء الحساب بنجاح");
              this.reset();
         }).catch(er =>{
-          console.log(er);
+           this.openSnackbar("تأكد من صحة المعلومات");
            return er;
           });
        

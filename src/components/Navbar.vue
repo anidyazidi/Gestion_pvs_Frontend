@@ -149,7 +149,7 @@ export default{
          
           ],
           title: 'الانابات',
-          affich:this.$store.state.showNavBar_role.statistique,//pour le test
+          affich:this.$store.state.showNavBar_role.dash_vie,//pour le test
         }
       ],
         }

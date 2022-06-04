@@ -86,17 +86,20 @@ export default({
               this.loading=false;
 
                    switch(response.data.user.role.nom) {
-                    case "user": { this.profile(true,true,true,true,true);
+                    case "user": { this.profile(true,true,false,false,false,false);
                                   this.$router.push('Plaint/Ajout');  
-                                  break;}
+                                  break;
+                                  }
 
-                   case "vice_admin": { this.profile(true,true,true,true,true);
-                                        this.$router.push('vicePvs');  
-                                          break;}
+                   case "vice_admin": { this.profile(false,false,false,true,false,true);
+                                        this.$router.push('vicePvs');
+                                          break;
+                                          }
 
-                   case "admin": { this.profile(true,true,true,true,true);
+                   case "admin": { this.profile(true,true,true,true,true,true);
                                   this.$router.push('stat/pv');  
-                                  break;}
+                                  break;
+                                  }
                    
                      }
                    
@@ -110,12 +113,13 @@ export default({
 
         });
     },
-    profile(pl,pv,mis,sta,com){
+    profile(pl,pv,mis,sta,com,vice){
       this.$store.state.showNavBar_role.plaints = pl;
       this.$store.state.showNavBar_role.pvs = pv;
       this.$store.state.showNavBar_role.mission = mis;
       this.$store.state.showNavBar_role.statistique = sta;
       this.$store.state.showNavBar_role.comptes = com;
+      this.$store.state.showNavBar_role.dash_vie = vice;
       console.log("plaint : "+ this.$store.state.showNavBar_role.plaints );
     },
 },

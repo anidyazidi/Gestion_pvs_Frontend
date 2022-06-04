@@ -9,13 +9,15 @@
       :value="snackbar.value"
       :timeout="snackbar.timeout"
       top
-      height="80"
+      height="60"
+      class="mt-12"
+      dark
     >
       {{ snackbar.text }}
 
-      <template v-slot:action="{ attrs }">
+      <template v-slot:action="{ attrs }" >
         <v-btn
-          color="red"
+         color="red"
           text
           v-bind="attrs"
           @click="fermer()"

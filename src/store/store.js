@@ -50,13 +50,14 @@ const store = new Vuex.Store({
         pvs:true,
         mission:true,
         statistique:true,
-        comptes:true
+        comptes:true,
+        dash_vie:true
       },
       // snackbar qu'est affiche tous les resultat
       snackbar:{   
         timeout:null, 
         value:false,
-        text:""
+        text:"",
       },
       //data of services plaints
       serv_plaint:[],
@@ -105,9 +106,10 @@ const store = new Vuex.Store({
   mutations:{
     
     //snackbar
-    openSnackbar:(state,msg)=>{
+    openSnackbar:(state,msg,colors)=>{
       state.snackbar.value=true;
       state.snackbar.text = msg;
+     
    },
       closeSnackbar:(state)=>{state.snackbar.value=false;},
 
@@ -130,22 +132,6 @@ const store = new Vuex.Store({
            
         }
         
-      
-        /*
-         state.datapartie.push(data);
-        //pour data local de tableau
-        let objetlocal={nom_data:'',type_data:'',genre:''};
-        let i= state.datapartie.length - 1;
-        let pers = nomOf(state.datapartie[i].PersonneMoraleID,state.serv_data[0]);
-        let id = state.datapartie[i].genreID;
-
-        if(id==1){  objetlocal.genre = "homme"; }
-        if(id==2) {objetlocal.genre= "femme"}
-        objetlocal.nom_data = state.datapartie[i].prenom;
-         objetlocal.type_data = pers;
-         
-        state.datapartielocal.push(objetlocal);
-        */
       },
       //show formulaire data partie
       show_form:state=>{state.showForm = !state.showForm},
