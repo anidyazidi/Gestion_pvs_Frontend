@@ -23,11 +23,16 @@ export default {
 };
 </script>
 <style>
+ @import url(https://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
 #bg{background: repeating-radial-gradient(circle, transparent, transparent 5.6px, #eae8e4 5.6px, #eae8e4 7.2px), repeating-radial-gradient(circle, transparent, transparent 5.6px, #eae8e4 5.6px, #eae8e4 7.2px), #f0f0f0;
 background-size: 32px 32px;
 background-position: 0 0, 16px 16px, 32px 16px;
 background-color: #f0f0f0;
+font-family: 'Droid Arabic Naskh',Arial, Helvetica,  sans-serif;
+font-size:15px;line-height:28px;
+text-decoration:none; color: black;
 }
+
  /* .smallnavbar{
    
   background: rgb(47,69,73);

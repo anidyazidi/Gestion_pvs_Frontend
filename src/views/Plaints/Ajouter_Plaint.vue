@@ -4,8 +4,8 @@
     
 <h2 class="subheading dark--text mb-4">إضافة شكاية</h2>
   <v-spacer></v-spacer>
-     <v-card elevation="2"
-  outlined  class="mx-auto my-auto"
+     <v-card elevation="2" 
+  outlined  class="mx-auto my-auto justify-center"
      >
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
   <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">معطيات الشكاية</v-toolbar-title>
@@ -32,8 +32,7 @@
             :items="serv_plaint[1]" 
             item-text="nom"
             item-value="id" 
-            :rules="[() => !!slct || 'المرجوا ملأ هذا الحقل']"
-            required 
+            :rules="rules.select2"
              dense 
             outlined
             placeholder="نوع الشكاية"
@@ -258,9 +257,7 @@
   >
   
     <template v-slot:top>
-      <v-toolbar
-        flat  class="nvbar mb-3" height="40px" app
-      ><v-icon right>mdi-account-multiple-plus</v-icon>
+      <v-toolbar dark class="nvbar mb-3" flat height="34px" app><v-icon right>mdi-account-multiple-plus</v-icon>
         <v-toolbar-title>أطراف الشكاية</v-toolbar-title>
         <v-divider
           class="mx-4"
@@ -372,8 +369,11 @@ export default {
          plaint: Object.assign({}, defaultForm),
          slct: null,
          rules: {
-          name: [val => (val || '').length > 0 || 'المرجوا ملأ هذا الحقل'],
-        },
+            name: [val => (val || '').length > 0 || 'المرجوا ملأ هذا الحقل'],
+      select: [(v) => !!v || 'المرجوا ملأ هذا الحقل'],
+      select2: [(v) =>  v.length>0 || 'المرجوا ملأ هذا الحقل'],
+      
+    },
         snackbar: false,
          load:false,
 

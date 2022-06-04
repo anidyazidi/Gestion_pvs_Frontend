@@ -6,7 +6,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="45px" app>
+     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
        <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">
          تاريخ تسجيل المحضر</v-toolbar-title></v-toolbar>
     <v-form class="px-5">

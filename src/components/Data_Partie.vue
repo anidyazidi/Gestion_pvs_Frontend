@@ -2,9 +2,9 @@
 <div class="data_partie">
     <v-card class="mt-3">
       <v-toolbar
-        flat  class="nvbar mb-3" height="40px" app
+        flat dark class="nvbar mb-3" height="34px" app
       ><v-icon right>mdi-account-plus</v-icon>
-       <v-toolbar-title>طرف الشكاية</v-toolbar-title></v-toolbar>
+       <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">طرف الشكاية</v-toolbar-title></v-toolbar>
       <v-row>
         <v-col cols="12" sm="6">
         <v-radio-group

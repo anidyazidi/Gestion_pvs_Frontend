@@ -6,7 +6,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto mb-2"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="45px" app></v-toolbar>
+     <v-toolbar dark class="nvbar mb-3" flat height="34px" app></v-toolbar>
     <v-form class="px-5">
           <v-row>
        <v-col

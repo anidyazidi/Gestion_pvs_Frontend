@@ -12,8 +12,8 @@
   >
    
     <template v-slot:top>
-      <v-toolbar dark flat>
-        <v-toolbar-title>المستخدمين</v-toolbar-title>
+      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
+        <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">المستخدمين</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset

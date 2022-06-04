@@ -48,7 +48,6 @@
           v-for="child in item.items"
           :key="child.title"
           :prepend-icon="child.icon" 
-          active-class="activ"
           router :to="child.route"
         >
             <v-list-title-action>
