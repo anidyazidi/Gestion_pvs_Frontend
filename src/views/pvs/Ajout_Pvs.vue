@@ -254,14 +254,14 @@
   >
     <template v-slot:top>
       <v-toolbar
-         flat dark class="nvbar mb-3" height="34px" app
-      > 
+         flat class="nvbar mb-3" height="40px" app
+      >
         <v-toolbar-title>  <v-checkbox
          v-model="pv.contreInnconue" 
             :value="!pv.contreInnconue"
             label="ضد شخص مجهول"
             color="red darken-4"
-            class="font-weight-black text-h5 mt-4  mr-8"
+            class="font-weight-black mt-4  mr-8"
             >
             </v-checkbox></v-toolbar-title>
         <v-divider
@@ -282,7 +282,21 @@
             </v-btn>
       </v-toolbar>
     </template>
-   
+   <template v-slot:[`item.action`]="{ item }">
+      <v-icon
+        small
+        class="mr-2"
+        @click="editItem(item)"
+      >
+        mdi-pencil
+      </v-icon>
+      <v-icon
+        small
+        @click="deleteItem(item)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
     </v-data-table>
   <DataPartie v-show="enable"></DataPartie>
     <v-row><v-col cols="12" sm="4"></v-col>
@@ -344,8 +358,8 @@
   </v-file-input></v-col><v-col cols="12" sm="4">
      <v-card-actions>
               <v-btn
+            hidden
                 text
-               @click="save"
               dark
               class="my-2 green darken-1"
               elevation="2"
@@ -359,7 +373,18 @@
       </v-tab-item>
     </v-tabs-items>
   </v-card>
-     
+     <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5">هل ان متأكد من هذه العملية</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="red darken-1" dark text @click="closeDelete">إلغاء</v-btn>
+              <v-btn class="blue darken-3"
+               dark text @click="deleteItemConfirm">نعم</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -368,7 +393,7 @@
 import { mapActions, mapGetters, mapMutations } from 'vuex'
  import DataPartie from '../../components/Data_Partie.vue'
   import vide from '../../store/vider_form'
-
+ import axios from 'axios'
 export default {
   components:{
     DataPartie
@@ -389,6 +414,7 @@ export default {
       })
        return {
           pv: Object.assign({}, defaultForm),
+          files:[],
          rules: {
           name: [val => (val || '').length > 0 || 'المرجوا ملأ هذا الحقل'],
         },
@@ -403,16 +429,19 @@ export default {
         modal3: false,
         defaultForm,
       headers: [
-        { text: 'اسم الطرف', align: 'start',sortable: false,value: 'nom_data'},
-        { text: 'صفته', value: 'type_data', sortable: false},
-        { text: 'نوعه', value: 'genre',sortable: false },
-        { text: 'محامو الطرف', value: 'avocat_partie', sortable: false},
-        { text: 'الممثل القانوني', value: 'representant_legal', sortable: false},
-        { text: 'نوع الممثل القانوني', value: 'type_representant_legal' ,sortable: false},
-        { text: 'تغيير', value: 'actions', sortable: false },
+        { text: 'اسم الطرف', align: 'start',sortable: false,value: 'nom'},
+        { text: 'صفته', value: 'PersonneMoraleID', sortable: false},
+        { text: 'نوعه', value: 'genreID',sortable: false },
+        { text: ' رقم بطاقة التعريف', value: 'NumCarte', sortable: false},
+        
+        { text: 'تغيير', value: 'action', sortable: false },
       ],
       data_partie: [],
-      
+
+
+      editedIndex:-1,
+         editedItem:{},
+         dialogDelete:false,
       pv:{
             typepvsID: null,
             sujetpvs: '',
@@ -464,17 +493,58 @@ export default {
     
     methods: {
       ...mapActions(["addpv"]),
-      ...mapMutations(["openSnackbar","show_form"]),
+      ...mapMutations(["openSnackbar","show_form","delete_one_data"]),
+
+      async addFile(idpv){
+           let token = localStorage.getItem("token");
+           let formData = new FormData();
+
+          for( var i = 0; i < this.files.length; i++ ){
+                    let file = this.files[i];
+                    console.log(file);
+                    formData.append('files[' + i + ']', file);
+                   }
+               await axios.post(`http://127.0.0.1:8000/api/pvs/uploadfile/${idpv}`,
+                 formData, 
+                 {headers: {   Authorization: `Bearer ${token}`,
+                               'Content-Type': 'multipart/form-data'
+                           }
+                    });
+      },
+
 
        enableform(){
         this.show_form();
       },
+      editItem (item) {
+        this.$store.state.editedIndex = this.datapartie_tab.indexOf(item)
+        this.$store.state.datap = Object.assign({}, item)
+        this.$store.state.showForm = true;
+
+        },
+        deleteItem (item) {
+        this.$store.state.editedIndex = this.datapartie_tab.indexOf(item)
+       this.$store.state.datap = Object.assign({}, item)
+        this.dialogDelete = true
+      },
+      closeDelete(){
+         this.dialogDelete = false
+      },
+      deleteItemConfirm () {
+        this.delete_one_data();
+        this.closeDelete()
+      },
 
      async ajoutpv(){
         this.load =true;
-         let resp = await this.addpv(this.pv);
+        try{
+         var  resp = await this.addpv(this.pv);
+             await this.addFile(resp.data);
                    this.load=false;
-
+                   this.files=[];
+        }catch(err){
+          resp.status=500;
+        }
          if(resp.status==201 || resp.status==200){
            this.openSnackbar("لقد تم تسجيل المحضر بنجاح");
            vide.vider_pv(this.pv);

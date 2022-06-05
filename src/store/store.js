@@ -184,7 +184,7 @@ const store = new Vuex.Store({
           console.log(er);
            return er;
           });
-          console.log('plaint rep: '+response);
+          this.state.datapartie.splice(0,this.state.datapartie.length);
           return response; 
     },
 
@@ -244,7 +244,6 @@ const store = new Vuex.Store({
 
       ////////////////////////---------------PVs-------------------------\\\\\\\\\\\\\\\
       async addpv({commit},newpv){
-        console.log("test: "+this.state.pv.sujetpvs);
         let token = localStorage.getItem("token");
         const response = await axios.post('http://127.0.0.1:8000/api/pvs/store',{
           pv:newpv,
@@ -254,7 +253,7 @@ const store = new Vuex.Store({
         }).catch(er=>{
           return er;
         })
-          console.log("response: "+response);
+           this.state.datapartie.splice(0,this.state.datapartie.length);
           return response;
       },
 

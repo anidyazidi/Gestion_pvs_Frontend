@@ -460,7 +460,8 @@ export default {
                    this.load=false;
          if(resp.status==201 || resp.status==200){
            this.openSnackbar("لقد تم تسجيل الشكاية بنجاح");
-           vide.vider_plaint(this.plaint);
+           //vide.vider_plaint(this.plaint);
+           this.resetForm();
            let last = this.$store.state.datapartie.length - 1;
            
            this.$store.state.datapartielocal = [];
