@@ -1,6 +1,6 @@
 <template>
 <div class="chercher_plaint">
-<h2 class="subheading grey--text">إحصائيات التقديم</h2>
+<h2 class="subheading dark--text mb-4">إحصائيات التقديم</h2>
 
  <v-spacer></v-spacer>
      <v-card elevation="2"
@@ -10,7 +10,7 @@
        <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">
          تاريخ تسجيل المحضر</v-toolbar-title></v-toolbar>
     <v-form class="px-5">
-          <v-row>
+          <v-row  dense justify align-content-center>
        <v-col
       cols="12"
       sm="4" class="mx-4"

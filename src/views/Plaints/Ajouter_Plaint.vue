@@ -13,7 +13,7 @@
         <v-form 
          ref="form"
         class="px-5">
-          <v-row>
+          <v-row  dense justify align-content-center>
             <v-col cols="12" sm="8">
             <v-checkbox
             v-model="plaint.contreInconnu" 
@@ -25,7 +25,7 @@
             </v-checkbox>
            </v-col>
           <v-col cols="12" sm="5" class="mx-5">
-            <div class="font-weight-bold darkgrey--text mx-15">نوع الشكاية</div>
+            <div class=" darkgrey--text mx-15">نوع الشكاية</div>
             <v-select
             v-model="plaint.TypePlaintID"
             class="py-0 mx-15" 
@@ -41,7 +41,7 @@
           </v-col>
           
           <v-col cols="12" sm="5" class="mx-5">
-            <div class="font-weight-bold darkgrey--text mx-15">مصدر الشكاية</div>
+            <div class=" darkgrey--text mx-15">مصدر الشكاية</div>
             <v-select
             v-model="plaint.SourcePlaintID"
             class="py-0 mx-15"
@@ -57,7 +57,7 @@
             </v-select>
           </v-col>
            <v-col cols="12" sm="5" class="mx-5">
-        <div class="font-weight-bold darkgrey--text mx-15">مرجع الشكاية</div>
+        <div class=" darkgrey--text mx-15">مرجع الشكاية</div>
           <v-text-field 
           class="py-0 mx-15"
             single-line dense
@@ -68,7 +68,7 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="5" class="mx-5">
-        <div class="font-weight-bold darkgrey--text mx-15">مكان الوقائع</div>
+        <div class=" darkgrey--text mx-15">مكان الوقائع</div>
           <v-text-field 
           class="py-0 mx-15"
             single-line dense
@@ -83,7 +83,7 @@
       sm="3"
       class="mx-4"
     >
-    <div class="font-weight-bold darkgrey--text mx-15">تاريخ الشكاية</div>
+    <div class=" darkgrey--text mx-15">تاريخ الشكاية</div>
       <v-menu
         ref="menu"
         v-model="menu"
@@ -133,7 +133,7 @@
       sm="3"
       class="mx-4"
     >
-    <div class="font-weight-bold darkgrey--text mx-15">تسجيل الشكاية</div>
+    <div class=" darkgrey--text mx-15">تسجيل الشكاية</div>
       <v-menu
         ref="menu1"
         v-model="menu1"
@@ -184,7 +184,7 @@
       sm="3"
       class="mx-4"
     >
-    <div class="font-weight-bold darkgrey--text mx-15">تاريخ الوقائع</div>
+    <div class=" darkgrey--text mx-15">تاريخ الوقائع</div>
       <v-menu
         ref="menu2"
         v-model="menu2"

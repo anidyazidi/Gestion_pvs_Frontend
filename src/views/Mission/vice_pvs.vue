@@ -1,6 +1,6 @@
 <template>
 <div class="chercher_plaint">
-<h2 class="subheading grey--text">بحث عن محضر</h2>
+<h2 class="subheading dark--text mb-4">بحث عن محضر</h2>
 
  <v-spacer></v-spacer>
      <v-card elevation="2"
@@ -8,7 +8,7 @@
      >
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app></v-toolbar>
     <v-form class="px-5">
-          <v-row>
+          <v-row  dense justify align-content-center>
        <v-col
       cols="12"
       sm="4"

@@ -1,6 +1,6 @@
 <template>
 <div class="chercher_plaint">
-<h2 class="subheading grey--text">بحث عن محضر</h2>
+<h2 class="subheading dark--text mb-4">بحث عن محضر</h2>
 
  <v-spacer></v-spacer>
      <v-card elevation="2"
@@ -9,9 +9,9 @@
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
        <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">بحث</v-toolbar-title></v-toolbar>
     <v-form class="px-5">
-          <v-row>
+          <v-row  dense justify align-content-center>
     <v-col cols="12" sm="4">
-            <div class="font-weight-bold darkgrey--text mx-15">نوع المحضر</div>
+            <div class=" mx-15">نوع المحضر</div>
             <v-select
             class="py-0 mx-15"
             :items="type"
@@ -20,7 +20,7 @@
             </v-select>
           </v-col>
            <v-col cols="12" sm="4">
-            <div class="font-weight-bold darkgrey--text mx-15">الرقم</div>
+            <div class=" mx-15">الرقم</div>
           <v-text-field
             outlined dense
             prepend-inner-icon="mdi-magnify"

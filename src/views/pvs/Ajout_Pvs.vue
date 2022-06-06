@@ -1,6 +1,6 @@
 <template>
 <div id="ajoutPv">
-    <h2>إضافة محضر</h2>
+    <h2 class="subheading dark--text mb-4">إضافة محضر</h2>
     <v-spacer/>
                <v-card>
     <v-tabs
@@ -31,10 +31,10 @@
   <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">المرجع</v-toolbar-title>
   </v-toolbar>
         <v-form class="px-5" ref="pv">
-          <v-row>
+          <v-row  dense justify align-content-center>
                
           <v-col cols="12" sm="4">
-            <div class="font-weight-bold darkgrey--text mx-15">نوع المصدر</div>
+            <div class=" mx-15">نوع المصدر</div>
             <v-select dense
             :items="serv_pvs[0]" v-model="pv.TypeSourcePvsID"
             item-text="nom"
@@ -56,7 +56,7 @@
             </v-select>
           </v-col>
            <v-col cols="12" sm="4">
-        <div class="font-weight-bold darkgrey--text mx-15">الضابطة القضائية</div>
+        <div class=" mx-15">الضابطة القضائية</div>
           <v-text-field 
             single-line v-model="pv.policeJudics"
             outlined dense :rules="rules.name"
@@ -64,7 +64,7 @@
           ></v-text-field>
         </v-col>
          <v-col cols="12" sm="3">
-        <div class="font-weight-bold darkgrey--text mx-15">رقم الارسالية</div>
+        <div class=" mx-15">رقم الارسالية</div>
           <v-text-field 
             single-line v-model="pv.numEnvoi"
             outlined dense :rules="rules.name"
@@ -75,7 +75,7 @@
       cols="12"
       sm="4"
     >
-    <div class="font-weight-bold darkgrey--text mx-15">تاريخ المحضر</div>
+    <div class=" mx-15">تاريخ المحضر</div>
       <v-menu
         ref="menu"
         v-model="menu"
@@ -124,7 +124,7 @@
       cols="11"
       sm="4"
     >
-    <div class="font-weight-bold darkgrey--text mx-15">ساعة الانجاز</div>
+    <div class=" mx-15">ساعة الانجاز</div>
       <v-menu
         ref="menu3"
         v-model="menu3"
@@ -165,10 +165,10 @@
   <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">النيابة العامة</v-toolbar-title>
   </v-toolbar>
         <v-form class="px-5">
-          <v-row>
+          <v-row  dense justify align-content-center>
                
           <v-col cols="12" sm="4">
-            <div class="font-weight-bold darkgrey--text mx-15">نوع المحضر</div>
+            <div class=" mx-15">نوع المحضر</div>
             <v-select
             :items="serv_pvs[2]" v-model="pv.typepvsID"
             outlined dense item-text="nom"
@@ -182,7 +182,7 @@
       cols="12"
       sm="4" class="mx-8"
     >
-    <div class="font-weight-bold darkgrey--text mx-15">تاريخ التسجيل</div>
+    <div class=" mx-15">تاريخ التسجيل</div>
       <v-menu
         ref="menu2"
         v-model="menu2"
@@ -299,7 +299,7 @@
     </template>
     </v-data-table>
   <DataPartie v-show="enable"></DataPartie>
-    <v-row><v-col cols="12" sm="4"></v-col>
+    <v-row  dense justify align-content-center><v-col cols="12" sm="4"></v-col>
   <v-card-actions class="mx-15">
               <v-btn
                 text
@@ -325,7 +325,7 @@
       <v-tab-item
       >
         <template><v-card flat  class="mt-9 mr-4">
-          <v-form><v-row><v-col cols="12" sm="4">
+          <v-form><v-row  dense justify align-content-center><v-col cols="12" sm="4">
  <v-file-input
     v-model="files"
     color="blue accent-4"

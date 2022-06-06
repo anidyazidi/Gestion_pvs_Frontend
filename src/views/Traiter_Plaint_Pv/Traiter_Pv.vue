@@ -1,6 +1,6 @@
 <template>
 <div class="traiter_plaint">
-<h2 class="subheading grey--text">تدبير المحضر</h2>
+<h2 class="subheading dark--text mb-4">تدبير المحضر</h2>
 
 
  <v-spacer></v-spacer>
@@ -9,12 +9,12 @@
      >
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app></v-toolbar>
     <v-form class="px-5">
-          <v-row>
+          <v-row  dense justify align-content-center>
        <v-col
       cols="12"
       sm="4"
     >
-    <div class="font-weight-bold darkgrey--text mx-15">تاريخ تسجيل المحضر من</div>
+    <div class=" mx-15">تاريخ تسجيل المحضر من</div>
       <v-menu
         ref="menu1"
         v-model="menu1"
@@ -62,7 +62,7 @@
       cols="12"
       sm="4"
     >
-    <div class="font-weight-bold darkgrey--text mx-15">إلى</div>
+    <div class=" mx-15">إلى</div>
       <v-menu
         ref="menu2"
         v-model="menu2"
@@ -106,7 +106,7 @@
       </v-menu>
     </v-col>
      <v-col cols="12" sm="4">
-            <div class="font-weight-bold darkgrey--text mx-15">نوع المحضر</div>
+            <div class=" mx-15">نوع المحضر</div>
             <v-select
             v-model="cher.id_type"
             class="py-0 mx-15"
@@ -146,8 +146,8 @@
     class="elevation-1"
   >
   </v-data-table>
-  <v-row><v-col cols="12" sm="3">
-   <div class="font-weight-bold darkgrey--text mx-15">ممثل النيابة</div>
+  <v-row  dense justify align-content-center><v-col cols="12" sm="3">
+   <div class=" mx-15">ممثل النيابة</div>
           <v-autocomplete
             ref="ممثل النيابة"
             v-model="userhaspvs.userID"
@@ -161,7 +161,7 @@
           ></v-autocomplete>
           </v-col>
           <v-col cols="12" sm="4">
-           <div class="font-weight-bold darkgrey--text mx-15">تاريخ الاحالة</div>
+           <div class=" mx-15">تاريخ الاحالة</div>
       <v-menu
         ref="menu3"
         v-model="menu3"

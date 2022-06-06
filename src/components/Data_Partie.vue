@@ -5,7 +5,7 @@
         flat dark class="nvbar mb-3" height="34px" app
       ><v-icon right>mdi-account-plus</v-icon>
        <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">طرف الشكاية</v-toolbar-title></v-toolbar>
-      <v-row>
+      <v-row  dense justify align-content-center>
         <v-col cols="12" sm="6">
         <v-radio-group
         v-model="datap.soi"

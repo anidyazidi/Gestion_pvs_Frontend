@@ -9,9 +9,9 @@
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
        <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">بحث</v-toolbar-title></v-toolbar>
     <v-form class="px-5">
-          <v-row>
+          <v-row  dense justify align-content-center>
      <v-col cols="12" sm="4">
-        <div class="font-weight-bold darkgrey--text mx-15">مرجع الشكاية</div>
+        <div class=" mx-15">مرجع الشكاية</div>
           <v-text-field 
           v-model="cherchant"
             single-line 

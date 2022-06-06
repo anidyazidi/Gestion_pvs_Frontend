@@ -54,7 +54,7 @@
               <v-icon right>{{ child.icon }}</v-icon>
             </v-list-title-action>
           <v-list-item-content>
-           <v-list-item-title class="font-weight-bold darkgrey--text text-h7"
+           <v-list-item-title
          v-text="child.title">
         </v-list-item-title>
           </v-list-item-content>
