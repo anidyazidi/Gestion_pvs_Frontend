@@ -1,13 +1,29 @@
 <template>
 <div class="traiter_plaint">
-<h2 class="subheading dark--text mb-4">تدبير شكاية</h2>
-
-
  <v-spacer></v-spacer>
+ <v-tabs
+      v-model="tab"
+    >
+      <v-tab
+      class="font-weight-black text-h6 mx-15"
+      >
+      تدبير الشكايات
+      </v-tab>
+       <v-tab
+      class="font-weight-black text-h6 mx-15"
+      id="vieww"
+      >
+       وضعية الشكايات  
+      </v-tab>
+    </v-tabs>
+    <v-tabs-items v-model="tab">
+      <v-tab-item
+      >
+
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app></v-toolbar>
+     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>بحث</v-toolbar>
     <v-form class="px-5">
           <v-row  dense justify align-content-center>
        <v-col
@@ -130,7 +146,7 @@
           <v-btn
             text
             color="primary"
-            @click="menu3 = false"
+            @click="menu3=false"
           >
             Cancel
           </v-btn>
@@ -163,6 +179,9 @@
   </form> </v-card>
     </v-form>
      </v-card>
+     </v-tab-item> 
+
+     </v-tabs-items>
 </div>
 </template>
 
@@ -172,6 +191,7 @@ import axios from 'axios'
 export default {
     data(){
         return {
+          tab:null,
           load:false,
           load2:false,
         selected: [],
@@ -186,14 +206,14 @@ export default {
         },
         
         date_cher: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        menu1: false, modal1: false, menu2: false, modal2: false,
+        menu1: false, modal1: false, menu3: false, modal2: false,
          
 
         headers: [
           {text: 'مرجع الشكاية',align: 'start',sortable: false,value: 'referencePlaints'},
 
-          { text: 'نوع الشكاية', value: 'TypePlaintID',sortable: false, },
-          { text: 'مصدر الشكاية', value: 'SourcePlaintID', sortable: false,},
+          { text: 'نوع الشكاية', value: 'type_plaint.nom',sortable: false, },
+          { text: 'مصدر الشكاية', value: 'source_plaint.nom', sortable: false,},
           { text: 'تاريخ التسجيل', value: 'dateEnregPlaints', sortable: false,},
           { text: 'موضوع الشكاية', value: 'sujetPlaints' ,sortable: false,},
         ],
@@ -213,16 +233,13 @@ export default {
                {Authorization: `Bearer ${token}`}
 
           }).then(response => {
-                  let plnt = response.data;
-                  for(let i=0;i<plnt.length;i++){
-                    plnt[i].TypePlaintID = plnt[i].type_source_plaint.nom;
-                    plnt[i].SourcePlaintID = plnt[i].source_plaint.nom;
-                  }     this.plaint = plnt;
+                     this.plaint = response.data;
                   this.load=false;
                   this.active=true;
                   return response;
                 }).catch(err=>{
                   this.load=false;
+                  this.active=true;
                   return err;
                 })
         },

@@ -7,57 +7,48 @@
         <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">
                 <v-icon large right>mdi-account-details-outline
             </v-icon>المعطيات الشخصية</v-toolbar-title> </v-toolbar>
-          <v-row  dense justify align-content-center>
+          <v-row dense small>
 
 
             <v-col cols="12" sm="5" class="mx-5">
-            الاسم الكامل : 
             <v-text-field
             v-model="users.nom"
+            label="الاسم الكامل"
             dense outlined
            :disabled="ro"
             class="font-weight-black text-h6"
             >
             </v-text-field>
             </v-col>
-            
-           
+            </v-row >
+           <v-row dense small>
           <v-col cols="12" sm="5" class="mx-5">
-            البريد الالكتروني :
           <v-text-field
             v-model="users.email"
+            label="البريدالالكتروني"
             dense outlined
            :disabled="ro"
            class="font-weight-black text-h6"
             >
             </v-text-field>
           </v-col>
-       
+        </v-row>
+        <v-row dense>
           <v-col cols="12" sm="5" class="mx-5">
-            الرقم :  
           <v-text-field
             v-model="users.numUser"
             dense outlined
+            label="الرقم"
            :disabled="ro"
            class="font-weight-black text-h6"
             >
             </v-text-field>
             </v-col>
            
-        <v-col cols="12" sm="5" class="mx-5">
-           الدور : 
-           <v-text-field
-            v-model="users.idRole"
-            dense outlined
-           :disabled="ro"
-           class="font-weight-black text-h6"
-            >
-            </v-text-field>
-        </v-col>
         
         </v-row>
         <v-card-actions>
-             <v-row justify="center">
+             <v-row dense justify="center">
     <v-dialog
       v-model="dialog"
       persistent
@@ -97,7 +88,7 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  label="كلمة السر القديمة*"
+                  label="كلمة السر الحالية*"
                   type="password"  :rules="rules.name"
                   required class="font-weight-black text-h7"
                 ></v-text-field>

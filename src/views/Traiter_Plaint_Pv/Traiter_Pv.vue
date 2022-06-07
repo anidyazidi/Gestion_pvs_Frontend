@@ -1,20 +1,36 @@
 <template>
 <div class="traiter_plaint">
-<h2 class="subheading dark--text mb-4">تدبير المحضر</h2>
-
-
  <v-spacer></v-spacer>
+ <v-tabs
+      v-model="tab"
+    >
+      <v-tab
+      class="font-weight-black text-h6 mx-15"
+      >
+      تدبير المحاضر
+      </v-tab>
+       <v-tab
+      class="font-weight-black text-h6 mx-15"
+      id="vieww"
+      >
+       وضعية المحاضر  
+      </v-tab>
+    </v-tabs>
+    <v-tabs-items v-model="tab">
+      <v-tab-item
+      >
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app></v-toolbar>
+     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>بحث  </v-toolbar>
     <v-form class="px-5">
-          <v-row  dense justify align-content-center>
+          <v-row  dense justify align-content-center >
        <v-col
       cols="12"
       sm="4"
+      
     >
-    <div class=" mx-15">تاريخ تسجيل المحضر من</div>
+    <div class=" mx-15">تاريخ التسجيل  من</div>
       <v-menu
         ref="menu1"
         v-model="menu1"
@@ -116,8 +132,9 @@
              outlined dense
             >
             </v-select>
-          </v-col>
-          <v-col cols="12" sm="6"></v-col>
+          </v-col> </v-row>
+          <v-row class="ma-0">
+            <v-col cols="12" sm="6"></v-col>
            <v-card-actions>
               <v-btn
                 text
@@ -132,8 +149,10 @@
               </v-btn>
               
               </v-card-actions>
+          </v-row>
+          
               
-    </v-row>
+    
     </v-form>
     
     <v-card flat class="ma-2" v-show="active"><form>
@@ -221,6 +240,8 @@
               </v-card-actions>
       </v-row>
   </form> </v-card></v-card>
+   </v-tab-item> 
+   </v-tabs-items>
 </div>
 </template>
 
@@ -255,6 +276,7 @@ export default {
           { text: '  رقم الإرسالية', value: 'numEnvoi' ,sortable: false,},
         ],
         pvs: [],
+        tab:null,
       }
     },
     computed:{

@@ -64,8 +64,8 @@ export default({
       return {
         hasSaved: false,
         model: null,
-        email:"admin@gmail.com",
-        pass:"admin",
+        email:"vice_admin@gmail.com",
+        pass:"vice_admin",
         message:"password or email incorrect" ,
         loading:false
       }
@@ -96,7 +96,7 @@ export default({
                                           break;
                                           }
 
-                   case "admin": { this.profile(true,true,true,true,true,true);
+                   case "admin": { this.profile(true,true,true,true,true,false);
                                   this.$router.push('stat/pv');  
                                   break;
                                   }

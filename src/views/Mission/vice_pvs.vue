@@ -1,12 +1,33 @@
 <template>
 <div class="chercher_plaint">
-<h2 class="subheading dark--text mb-4">بحث عن محضر</h2>
-
  <v-spacer></v-spacer>
+ <v-tabs
+      v-model="tab"
+    >
+      <v-tab
+      class="font-weight-black text-h6 mx-15"
+      >
+      <v-icon right>mdi-police-badge-outline</v-icon>
+        المحاضر
+      </v-tab>
+       <v-tab
+      class="font-weight-black text-h6 mx-15"
+      v-show="showInfo"
+      id="vieww"
+      >
+      <v-icon right>mdi-note-multiple-outline</v-icon>
+       المعلومات  
+      </v-tab>
+    </v-tabs>
+    <v-tabs-items v-model="tab">
+      <v-tab-item
+      >
      <v-card elevation="2"
   outlined  class="mx-auto my-auto mb-2"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app></v-toolbar>
+     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
+       <v-toolbar-title>بحث</v-toolbar-title>
+     </v-toolbar>
     <v-form class="px-5">
           <v-row  dense justify align-content-center>
        <v-col
@@ -134,6 +155,27 @@
      class="elevation-1 font-weight-black mb-4"
     hide-default-footer
     >
+    <template v-slot:[`item.action`]="{ item }">
+     
+            <v-btn
+             @click="ViewItem(item)"
+              color="primary"
+              fab
+              x-small
+              dark
+            >
+              <v-icon>mdi-eye</v-icon>
+            </v-btn>
+     
+      <v-icon
+        small
+        class="mr-2"
+        @click="traiterItem(item)"
+      >
+        mdi-wrench <!-- traiter -->
+      </v-icon>
+    </template>
+
     </v-data-table>
     <div class="text-center">
     <v-pagination
@@ -144,6 +186,59 @@
      ></v-pagination>
     </div>
      </v-card>
+     </v-tab-item>
+
+     <v-tab-item>
+      <v-card>
+        <v-card-title class="blue lighten-5" >
+          الأطراف
+        </v-card-title>
+        <v-data-table
+            :headers="headersPartie" 
+            no-data-text="لا يوجد أطراف"
+            :items="datapartie"
+            class="elevation-1"
+            hide-default-footer
+            
+            ></v-data-table>
+      </v-card>
+      <v-card>
+         <v-card-title class="blue lighten-5">االمرفقات</v-card-title>
+         <v-data-table
+            :headers="headfichiers" 
+            no-data-text=" لا توجد مرفقات "
+            :items="fichiers"
+            class="elevation-1"
+            hide-default-footer>
+            <template v-slot:[`item.action`]="{ item }">
+              <v-btn 
+             @click="download(item)"
+              color="primary"
+              dark
+            >
+            <v-icon>mdi-download</v-icon>
+              تحميل
+            </v-btn>
+    </template>
+            </v-data-table>
+      </v-card>
+
+    </v-tab-item>
+     </v-tabs-items>
+      <v-dialog v-model="dialogTraite" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5">  هل تم معالجة هذا المحضر  </v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="red darken-1" dark text @click="dialogTraite = false">إلغاء</v-btn>
+              <v-btn class="blue darken-3"
+               dark text @click="validtraited">نعم</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+     
 </div>
 </template>
 
@@ -153,6 +248,7 @@ import { mapGetters,mapMutations } from 'vuex'
 export default {
     data(){
         return {
+          
         pagination: {
                 current: 1,
                 total: 0
@@ -172,8 +268,26 @@ export default {
           { text: ' تاريخ التسجيل', value: 'dateEnregPvs' },
           { text: '  رقم الإرسالية', value: 'numEnvoi' },
           { text: 'موضوع المحضر', value: 'sujetpvs' },
+           { text: 'تغيير', value: 'action', sortable: false }
           ],
-         
+          headersPartie: [
+        { text: 'الإسم الشخصي ', align: 'start',sortable: false,value: 'prenom'},
+        { text: 'الإسم العائلي', value: 'nom', sortable: false},
+        { text: 'صفته', value: 'personne_morales.nom', sortable: false},
+        { text: 'نوعه', value: 'genre.nom',sortable: false },
+        { text: ' رقم بطاقة التعريف', value: 'NumCarte', sortable: false},
+        { text: 'المقاطعة', value: 'provinces.nom', sortable: false}
+      ],
+      headfichiers:[
+         { text: ' إسم الملف', value: 'name' },
+          { text: ' تحميل الملف', value: 'action', sortable: false },
+      ],
+          showInfo:false,
+           tab:null,
+           fichiers:[],
+           datapartie:[],
+           traitedItem:{},
+       dialogTraite:false,
         }
     },
     computed:{
@@ -184,7 +298,7 @@ export default {
     },
     methods:{
       ...mapMutations(["openSnackbar"]),
-      async getPlaint() {
+      async getPvs() {
         let token = localStorage.getItem("token");
             await axios.post('http://127.0.0.1:8000/api/pvs/mission_pvs?page=' + this.pagination.current,{},
             { headers:{ Authorization: `Bearer ${token}` }
@@ -204,7 +318,7 @@ export default {
                 });
         },
         onPageChange() {
-            this.getPlaint();
+            this.getPvs();
         },
         chercher_pvs(){
           this.load=true;
@@ -230,10 +344,64 @@ export default {
                   this.load=false;
                   return err;
                 })
-        }
+        },
+        async ViewItem(item){
+          try{
+            let token = localStorage.getItem("token");
+          let pv = await axios.post(`http://127.0.0.1:8000/api/dataparties/index/${item.id}`,
+          {type:'pvs'},
+          {headers:{ Authorization:`Bearer ${token}`} });
+          let pvfiles = await axios.get(`http://127.0.0.1:8000/api/pvs/File_index/${item.id}`,
+          { 
+            headers:{ Authorization:`Bearer ${token}`} });
+            console.log(item.id)
+         console.log(pvfiles.data);
+          this.fichiers = pvfiles.data; 
+          this.datapartie = pv.data;
+          document.getElementById("vieww").click();
+          this.showInfo=true;
+          }catch(er){
+             this.openSnackbar("هناك خطأ حاول مرة اخرى");
+             return er;
+          }
+          
+        },
+        async download(item){
+          let token = localStorage.getItem("token");
+         await axios.post("http://127.0.0.1:8000/api/pvs/File_download",{lien:item.lien},{
+         responseType: "blob",
+          headers:{ Authorization:`Bearer ${token}`}
+        }).then((response) => {
+       var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', item.name);
+       document.body.appendChild(fileLink);
+       fileLink.click();
+                });;
+
+
+        },
+
+        traiterItem(item){
+          this.dialogTraite = true;
+          this.traitedItem = Object.assign({},item);
+        },
+        validtraited(){
+          let token = localStorage.getItem("token");
+          axios.put(`http://127.0.0.1:8000/api/users/haspvs/update/${this.traitedItem.id}`,
+          {
+            userhaspvs:{traitID:true}
+          },{headers:{ Authorization:`Bearer ${token}`} 
+          }).then(reponser=>{
+            this.getPvs();
+            this.dialogTraite = false
+          })
+          
+          },
     },
     mounted(){
-      this.getPlaint();
+      this.getPvs();
     }
 }
 

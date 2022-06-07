@@ -70,13 +70,13 @@ export default {
           load:false,
           table_vide:true,
         headers: [
-          { text: 'نوع الشكاية', value: 'TypePlaintID' },
-          { text: 'مصدر الشكاية', value: 'SourcePlaintID' },
+          { text: 'نوع الشكاية', value: 'type_plaint.nom' },
+          { text: 'مصدر الشكاية', value: 'source_plaint.nom' },
           { text: 'تاريخ تسجيل الشكاية', value: 'dateEnregPlaints' },
           { text: 'موضوع الشكاية', value: 'sujetPlaints' },
         ],
         plaint: [],
-        cherchant:"100",
+        cherchant:"",
             pagination: {
                 current: 1,
                 total: 0
@@ -90,19 +90,17 @@ export default {
              await axios.get('http://127.0.0.1:8000/api/plaint/index?page=' + this.pagination.current,{
               headers:  
                { Authorization: `Bearer ${token}` }
-          })
-                .then(response => {
-                  let plnt = response.data.data;
-                  for(let i=0;i<plnt.length;i++){
-                    plnt[i].TypePlaintID = plnt[i].type_source_plaint.nom;
-                    plnt[i].SourcePlaintID = plnt[i].source_plaint.nom;
-                  }
-                  
-                    this.plaint =plnt ;
+          }).then(response => {
+
+                    this.plaint =response.data.data ;
                     this.pagination.current = response.data.current_page;
                     this.pagination.total = response.data.last_page;
+                    this.table_vide=false;
+                }).catch(er=>{
+                  this.table_vide=false;
+                  return er;
                 });
-                this.table_vide=false;
+                
         },
         onPageChange() {
             this.getPlaint();

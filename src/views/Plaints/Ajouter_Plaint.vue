@@ -470,7 +470,6 @@ export default {
 
         }else{ 
           this.openSnackbar(" تاكد من جميع المعلومات !!");
-    
             }
         
       },

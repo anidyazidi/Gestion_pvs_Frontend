@@ -184,7 +184,7 @@ const store = new Vuex.Store({
           console.log(er);
            return er;
           });
-          this.state.datapartie.splice(0,this.state.datapartie.length);
+          //this.state.datapartie.splice(0,this.state.datapartie.length);
           return response; 
     },
 

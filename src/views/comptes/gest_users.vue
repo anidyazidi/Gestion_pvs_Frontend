@@ -131,6 +131,8 @@
       <v-chip
         :color="getColor(item.active)"
         dark
+        small
+        fab
       >   
       </v-chip>
 

@@ -246,7 +246,8 @@
         <v-form>
          
          <v-data-table
-    :headers="headers" no-data-text="معلومات غير متاحة"
+    :headers="headers" 
+    no-data-text="معلومات غير متاحة"
     :items="datapartie_tab"
     class="elevation-1"
     hide-default-footer
@@ -298,6 +299,7 @@
       </v-icon>
     </template>
     </v-data-table>
+
   <DataPartie v-show="enable"></DataPartie>
     <v-row  dense justify align-content-center><v-col cols="12" sm="4"></v-col>
   <v-card-actions class="mx-15">
@@ -322,6 +324,7 @@
         </v-btn>             
               </v-card-actions></v-row></v-form></v-card>
       </v-tab-item>
+      
       <v-tab-item
       >
         <template><v-card flat  class="mt-9 mr-4">
@@ -504,7 +507,7 @@ export default {
                     console.log(file);
                     formData.append('files[' + i + ']', file);
                    }
-               await axios.post(`http://127.0.0.1:8000/api/pvs/uploadfile/${idpv}`,
+               await axios.post(`http://127.0.0.1:8000/api/pvs/File_store/${idpv}`,
                  formData, 
                  {headers: {   Authorization: `Bearer ${token}`,
                                'Content-Type': 'multipart/form-data'

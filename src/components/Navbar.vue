@@ -69,7 +69,7 @@
             <v-card-title class="text-h5">هل ان متأكد من هذه العملية</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="red darken-1" dark text @click="closelogout">إلغاء</v-btn>
+              <v-btn class="red darken-1" dark text @click="dialoglogout=false">إلغاء</v-btn>
               <v-btn class="blue darken-3"
               :loading="load_pop_delete"
                dark text @click="logoutConfirm">نعم</v-btn>
@@ -157,8 +157,11 @@ export default{
     methods:{
       logout(){
       this.dialoglogout=false;
-       window.history.back();
-      window.location.replace('http://192.168.43.119:8080/');
+      window.history.go(-(window.history.length-1));
+       window.location.href="http://localhost:8080/";
+       
+      // window.history.back();
+      //window.location.replace('');
     
    }
     }
