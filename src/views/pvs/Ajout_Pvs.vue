@@ -32,14 +32,14 @@
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
   <v-toolbar-title  class="darkgrey--text text-h6">المرجع</v-toolbar-title>
   </v-toolbar>
-        <v-form class="px-5" ref="pv">
+        <v-form class="px-5" ref="pv1">
           <v-row  dense justify align-content-center no-gutters>
           <v-col cols="12" sm="3" class="ml-6">
             <v-select dense
             :items="serv_pvs[0]" v-model="pv.TypeSourcePvsID"
             item-text="nom"
             item-value="id"
-            outlined :rules="rules.name"
+            outlined 
             required label="نوع المصدر"
             >
             </v-select>
@@ -48,7 +48,7 @@
            <v-col cols="12" sm="3" class="ml-6" >
            
             <v-select v-model="pv.typePoliceJudicID"
-            outlined dense  :rules="rules.name"
+            outlined dense  
             required label="صنف الضابطة القضائية"
             class="pa-0"
             item-text="nom"
@@ -59,7 +59,7 @@
            <v-col cols="12" sm="3" class="ml-6">
           <v-text-field 
             v-model="pv.policeJudics"
-            outlined dense :rules="rules.name"
+            outlined dense 
             required label="الضابطة القضائية"
           ></v-text-field>
         </v-col>
@@ -69,7 +69,7 @@
          <v-col cols="12" sm="3" class="ml-6">
           <v-text-field 
             v-model="pv.numEnvoi"
-            outlined dense :rules="rules.name"
+            outlined dense 
             required label="رقم الارسالية"
           ></v-text-field>
         </v-col>
@@ -94,7 +94,7 @@
             readonly dense
             v-bind="attrs"
             v-on="on"
-            outlined :rules="rules.name"
+            outlined 
             required label="تاريخ المحضر"
           ></v-text-field>
         </template>
@@ -143,7 +143,7 @@
             v-model="pv.heureRealisation"
             prepend-inner-icon="mdi-clock-time-four-outline"
             readonly outlined
-            v-bind="attrs" :rules="rules.name"
+            v-bind="attrs"
             required label="ساعة الانجاز"
             v-on="on" dense
           ></v-text-field>
@@ -167,14 +167,14 @@
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
   <v-toolbar-title  class="darkgrey--text text-h6">النيابة العامة</v-toolbar-title>
   </v-toolbar>
-        <v-form class="px-5">
+        <v-form class="px-5" ref="pv">
           <v-row  dense justify align-content-center>
                
           <v-col cols="12" sm="3" class="ml-6">
             <v-select
             :items="serv_pvs[2]" v-model="pv.typepvsID"
             outlined dense item-text="nom"
-            item-value="id" :rules="rules.name"
+            item-value="id"
             required label="نوع المحضر"
             >
             </v-select>
@@ -197,7 +197,7 @@
           <v-text-field
             v-model="pv.dateEnregPvs"
             prepend-inner-icon="mdi-calendar"
-            readonly dense :rules="rules.name"
+            readonly dense 
             required label="تاريخ التسجيل"
             v-bind="attrs"
             v-on="on"
@@ -237,7 +237,7 @@
     label="موضوع المحضر"
     class="font-weight-black"
     rows="1" v-model="pv.sujetpvs"
-    outlined :rules="rules.name"
+    outlined 
             required 
     no-resize
     >
@@ -437,8 +437,8 @@ export default {
         defaultForm,
       headers: [
         { text: 'اسم الطرف', align: 'start',sortable: false,value: 'nom'},
-        { text: 'صفته', value: 'PersonneMoraleID', sortable: false},
-        { text: 'نوعه', value: 'genreID',sortable: false },
+        { text: 'صفته', value: 'PersonneMoraleID.nom', sortable: false},
+        { text: 'نوعه', value: 'genreID.nom',sortable: false },
         { text: ' رقم بطاقة التعريف', value: 'NumCarte', sortable: false},
         
         { text: 'تغيير', value: 'action', sortable: false },
@@ -546,7 +546,9 @@ export default {
         this.load =true;
         try{
          var  resp = await this.addpv(this.pv);
-             await this.addFile(resp.data);
+         if(this.files[0] != null){
+          await this.addFile(resp.data);
+         }
                    this.load=false;
                    this.files=[];
         }catch(err){
@@ -569,6 +571,7 @@ export default {
      resetForm () {
         this.pv = Object.assign({}, this.defaultForm)
         this.$refs.pv.reset()
+        this.$refs.pv1.reset()
       },
       }
   } 

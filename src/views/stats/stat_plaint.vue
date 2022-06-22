@@ -131,8 +131,17 @@
     
     </v-form>
      </v-card>
+      <v-progress-linear
+        :active="loading"
+        :indeterminate="loading"
+        absolute
+        bottom
+        color="deep-purple accent-4"
+      ></v-progress-linear>
+     
+     
      <!-- <app-statpl v-show="display"></app-statpl> -->
-      <v-row class="mt-5">
+      <v-row class="mt-5" v-show="!loading">
    <v-col cols="13" sm="4">
     <v-card class="elevation-5"
     color="green lighten-1">
@@ -177,7 +186,7 @@
       العدد الاجمالي
       <v-spacer></v-spacer>
       <span class="text-h6 ml-10">
-        ({{ 2339373737 }})
+        ({{ 23 }})
       </span>
       
     </v-card-actions>
@@ -223,10 +232,20 @@ export default {
         date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         menu1: false, modal1: false, menu2: false, modal2: false,
         display: false,
+        loading:false,
         }
     },
     components:{
       'app-statpl':statPl,
+    },
+     watch: {
+      loading () {
+        if (this.loading) return  setTimeout(() => (this.loading = false), 2000);
+      },
+    },
+
+    created(){
+      this.loading = true;
     }
 }
 

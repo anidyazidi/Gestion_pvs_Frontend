@@ -21,20 +21,16 @@
         
     </v-app-bar>
     
-    <v-navigation-drawer clipped right  v-model="drawer" app class="ma-4">
-     <v-card flat class="mb-3">
-  <v-card-title>
-    <router-link to="/Compte">
-      <v-icon size="60px" class="mx-15" >
+    <v-navigation-drawer clipped right  v-model="drawer" app class="ma-4 rounded-lg">
+
+     <v-card flat class="pa-0 ma-0 ">
+    <router-link to="/Compte" style="text-decoration:none;" class="pa-0 ma-0">
+      <v-icon size="60px"  color="grey darken-3" class="mx-16 pr-6">
        mdi-account-circle-outline
        </v-icon>
-       </router-link>
-    
-       
-  </v-card-title>
-        
+       </router-link>        
   </v-card>
-    <v-list nav dense>
+    <v-list>
       <v-list-group
         v-for="item in items"
         :key="item.title"
@@ -42,7 +38,6 @@
         :prepend-icon="item.action"
         no-action active-class="active"
        v-show="item.affich" 
-      
       >
         <template v-slot:activator>
            <v-list-item-content>
@@ -50,7 +45,7 @@
          </v-list-item-title>
            </v-list-item-content> 
         </template>
-        <v-list-item  
+        <v-list-item  dense 
           v-for="child in item.items"
           :key="child.title"
           :prepend-icon="child.icon" 
@@ -165,6 +160,7 @@ export default{
       this.dialoglogout=false;
       window.history.go(-(window.history.length-1));
        window.location.href="http://localhost:8080/";
+       localStorage.removeItem(token);
        
       // window.history.back();
       //window.location.replace('');
@@ -194,12 +190,17 @@ background: -webkit-linear-gradient(to right, #fbe5dd, #c4ebf8) !important;
 background: linear-gradient(to rigsht, #cdeef5, #f8f9fa) !important; 
 }
 .nvbar{
-  background: rgb(2,0,36);
-background: linear-gradient(120deg, rgba(2,0,36,0.8799894957983193) 2%, rgba(5,105,143,1) 24%, rgba(49,159,175,0.958420868347339) 48%, rgba(2,0,36,0.8127626050420168) 97%);
+background: rgb(0,238,248);
+background: radial-gradient(circle, rgba(0,238,248,1) 0%, rgba(0,14,187,1) 100%);/*hh*/
 }
 .act{
   background: #c1eaf4 !important; 
 background: -webkit-linear-gradient(to right, #cde0f9, #c4ebf8) !important; 
 background: linear-gradient(to rigsht, #bae8f2, #e9eff0) !important; 
+}
+
+.drawer{
+background: rgb(0,226,248);
+background: linear-gradient(131deg, rgba(0,226,248,1) 0%, rgba(255,255,255,1) 100%, rgba(165,243,255,1) 100%);
 }
 </style>

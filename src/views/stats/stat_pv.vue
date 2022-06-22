@@ -128,15 +128,21 @@
   
     </v-form>
      </v-card>
-
+     <v-progress-linear
+        :active="loading"
+        :indeterminate="loading"
+        absolute
+        bottom
+        color="deep-purple accent-4"
+      ></v-progress-linear>
     <!-- <app-stpv v-show="display"></app-stpv> --> 
 
 
-      <v-row class="mt-5">
+      <v-row class="mt-5" v-show="!loading">
    <v-col cols="13" sm="4">
     <v-card class="elevation-5"
     color="green lighten-1">
-      <v-card-title class="text-h6"> الشكايات المعالجة
+      <v-card-title class="text-h6"> المحاضر المعالجة
         <v-icon
         class="shrink ma-2"
         contain
@@ -161,7 +167,7 @@
     <v-card class="elevation-5" 
     color="orange lighten-1"
     >
-      <v-card-title class="text-h6">   الشكايات
+      <v-card-title class="text-h6">   المحاضر
               في طور
              المعالجة 
         <v-icon
@@ -189,7 +195,7 @@
     <v-card class="elevation-5"
     color="red lighten-1"
    >
-      <v-card-title class="text-h6"> الشكايات 
+      <v-card-title class="text-h6"> المحاضر 
             غير
              المعالجة
         <v-icon
@@ -204,7 +210,7 @@
       العدد الاجمالي
       <v-spacer></v-spacer>
       <span class="text-h6 ml-10">
-        ({{ 2339373737 }})
+        ({{ 2345 }})
       </span>
       
     </v-card-actions>
@@ -223,12 +229,24 @@ export default {
         date1: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         menu1: false, modal1: false, menu2: false, modal2: false,
-        display: false,
+        display: true,
+        loading:false
          
         }
     },
+
     components:{
       'app-stpv': statPv
+    },
+
+    watch: {
+      loading () {
+        if (this.loading) return  setTimeout(() => (this.loading = false), 2000);
+      },
+    },
+
+    created(){
+      this.loading = true;
     }
 }
 

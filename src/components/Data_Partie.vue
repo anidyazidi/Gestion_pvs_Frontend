@@ -28,7 +28,7 @@
     <v-col cols="12" sm="3">
             
             <v-select
-            v-model="datap.PersonneMoraleID"
+            v-model="datap.PersonneMoraleID.id"
             :items="data_part[0]"
             item-text="nom"
             item-value="id"
@@ -42,7 +42,7 @@
           <v-row no-gutters>
           <v-col cols="12" sm="3">
         <v-radio-group
-      v-model="datap.genreID"
+      v-model="datap.genreID.id"
       row
     >
       <v-radio

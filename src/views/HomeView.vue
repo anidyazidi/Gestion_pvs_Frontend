@@ -79,11 +79,8 @@ background: linear-gradient(to rigsht, #bae8f2, #e9eff0) !important;
 background: linear-gradient(120deg, rgba(2,0,36,0.8799894957983193) 2%,rgba(2,0,36,0.8799894957983193) 2%, rgba(49,159,175,0.958420868347339) 48%, rgba(2,0,36,0.8127626050420168) 97%);
 } */
 .nvbar{
-   background: rgb(47,69,73);
-background: -moz-linear-gradient(20deg, rgba(2,0,36,0.8799894957983193) 2%,rgba(5,105,143,1) 24% ,rgba(8, 101, 116, 0.958) 48%);
-background: -webkit-linear-gradient(20deg, rgba(2,0,36,0.8799894957983193) 2%,rgba(5,105,143,1) 24%, rgba(7, 80, 92, 0.958) 48%);
-background: linear-gradient(20deg, rgba(2,0,36,0.8799894957983193) 2%,rgba(5,105,143,1) 24%, rgba(10, 96, 110, 0.958) 48%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2f4549",endColorstr="#216d73",GradientType=1);
+background: rgb(0,238,248);
+background: linear-gradient(131deg, rgba(0,238,248,1) 0%, rgba(41,71,229,1) 100%);
 
 }
 

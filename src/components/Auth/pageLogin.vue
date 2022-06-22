@@ -9,10 +9,11 @@
   >
     <v-toolbar 
       flat
-      color="light-blue lighten-4"
+      color="cssgrad"
+      
     >
       <v-icon right>mdi-account</v-icon>
-      <v-toolbar-title class="font-weight-black">تسجيل الدخول
+      <v-toolbar-title>تسجيل الدخول
       </v-toolbar-title>
       
     </v-toolbar>
@@ -37,11 +38,12 @@
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions>
+      
       <v-btn
         :loading="loading"
-        color="light-blue darken-1" class="font-weight-black"
+         class="cssgrad"
         @click="login" light 
-        width="30px"
+        width="100px"
       >
         دخول
       </v-btn>
@@ -133,3 +135,9 @@ export default({
   }
 });
 </script>
+<style>
+.cssgrad{
+background: rgb(165,243,255);
+background: radial-gradient(circle, rgba(165,243,255,1) 5%, rgba(0,160,255,1) 100%);
+}
+</style>

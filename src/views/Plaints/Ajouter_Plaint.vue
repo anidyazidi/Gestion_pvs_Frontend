@@ -25,7 +25,7 @@
            </v-row>
 
            <v-row no-gutters dense >
-          <v-col cols="12" sm="3" class="ml-2">
+          <v-col cols="12" sm="4" class="ml-2">
             <v-select
             v-model="plaint.TypePlaintID"
             class="blue-lighten-6" 
@@ -40,7 +40,7 @@
             </v-select>
           </v-col>
           
-          <v-col cols="12" sm="3" class="ml-2">
+          <v-col cols="12" sm="4" class="ml-2">
             <v-select
             v-model="plaint.SourcePlaintID"
             :items="serv_plaint[0]"
@@ -57,7 +57,7 @@
           </v-col>
           </v-row>
           <v-row  dense no-gutters>
-           <v-col cols="12" sm="3" class="ml-2">
+           <v-col cols="12" sm="4" class="ml-2">
           <v-text-field 
             dense
             v-model="plaint.referencePlaints"
@@ -66,7 +66,7 @@
             label="مرجع الشكاية"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" sm="3" class="ml-2">
+        <v-col cols="12" sm="4" class="ml-2">
           <v-text-field dense 
             single-line 
             v-model="plaint.EmplaceFaits"
@@ -398,8 +398,8 @@ export default {
         
       headers: [
         { text: 'اسم الطرف', align: 'start',sortable: false,value: 'nom'},
-        { text: 'صفته', value: 'PersonneMoraleID', sortable: false},
-        { text: 'نوعه', value: 'genreID',sortable: false },
+        { text: 'صفته', value: 'PersonneMoraleID.nom', sortable: false},
+        { text: 'نوعه', value: 'genreID.nom',sortable: false },
         { text: ' رقم بطاقة التعريف', value: 'NumCarte', sortable: false},
         
         { text: 'تغيير', value: 'action', sortable: false },

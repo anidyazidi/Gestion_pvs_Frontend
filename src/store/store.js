@@ -2,6 +2,7 @@ import  axios from 'axios';
 import Vue from 'vue'
 import Vuex from 'vuex'
 import nomOf from './services'
+import rempli_nom from './data_partie_nom'
 import vide from './vider_form'
 //import axios from 'axios'
 
@@ -12,7 +13,7 @@ const store = new Vuex.Store({
   state () {
     return {
       datap:{
-        PersonneMoraleID: null,
+        PersonneMoraleID: {id:null,nom:""},
         TypeCarteIdentsID: null,
         SituationFamillID: null,
         VilleDeNaissID: null,
@@ -22,7 +23,7 @@ const store = new Vuex.Store({
 
         soi: false,
         morale: false,
-        genreID: null,
+        genreID: {id:null,nom:""},
         minor:false,
         nom: "",
         prenom: "",
@@ -125,10 +126,12 @@ const store = new Vuex.Store({
                                  vide.vider_data(state.datap)},
       add_data:(state,data)=> {
         if(state.editedIndex > -1){
+          var data1 = rempli_nom(data,state.serv_data);
          Object.assign(state.datapartie[state.editedIndex],data)
          state.editedIndex = -1
         }else{
-           state.datapartie.push(Object.assign({}, data));
+          var data1 = rempli_nom(data,state.serv_data);
+           state.datapartie.push(Object.assign({}, data1));
            
         }
         
