@@ -25,12 +25,11 @@
      >
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>بحث</v-toolbar>
     <v-form class="px-5">
-          <v-row  dense justify align-content-center>
+          <v-row  dense justify align-content-center no-gutters>
        <v-col
       cols="12"
       sm="4"
     >
-    <div class=" mx-15">تاريخ تسجيل الشكاية</div>
       <v-menu
         ref="menu1"
         v-model="menu1"
@@ -43,8 +42,10 @@
         <template v-slot:activator="{ on, attrs }">
           <v-text-field dense
             v-model="date_cher"
+            class="mt-3 ml-3"
             prepend-icon="mdi-calendar"
             readonly
+            label="تاريخ تسجيل الشكاية"
             v-bind="attrs"
             v-on="on"
             outlined
@@ -73,8 +74,8 @@
         </v-date-picker>
       </v-menu>
     </v-col>
-<v-col cols="12" sm="2"></v-col>
-           <v-card-actions>
+    <v-col>
+      <v-card-actions>
               <v-btn
                 text
                @click="chercher_plaint"
@@ -88,8 +89,10 @@
               </v-btn>
               
               </v-card-actions>
-              
-    </v-row>
+    </v-col>
+
+
+    </v-row >
     <v-card flat class="ma-2" v-show="active"><form>
     <v-data-table
     v-model="selected"
@@ -98,26 +101,26 @@
     item-key="id" 
     no-data-text="معلومات غير متاحة"
     show-select hide-default-footer
-    class="elevation-1 mb-4"
+    class="elevation-1 mb-10"
 
   >
   </v-data-table>
 
-  <v-row  dense justify align-content-center><v-col cols="12" sm="3">
-   <div class=" mx-15">ممثل النيابة</div>
+  <v-row  dense justify align-content-center no-gutters><v-col cols="12" sm="3">
           <v-autocomplete
-            ref="ممثل النيابة"
             v-model="userhasplaint.userID"
             :rules="[() => !!viceProc || 'المرجوا ملأ هذا الحقل']"
             :items="viceProc"
             item-text="nom"
             item-value="id"
             placeholder="مساعدة في البحث"
-            required single-line
+            no-data-text="لا يوجد"
+            label="ممثل النيابة"
+            
+            required 
             outlined dense
           ></v-autocomplete></v-col>
-          <v-col cols="12" sm="4">
-           <div class=" mx-15">تاريخ الاحالة</div>
+          <v-col cols="12" sm="4" class="mr-6">
       <v-menu
         ref="menu3"
         v-model="menu3"
@@ -130,8 +133,10 @@
         <template v-slot:activator="{ on, attrs }">
           <v-text-field dense
             v-model="userhasplaint.dateMission"
-            prepend-icon="mdi-calendar"
+            prepend-inner-icon="mdi-calendar"
+            
             readonly
+            label="تاريخ الاحالة"
             v-bind="attrs"
             v-on="on"
             outlined
@@ -160,13 +165,15 @@
         </v-date-picker>
       </v-menu>
       </v-col>
-       <v-col cols="12" sm="6"></v-col>
-           <v-card-actions>
+      </v-row>
+      <v-row no-gutters  class="ma-0 pa-0">
+       <v-col cols="13" sm="4"></v-col>
+           <v-card-actions  class="ma-0 pa-0">
               <v-btn
                 text
                @click="affecter_plaints"
               dark
-              class="my-2 green darken-1 font-weight-black"
+              class="my-2 green darken-1"
               elevation="2"
               :loading="load2"
             >

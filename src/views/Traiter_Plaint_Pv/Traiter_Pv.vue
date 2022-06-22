@@ -22,15 +22,14 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>بحث  </v-toolbar>
-    <v-form class="px-5">
-          <v-row  dense justify align-content-center >
+     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>بحث</v-toolbar>
+    <v-form class="px-5 mt-5">
+          <v-row  dense justify align-content-center no-gutters>
        <v-col
       cols="12"
-      sm="4"
-      
+      sm="3"
+      class="ml-4"
     >
-    <div class=" mx-15">تاريخ التسجيل  من</div>
       <v-menu
         ref="menu1"
         v-model="menu1"
@@ -45,6 +44,7 @@
             v-model="cher.de"
             prepend-icon="mdi-calendar"
             readonly
+            label="تاريخ التسجيل  من"
             v-bind="attrs"
             v-on="on"
             outlined
@@ -76,9 +76,9 @@
 
      <v-col
       cols="12"
-      sm="4"
+      sm="3"
     >
-    <div class=" mx-15">إلى</div>
+    
       <v-menu
         ref="menu2"
         v-model="menu2"
@@ -93,6 +93,7 @@
             v-model="cher.a"
             prepend-icon="mdi-calendar"
             readonly
+            label="إلى"
             v-bind="attrs"
             v-on="on"
             outlined
@@ -122,25 +123,27 @@
       </v-menu>
     </v-col>
      <v-col cols="12" sm="4">
-            <div class=" mx-15">نوع المحضر</div>
             <v-select
             v-model="cher.id_type"
             class="py-0 mx-15"
             :items="type"
+            label="نوع المحضر"
             item-text="nom"
             item-value="id"
              outlined dense
             >
             </v-select>
-          </v-col> </v-row>
-          <v-row class="ma-0">
-            <v-col cols="12" sm="6"></v-col>
-           <v-card-actions>
+          </v-col> 
+          </v-row>
+
+          <v-row class="ma-0 pa-0" no-gutters>
+            <v-col cols="12" sm="4"></v-col>
+           <v-card-actions class="ma-0 pa-0">
               <v-btn
                 text
                @click="chercher_pvs"
               dark
-              class="my-2 blue font-weight-bold"
+              class="ma-0 pa-0 pr-3 pl-5 mb-3  blue font-weight-bold"
               elevation="2"
               :loading="load"
             >
@@ -162,11 +165,10 @@
     :items="pvs"
     item-key="id" no-data-text="معلومات غير متاحة"
      show-select hide-default-footer
-    class="elevation-1"
+    class="elevation-1 mb-8"
   >
   </v-data-table>
   <v-row  dense justify align-content-center><v-col cols="12" sm="3">
-   <div class=" mx-15">ممثل النيابة</div>
           <v-autocomplete
             ref="ممثل النيابة"
             v-model="userhaspvs.userID"
@@ -174,13 +176,14 @@
             :items="viceProc"
             item-text="nom"
             item-value="id"
+            label="ممثل النيابة"
             placeholder="مساعدة في البحث"
-            required single-line
+            no-data-text="لا يوجد"
+            required
             outlined dense
           ></v-autocomplete>
           </v-col>
-          <v-col cols="12" sm="4">
-           <div class=" mx-15">تاريخ الاحالة</div>
+          <v-col cols="12" sm="4" class="mr-6">
       <v-menu
         ref="menu3"
         v-model="menu3"
@@ -193,8 +196,9 @@
         <template v-slot:activator="{ on, attrs }">
           <v-text-field dense
             v-model="date3"
-            prepend-icon="mdi-calendar"
+            prepend-inner-icon="mdi-calendar"
             readonly
+            label="تاريخ الاحالة"
             v-bind="attrs"
             v-on="on"
             outlined
@@ -222,16 +226,18 @@
           </v-btn>
         </v-date-picker>
       </v-menu>
-      </v-col>
-       <v-col cols="12" sm="6"></v-col>
-           <v-card-actions>
+      </v-col> </v-row>
+
+       <v-row no-gutters  class="ma-0 pa-0">
+       <v-col cols="13" sm="4"></v-col>
+           <v-card-actions  class="ma-0 pa-0">
               <v-btn
                 text
                @click="affecter_pvs"
               dark
-              class="my-2 green darken-1 font-weight-black"
+              class="my-2 green darken-1 "
               elevation="2"
-              :loading="load2" 
+              :loading="load2"
             >
             <v-icon right >mdi-note-check-outline</v-icon>             
               إضافة
@@ -239,6 +245,8 @@
               
               </v-card-actions>
       </v-row>
+              
+       
   </form> </v-card></v-card>
    </v-tab-item> 
    </v-tabs-items>

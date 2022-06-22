@@ -8,8 +8,8 @@
   outlined 
   >
     <v-toolbar 
-      flat dark
-      color="grey darken-4"
+      flat
+      color="light-blue lighten-4"
     >
       <v-icon right>mdi-account</v-icon>
       <v-toolbar-title class="font-weight-black">تسجيل الدخول
@@ -25,6 +25,7 @@
         label="البريد الإلكتروني"
         v-model="email" outlined 
       ></v-text-field>
+
       <v-text-field
         type="password"
         prepend-inner-icon="mdi-lock"
@@ -32,13 +33,15 @@
         label="كلمة السر" dense
         v-model="pass" outlined
       ></v-text-field>
+
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions>
       <v-btn
         :loading="loading"
-        color="success" class="font-weight-black"
+        color="light-blue darken-1" class="font-weight-black"
         @click="login" light 
+        width="30px"
       >
         دخول
       </v-btn>
@@ -64,8 +67,8 @@ export default({
       return {
         hasSaved: false,
         model: null,
-        email:"vice_admin@gmail.com",
-        pass:"vice_admin",
+        email:"admin@gmail.com",
+        pass:"admin",
         message:"password or email incorrect" ,
         loading:false
       }

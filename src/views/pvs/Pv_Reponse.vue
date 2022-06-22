@@ -1,38 +1,40 @@
 <template>
 <div class="chercher_plaint">
-<h2 class="subheading dark--text mb-4">بحث عن محضر</h2>
 
  <v-spacer></v-spacer>
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
-       <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">بحث</v-toolbar-title></v-toolbar>
+       <v-toolbar-title  class=" darkgrey--text text-h6"> بحث عن محضر</v-toolbar-title></v-toolbar>
     <v-form class="px-5">
-          <v-row  dense justify align-content-center>
+          <v-row  dense justify align-content-center  no-gutters class="mt-6">
     <v-col cols="12" sm="4">
-            <div class=" mx-15">نوع المحضر</div>
             <v-select
-            class="py-0 mx-15"
+            class="py-0 ml-15"
+            label="نوع المحضر"
             :items="type"
             outlined dense
             >
             </v-select>
           </v-col>
            <v-col cols="12" sm="4">
-            <div class=" mx-15">الرقم</div>
           <v-text-field
             outlined dense
+            label="الرقم"
             prepend-inner-icon="mdi-magnify"
           ></v-text-field>
+          
           </v-col>
-         <v-card-actions>
-              <v-col cols="12" sm="5" class="mr-15">
+          </v-row>
+          <v-row no-gutters dense>
+            <v-col cols="11" sm="4"></v-col>
+         <v-card-actions class="ma-0 pa-0">
               <v-btn
                 text
                @click="save"
               dark
-              class="my-2 blue"
+              class="mb-2 blue pl-3"
               elevation="2"
                
             >

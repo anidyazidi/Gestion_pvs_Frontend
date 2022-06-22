@@ -1,20 +1,22 @@
 <template>
 <div id="ajoutPv">
-    <h2 class="subheading dark--text mb-4">إضافة محضر</h2>
+    <p class="ma-0">إضافة محضر</p>
     <v-spacer/>
-               <v-card>
+     <v-card>
     <v-tabs
       v-model="tab"
-       active-class="active1" 
+       active-class="active1"
+       height="35px"
     >
       <v-tab
-      class="font-weight-black text-h6 mx-15"
+      class="text-h7 mx-10"
+      
       >
       <v-icon right>mdi-police-badge-outline</v-icon>
         الاجراءات
       </v-tab>
        <v-tab
-      class="font-weight-black text-h6 mx-15"
+      class="text-h6 mx-10"
       >
       <v-icon right>mdi-note-multiple-outline</v-icon>
         إضافة المرفقات
@@ -25,57 +27,57 @@
       <v-tab-item
       >
        <v-card elevation="2"
-  outlined  class="mx-auto my-auto"
+      outlined  class="mx-auto my-auto"
      >
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
-  <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">المرجع</v-toolbar-title>
+  <v-toolbar-title  class="darkgrey--text text-h6">المرجع</v-toolbar-title>
   </v-toolbar>
         <v-form class="px-5" ref="pv">
-          <v-row  dense justify align-content-center>
-               
-          <v-col cols="12" sm="4">
-            <div class=" mx-15">نوع المصدر</div>
+          <v-row  dense justify align-content-center no-gutters>
+          <v-col cols="12" sm="3" class="ml-6">
             <v-select dense
             :items="serv_pvs[0]" v-model="pv.TypeSourcePvsID"
             item-text="nom"
             item-value="id"
             outlined :rules="rules.name"
-            required placeholder="نوع المصدر"
+            required label="نوع المصدر"
             >
             </v-select>
           </v-col>
 
-           <v-col cols="12" sm="3" >
-            <div class="font-weight-bold darkgrey--text mx-10">صنف الضابطة القضائية</div>
+           <v-col cols="12" sm="3" class="ml-6" >
+           
             <v-select v-model="pv.typePoliceJudicID"
             outlined dense  :rules="rules.name"
-            required placeholder="صنف الضابطة القضائية"
+            required label="صنف الضابطة القضائية"
+            class="pa-0"
             item-text="nom"
             item-value="id" :items="serv_pvs[1]"
             >
             </v-select>
           </v-col>
-           <v-col cols="12" sm="4">
-        <div class=" mx-15">الضابطة القضائية</div>
+           <v-col cols="12" sm="3" class="ml-6">
           <v-text-field 
-            single-line v-model="pv.policeJudics"
+            v-model="pv.policeJudics"
             outlined dense :rules="rules.name"
-            required placeholder="الضابطة القضائية"
+            required label="الضابطة القضائية"
           ></v-text-field>
         </v-col>
-         <v-col cols="12" sm="3">
-        <div class=" mx-15">رقم الارسالية</div>
+        </v-row>
+
+        <v-row no-gutters>
+         <v-col cols="12" sm="3" class="ml-6">
           <v-text-field 
-            single-line v-model="pv.numEnvoi"
+            v-model="pv.numEnvoi"
             outlined dense :rules="rules.name"
-            required placeholder="رقم الارسالية"
+            required label="رقم الارسالية"
           ></v-text-field>
         </v-col>
         <v-col
       cols="12"
-      sm="4"
+      sm="3"
+      class="ml-6"
     >
-    <div class=" mx-15">تاريخ المحضر</div>
       <v-menu
         ref="menu"
         v-model="menu"
@@ -88,12 +90,12 @@
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
             v-model="pv.datePvs"
-            prepend-icon="mdi-calendar"
+            prepend-inner-icon="mdi-calendar"
             readonly dense
             v-bind="attrs"
             v-on="on"
             outlined :rules="rules.name"
-            required placeholder="تاريخ المحضر"
+            required label="تاريخ المحضر"
           ></v-text-field>
         </template>
         <v-date-picker
@@ -122,9 +124,9 @@
 
     <v-col
       cols="11"
-      sm="4"
+      sm="3"
+      class="ml-6"
     >
-    <div class=" mx-15">ساعة الانجاز</div>
       <v-menu
         ref="menu3"
         v-model="menu3"
@@ -139,10 +141,10 @@
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
             v-model="pv.heureRealisation"
-            prepend-icon="mdi-clock-time-four-outline"
+            prepend-inner-icon="mdi-clock-time-four-outline"
             readonly outlined
             v-bind="attrs" :rules="rules.name"
-            required placeholder="ساعة الانجاز"
+            required label="ساعة الانجاز"
             v-on="on" dense
           ></v-text-field>
         </template>
@@ -155,34 +157,33 @@
       </v-menu>
     </v-col>
 
-              </v-row></v-form></v-card>
+              </v-row>
+              </v-form></v-card>
               
      <v-spacer></v-spacer>
      <v-card elevation="2"
   outlined  class="mx-auto my-5"
      >
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
-  <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">النيابة العامة</v-toolbar-title>
+  <v-toolbar-title  class="darkgrey--text text-h6">النيابة العامة</v-toolbar-title>
   </v-toolbar>
         <v-form class="px-5">
           <v-row  dense justify align-content-center>
                
-          <v-col cols="12" sm="4">
-            <div class=" mx-15">نوع المحضر</div>
+          <v-col cols="12" sm="3" class="ml-6">
             <v-select
             :items="serv_pvs[2]" v-model="pv.typepvsID"
             outlined dense item-text="nom"
             item-value="id" :rules="rules.name"
-            required placeholder="نوع المحضر"
+            required label="نوع المحضر"
             >
             </v-select>
           </v-col>
 
         <v-col
       cols="12"
-      sm="4" class="mx-8"
+      sm="3" class="ml-6" 
     >
-    <div class=" mx-15">تاريخ التسجيل</div>
       <v-menu
         ref="menu2"
         v-model="menu2"
@@ -195,9 +196,9 @@
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
             v-model="pv.dateEnregPvs"
-            prepend-icon="mdi-calendar"
+            prepend-inner-icon="mdi-calendar"
             readonly dense :rules="rules.name"
-            required placeholder="تاريخ التسجيل"
+            required label="تاريخ التسجيل"
             v-bind="attrs"
             v-on="on"
             outlined
@@ -226,12 +227,15 @@
         </v-date-picker>
       </v-menu>
     </v-col>
-  <v-col cols="12" sm="10" class="mr-5">
+    </v-row>
+
+    <v-row no-gutters>
+  <v-col cols="12" sm="10">
     <v-textarea
     clearable
     value="" dense
     label="موضوع المحضر"
-    class="font-weight-black mx-15"
+    class="font-weight-black"
     rows="1" v-model="pv.sujetpvs"
     outlined :rules="rules.name"
             required 
@@ -240,8 +244,8 @@
     </v-textarea>
     </v-col>
               </v-row></v-form></v-card>
-               <v-card elevation="2"
-  outlined  class="mx-auto my-4"
+               <v-card 
+  outlined  class="mx-auto my-4" flat
      >
         <v-form>
          
@@ -251,7 +255,6 @@
     :items="datapartie_tab"
     class="elevation-1"
     hide-default-footer
-    
   >
     <template v-slot:top>
       <v-toolbar
@@ -261,8 +264,8 @@
          v-model="pv.contreInnconue" 
             :value="!pv.contreInnconue"
             label="ضد شخص مجهول"
-            color="red darken-4"
-            class="font-weight-black mt-4  mr-8"
+            class="mt-4  mr-8"
+            dark
             >
             </v-checkbox></v-toolbar-title>
         <v-divider
@@ -302,7 +305,7 @@
 
   <DataPartie v-show="enable"></DataPartie>
     <v-row  dense justify align-content-center><v-col cols="12" sm="4"></v-col>
-  <v-card-actions class="mx-15">
+  <v-card-actions class="mx-12">
               <v-btn
                 text
                @click="ajoutpv"
@@ -313,8 +316,9 @@
             >
             <v-icon right >mdi-notebook-plus-outline</v-icon>             
                إضافة محضر
-              </v-btn>     <v-btn
-          text
+              </v-btn>    
+               <v-btn
+                text
           @click="resetForm"
           dark
               class="my-2 red font-weight-black"
@@ -361,8 +365,8 @@
   </v-file-input></v-col><v-col cols="12" sm="4">
      <v-card-actions>
               <v-btn
-            hidden
-                text
+              hidden
+              text
               dark
               class="my-2 green darken-1"
               elevation="2"
@@ -378,7 +382,7 @@
   </v-card>
      <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">هل ان متأكد من هذه العملية</v-card-title>
+            <v-card-title class="text-h5">هل تريد حذف هذا الطرف</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn class="red darken-1" dark text @click="closeDelete">إلغاء</v-btn>

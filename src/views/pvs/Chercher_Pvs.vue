@@ -1,19 +1,15 @@
 <template>
 <div class="chercher_plaint">
-<h2 class="subheading dark--text mb-4">بحث عن محضر</h2>
-
- <v-spacer></v-spacer>
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app></v-toolbar>
-    <v-form class="px-5">
+     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>بحث عن محضر</v-toolbar>
+    <v-form class="px-5 mt-6">
           <v-row  dense justify align-content-center>
        <v-col
       cols="12"
       sm="4"
     >
-    <div class="font-weight-bold darkgrey--text">تاريخ تسجيل المحضر من</div>
       <v-menu
         ref="menu1"
         v-model="menu1"
@@ -28,6 +24,7 @@
             v-model="cherchant.de"
             prepend-icon="mdi-calendar"
             readonly dense
+            label="تاريخ تسجيل المحضر من"
             v-bind="attrs"
             v-on="on"
             outlined 
@@ -61,7 +58,6 @@
       cols="12"
       sm="4"
     >
-    <div class="font-weight-bold darkgrey--text">إلى</div>
       <v-menu
         ref="menu2"
         v-model="menu2"
@@ -76,6 +72,7 @@
             v-model="cherchant.a"
             prepend-icon="mdi-calendar"
             readonly
+            label="إلى"
             v-bind="attrs"
             v-on="on" dense
             outlined
@@ -105,30 +102,32 @@
       </v-menu>
     </v-col>
     <v-col cols="12" sm="4">
-            <div class=" mx-15">نوع محضر</div>
             <v-select
             class="py-0 mx-15"
             v-model="cherchant.id_type"
             :items="type"
             item-text="nom"
+            label="نوع محضر"
             item-value="id"
             outlined dense
             >
             </v-select>
           </v-col>
-         <v-card-actions>
+          </v-row>
+          <v-row no-gutters>
+            <v-col cols="12" sm="4"></v-col>
+         <v-card-actions class="ma-0 pa-0">
               <v-btn
                 text
                @click="chercher_pl"
               dark
-              class="my-2 blue"
+              class="mb-2 blue pl-4"
               elevation="2"
                :loading="load"
             >
             <v-icon right >mdi-magnify</v-icon>             
                بحث
               </v-btn>
-              
               </v-card-actions>
     </v-row>
     </v-form>

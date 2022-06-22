@@ -1,35 +1,40 @@
 <template>
 <nav>
-    <v-app-bar flat dense clipped-right dark class="nvbar" app height="60px"
+    <v-app-bar flat dense clipped-right dark class="nvbar" app height="52px"
     tile>
         <v-app-bar-nav-icon 
            @click="drawer = !drawer"
             ></v-app-bar-nav-icon>
         <v-toolbar-title>
             <v-icon>mdi-gavel</v-icon>
-            <span class="font-weight-black text-h5"> نظام تدبير القضايا الزجرية</span>         
+            <span class=" text-h6"> نظام تدبير القضايا الزجرية</span>         
         </v-toolbar-title>
-        <v-spacer />
-         <img  height="45px" style="border-radius:5px;"  :src="require('../assets/mr.png')"/>
-         <v-spacer />
+        <v-spacer/>
+         <img  height="45px" style="border-radius:5px;"  :src="require('../assets/taj.png')"/>
+         <v-spacer/>
         
-        <v-btn text @click="logout" class="font-weight-bold text-h8">
+    <v-btn text @click="logout" class="text-h8">
             <span>تسجيل الخروج</span>
             <v-icon right>mdi-logout</v-icon>
-        </v-btn>
+        </v-btn> 
+      
+        
     </v-app-bar>
     
     <v-navigation-drawer clipped right  v-model="drawer" app class="ma-4">
      <v-card flat class="mb-3">
   <v-card-title>
-    <v-icon size="75px" class="mx-15">mdi-account-circle-outline</v-icon>
+    <router-link to="/Compte">
+      <v-icon size="60px" class="mx-15" >
+       mdi-account-circle-outline
+       </v-icon>
+       </router-link>
+    
+       
   </v-card-title>
-         <v-btn  block
-        outlined light active-class="act"
-         x-large router to="/compte" 
-          class="font-weight-black text-h5"  text>حسابي</v-btn>
+        
   </v-card>
-    <v-list>
+    <v-list nav dense>
       <v-list-group
         v-for="item in items"
         :key="item.title"
@@ -37,11 +42,12 @@
         :prepend-icon="item.action"
         no-action active-class="active"
        v-show="item.affich" 
+      
       >
-        <template v-slot:activator >
-           <v-list-item-content  >
+        <template v-slot:activator>
+           <v-list-item-content>
         <v-list-item-title   class="font-weight-bold darkgrey--text text-h6" v-text="item.title">
-         </v-list-item-title> 
+         </v-list-item-title>
            </v-list-item-content> 
         </template>
         <v-list-item  
@@ -55,7 +61,7 @@
             </v-list-title-action>
           <v-list-item-content>
            <v-list-item-title
-         v-text="child.title">
+           v-text="child.title">
         </v-list-item-title>
           </v-list-item-content>
         </v-list-item>

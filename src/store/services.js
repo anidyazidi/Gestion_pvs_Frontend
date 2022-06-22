@@ -6,7 +6,5 @@ function nomOf(id,arrayObjet){
         }
     }
 }
-function ExtraireIdFromObjet(){
 
-}
 export default nomOf;

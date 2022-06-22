@@ -1,18 +1,18 @@
 <template>
     <div>
-        <v-row justify="space-between">
+        <v-row justify="space-between" no-gutters>
             <v-col cols="12" sm="4">
         <v-card
-    class="mx-15 mt-15 elevation-20"
+    class="mx-5 mt-10 elevation-10"
     color="green lighten-1"
     dark
-    style="max-width: 300px;"
+    style="max-width: 5000px;"
   >
-    <v-row justify="space-between">
+    <v-row justify="space-between" no-gutters>
       <v-col cols="8">
         <v-card-title>
           <div>
-            <div class="text-h5 mt-6">
+            <div class="text-h6 mt-6">
               الشكايات المعالجة
             </div>
           </div>
@@ -35,9 +35,10 @@
       
     </v-card-actions>
   </v-card></v-col>
+  
   <v-col cols="12" sm="4">
   <v-card
-    class="mx-15 mt-15 elevation-20"
+    class="mx-15 mt-15 elevation-10"
     color="orange lighten-1"
     dark
     style="max-width: 300px;"
@@ -46,7 +47,7 @@
       <v-col cols="8">
         <v-card-title>
           <div>
-            <div class="text-h5">
+            <div class="text-h6">
               الشكايات
               في طور
              المعالجة
@@ -73,7 +74,7 @@
   </v-card></v-col>
   <v-col cols="12" sm="4">
   <v-card
-    class="mx-15 mt-15 elevation-20"
+    class="mx-15 mt-15 elevation-10"
     color="red lighten-1"
     dark
     style="max-width: 300px;"
@@ -82,7 +83,7 @@
       <v-col cols="8">
         <v-card-title>
           <div>
-            <div class="text-h5">
+            <div class="text-h6">
              الشكايات 
             &nbsp; &nbsp;غير&nbsp;
              المعالجة

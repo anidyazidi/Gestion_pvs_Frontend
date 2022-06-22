@@ -1,29 +1,27 @@
 <template>
 <div class="chercher_plaint">
-<h2 class="subheading dark--text mb-4">بحث عن شكاية</h2>
-
- <v-spacer></v-spacer>
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
-       <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">بحث</v-toolbar-title></v-toolbar>
+       <v-toolbar-title  class="darkgrey--text text-h6">بحث عن شكاية</v-toolbar-title></v-toolbar>
     <v-form class="px-5">
-          <v-row  dense justify align-content-center>
+          <v-row  dense justify align-content-center no-gutters>
      <v-col cols="12" sm="4">
-        <div class=" mx-15">مرجع الشكاية</div>
           <v-text-field 
           v-model="cherchant"
-            single-line 
-            outlined dense
+            label="مرجع الشكاية"
+            class="mt-2 ml-4 pa-0"
+            outlined dense 
           ></v-text-field>
         </v-col>
-         <v-card-actions>
+        <v-col>
+           <v-card-actions>
               <v-btn
                 text
                @click="chercher_pl"
               dark
-              class="my-2 blue"
+              class="mt-1 blue"
               elevation="2"
                :loading="load"
             >
@@ -32,7 +30,10 @@
               </v-btn>
               
               </v-card-actions>
+        </v-col>
+        
     </v-row>
+
     </v-form>
          </v-card> 
 

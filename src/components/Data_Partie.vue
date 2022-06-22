@@ -1,52 +1,59 @@
 <template>
 <div class="data_partie">
-    <v-card class="mt-3">
+    <v-card class="mt-3" flat>
       <v-toolbar
         flat dark class="nvbar mb-3" height="34px" app
       ><v-icon right>mdi-account-plus</v-icon>
-       <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">طرف الشكاية</v-toolbar-title></v-toolbar>
-      <v-row  dense justify align-content-center>
+       <v-toolbar-title  class=" darkgrey--text text-h6">طرف الشكاية</v-toolbar-title></v-toolbar>
+      
+      <v-row  dense justify align-content-center no-gutters class="ma-0 pa-0">
         <v-col cols="12" sm="6">
         <v-radio-group
         v-model="datap.soi"
-        
+        class=""
       row
     >
       <v-radio
-        label="شخص ذاتي" class="font-weight-black ma-4"
+        label="شخص ذاتي" 
         :value="tru"
       ></v-radio>
       <v-radio
-        label="شخص معنوي" class="font-weight-black ma-4"
+        label="شخص معنوي" 
         :value="!tru"
       ></v-radio>
     </v-radio-group>
     </v-col>
-    <v-col cols="12" sm="5">
-            <div class="font-weight-black py-0 mx-5">صفته</div>
+   
+    
+    <v-col cols="12" sm="3">
             
             <v-select
             v-model="datap.PersonneMoraleID"
             :items="data_part[0]"
             item-text="nom"
             item-value="id"
-            class="py-0 px-4"
+            class="py-0 mt-3"
             outlined dense
+            label="صفته"
             >
             </v-select>
           </v-col>
+ </v-row>
+          <v-row no-gutters>
           <v-col cols="12" sm="3">
         <v-radio-group
       v-model="datap.genreID"
       row
     >
       <v-radio
-        label="السيد" class="font-weight-black"
+        label="السيد"
         value="1"
+        class="mt-0"
       ></v-radio>
       <v-radio
-        label="السيدة" class="font-weight-black"
+        label="السيدة"
         value="2"
+        class="mt-0"
       ></v-radio>
     </v-radio-group>
     </v-col>
@@ -56,31 +63,30 @@
             :value="tru"
             label="حدث"
             color="red darken-4"
-            class="font-weight-black"
             >
             </v-checkbox>
            </v-col>
           <v-col cols="12" sm="3">
 
-            <div class="font-weight-black mx-5">الاسم العائلي</div>
             <v-text-field
             v-model="datap.nom"
-            single-line dense
-            class="py-0 px-4" outlined
+             dense
+            class="py-0 px-4" 
+            outlined
+            label="الاسم العائلي"
             >
             </v-text-field>
           </v-col>
           <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">الاسم الشخصي</div>
             <v-text-field
             v-model="datap.prenom"
-            single-line dense
+             dense
             class="py-0 px-4" outlined
+            label="الاسم الشخصي"
             >
             </v-text-field>
           </v-col>
           <v-col cols="12" sm="3">
-            <div class="font-weight-black py-0 mx-5">نوع وثيقة التعريف</div>
             
             <v-select
             v-model="datap.TypeCarteIdentsID"
@@ -88,100 +94,94 @@
             item-text="nom"
             item-value="id"
              dense
+             label="نوع وثيقةالتعريف"
             class="py-0 px-4" outlined
             >
             </v-select>
           </v-col>
           <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">رقم وثيقة التعريف</div>
             <v-text-field
             v-model="datap.NumCarte"
-            single-line outlined dense
+             outlined dense
+            label="رقم وثيقةالتعريف"
             class="py-0 px-4">
             </v-text-field>
           </v-col>
           <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">اسم الأب</div>
             <v-text-field dense
             v-model="datap.NomDePere"
-            single-line outlined
+             outlined
+            label="اسم الأب"
             class="py-0 px-4">
             </v-text-field>
           </v-col>
 
            <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">إبن</div>
             <v-text-field dense
             v-model="datap.FilsDe"
-            single-line outlined
+             outlined
+            label="إبن"
             class="py-0 px-4">
             </v-text-field>
           </v-col>
            <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">اسم الأم</div>
             <v-text-field dense
             v-model="datap.NomDeMere"
-            single-line outlined
+             outlined
+            label="اسم الأم"
             class="py-0 px-4">
             </v-text-field>
           </v-col>
           <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">بنت</div>
             <v-text-field dense
              v-model="datap.FilleDe"
-            single-line outlined
+             outlined
+            label="بنت"
             class="py-0 px-4">
             </v-text-field>
           </v-col>
+
            <v-col cols="12" sm="3">
-            <div class="font-weight-black py-0 mx-5">الحالة العائلية</div>
-            
             <v-select
             v-model="datap.SituationFamillID"
             :items="data_part[2]"
             item-text="nom"
             item-value="id"
              outlined
+             label="الحالةالعائلية"
             class="py-0 px-4" dense
             >
             </v-select>
+
           </v-col>
           <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">المهنة</div>
             <v-text-field dense
              v-model="datap.Profession"
-            single-line outlined
+             outlined
+            label="المهنة"
             class="py-0 px-4">
             </v-text-field>
           </v-col>
-          <!-- <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">المهنة</div>
-            <v-text-field dense
-             v-model="datap.Profession"
-            single-line outlined
-            class="py-0 px-4">
-            </v-text-field>
-          </v-col>-->
+         
           <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">مقر العمل</div>
             <v-text-field dense
              v-model="datap.LieuDeTravail"
-            single-line outlined
+             outlined
+            label="مقرالعمل"
             class="py-0 px-4">
             </v-text-field>
           </v-col>
           <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">الرقم المالي</div>
             <v-text-field dense
              v-model="datap.NumFinan"
-            single-line outlined
+             outlined
+            label="الرقم المالي"
             class="py-0 px-4">
             </v-text-field>
           </v-col>
           
            <v-col cols="12" sm="3"
     >
-    <div class="font-weight-bold darkgrey--text mx-15">تاريخ الإزدياد</div>
       <v-menu
         ref="menu"
         v-model="menu"
@@ -194,11 +194,12 @@
         <template v-slot:activator="{ on, attrs }">
           <v-text-field dense
             v-model="datap.DateNaiss"
-            prepend-icon="mdi-calendar"
+            prepend-inner-icon="mdi-calendar"
             readonly outlined
+            label="تاريخ الإزدياد"
             v-bind="attrs"
             v-on="on"
-            class="py-0 mr-12"
+            class="py-0 pl-4 mr-4"
           ></v-text-field>
         </template>
         <v-date-picker
@@ -226,7 +227,6 @@
     </v-col>
 
    <v-col cols="12" sm="3">
-            <div class="font-weight-black py-0 mx-5">مدينة الإزدياد</div>
             
             <v-select
             v-model="datap.VilleDeNaissID"
@@ -239,32 +239,32 @@
             </v-select>
           </v-col>
           <v-col cols="12" sm="3">
-            <div class="font-weight-black mx-5">مكان الإزدياد</div>
             <v-text-field dense
             v-model="datap.LieuNaiss"
-            single-line outlined
+             outlined
+            label="مكانالإزدياد"
             class="py-0 px-4">
             </v-text-field>
           </v-col>
           <v-col cols="12" sm="3">
-            <div class="font-weight-black py-0 mx-5">الجنسية</div>
             
             <v-select dense
             v-model="datap.nationaliteID"
-            :items="data_part[4]" 
+            :items="data_part[4]"
             item-text="nom"
             item-value="id"
+            label="الجنسية"
              outlined
             class="py-0 px-4"
             >
             </v-select>
           </v-col>
         <v-col cols="12" sm="3">
-            <div class="font-weight-black py-0 mx-5">البلد</div>
             
             <v-select dense
            v-model="datap.paysID"
-            :items="data_part[5]" 
+            :items="data_part[5]"
+            label="البلد"
             item-text="nom"
             item-value="id" outlined
             class="py-0 px-4"
@@ -272,11 +272,11 @@
             </v-select>
           </v-col>
           <v-col cols="12" sm="3">
-            <div class="font-weight-black py-0 mx-5">(العمالة) المدينة</div>
             
             <v-select dense
             v-model="datap.ProvinceID"
             :items="data_part[6]" 
+            label="المدينة (العمالة)"
             item-text="nom"
             item-value="id" outlined
             class="py-0 px-4"
@@ -284,10 +284,10 @@
             </v-select>
           </v-col>
          <v-col cols="12" sm="6">
-            <div class="font-weight-black mx-5">العنوان</div>
             <v-text-field dense
             v-model="datap.address"
-            single-line outlined
+            label="العنوان"
+             outlined
             class="py-0 px-4">
             </v-text-field>
           </v-col>
