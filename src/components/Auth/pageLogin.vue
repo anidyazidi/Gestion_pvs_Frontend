@@ -138,6 +138,6 @@ export default({
 <style>
 .cssgrad{
 background: rgb(165,243,255);
-background: radial-gradient(circle, rgba(165,243,255,1) 5%, rgba(0,160,255,1) 100%);
+background: radial-gradient(circle, rgba(165,243,255,1) 5%, rgba(36,57,209,1) 100%);
 }
 </style>
