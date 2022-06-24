@@ -3,7 +3,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>بحث عن محضر</v-toolbar>
+     <v-toolbar light class="nvbar mb-3" flat height="34px" app>بحث عن محضر</v-toolbar>
     <v-form class="px-5 mt-6">
           <v-row  dense justify align-content-center>
        <v-col
@@ -120,7 +120,8 @@
               <v-btn
                 text
                @click="chercher_pl"
-              dark
+              light
+              height="30px"
               class="mb-2 blue pl-4"
               elevation="2"
                :loading="load"

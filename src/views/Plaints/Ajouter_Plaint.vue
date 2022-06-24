@@ -5,7 +5,7 @@
      <v-card elevation="2" 
   outlined  class="mx-auto my-auto justify-center"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
+     <v-toolbar class="nvbar mb-3" flat height="34px" app>
   <v-toolbar-title  class=" darkgrey--text text-h6">معطيات الشكاية</v-toolbar-title>
   </v-toolbar>
         <v-form 
@@ -34,7 +34,8 @@
             item-value="id"
             label="نوع الشكاية" 
             :rules="rules.select2"
-             dense 
+             dense
+              
             outlined
             >
             </v-select>
@@ -241,12 +242,13 @@
         </v-form>
 
    </v-card>
-   <v-card elevation="2"
+   <v-card 
   outlined  class="mx-auto my-4"
+  flat
   
      >
         <v-form>
-         <v-data-table
+         <v-data-table 
     :headers="headers"
     :items="datapartie_tab"
     class="elevation-1 font-weight-black"
@@ -254,7 +256,7 @@
   >
   
     <template v-slot:top>
-      <v-toolbar dark class="nvbar mb-3" flat height="32" app><v-icon right>mdi-account-multiple-plus</v-icon>
+      <v-toolbar  class="nvbar mb-3" flat height="32" app><v-icon right>mdi-account-multiple-plus</v-icon>
         <v-toolbar-title class="darkgrey--text text-h6">أطراف الشكاية</v-toolbar-title>
         <v-divider
           class="mx-4"
@@ -265,7 +267,7 @@
        
             <v-btn
             @click="enableform"
-             dark small
+              small
               class="my-2 blue"
               elevation="2"
               :disabled="plaint.contreInconnu" 
@@ -300,11 +302,11 @@
 
   <v-row>
     <v-col cols="12" sm="4"></v-col>
-   <v-card-actions>
+   <v-card-actions class="mt-4">
               <v-btn
                text
               @click="ajoutplaint"
-              dark
+              height="30px"
               class="my-2 blue"
               elevation="2" 
               :loading="load"
@@ -316,7 +318,7 @@
               <v-btn
           text
           @click="resetForm"
-          dark
+          height="30px"
               class="my-2 red"
               elevation="2"
         >
@@ -332,9 +334,9 @@
             <v-card-title class="text-h5">هل تريد حذف هذا الطرف</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="red darken-1" dark text @click="closeDelete">إلغاء</v-btn>
+              <v-btn class="red darken-1"  text @click="closeDelete">إلغاء</v-btn>
               <v-btn class="blue darken-3"
-               dark text @click="deleteItemConfirm">نعم</v-btn>
+                text @click="deleteItemConfirm">نعم</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>

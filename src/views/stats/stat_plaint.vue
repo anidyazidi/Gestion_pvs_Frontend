@@ -6,8 +6,8 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
-       <v-toolbar-title  class=" darkgrey--text text-h6">
+     <v-toolbar lighten class="nvbar mb-3" flat height="34px" app>
+       <v-toolbar-title  class=" lightengrey--text text-h6">
          تاريخ تسجيل الشكاية
          </v-toolbar-title>
          </v-toolbar>
@@ -116,9 +116,10 @@
               <v-btn
                 text
                @click="display = !display"
-              dark
+              lighten
               class="mb-2 blue pr-3 pl-4"
               elevation="2"
+              height="30px"
                
             >
             <v-icon right >mdi-magnify</v-icon>             
@@ -154,7 +155,7 @@
       >mdi-progress-check</v-icon>
       </v-card-title>
       
-      <v-divider dark class="mt-2"></v-divider>
+      <v-divider lighten class="mt-2"></v-divider>
     <v-card-actions class="text-h6 pa-4">
       العدد الاجمالي
       <v-spacer></v-spacer>
@@ -181,7 +182,7 @@
       >mdi-progress-alert</v-icon>
       </v-card-title>
       
-      <v-divider dark class="mt-2"></v-divider>
+      <v-divider lighten class="mt-2"></v-divider>
     <v-card-actions class="text-h6 pa-4">
       العدد الاجمالي
       <v-spacer></v-spacer>
@@ -208,7 +209,7 @@
       >mdi-progress-close</v-icon>
       </v-card-title>
       
-      <v-divider dark class="mt-2"></v-divider>
+      <v-divider lighten class="mt-2"></v-divider>
     <v-card-actions class="text-h6 pa-4">
       العدد الاجمالي
       <v-spacer></v-spacer>

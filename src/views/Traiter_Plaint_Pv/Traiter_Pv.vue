@@ -22,7 +22,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>بحث</v-toolbar>
+     <v-toolbar lighten class="nvbar mb-3" flat height="34px" app>بحث</v-toolbar>
     <v-form class="px-5 mt-5">
           <v-row  dense justify align-content-center no-gutters>
        <v-col
@@ -142,10 +142,11 @@
               <v-btn
                 text
                @click="chercher_pvs"
-              dark
+              lighten
               class="ma-0 pa-0 pr-3 pl-5 mb-3  blue font-weight-bold"
               elevation="2"
               :loading="load"
+              height="30px"
             >
             <v-icon right >mdi-magnify</v-icon>             
                بحث
@@ -234,8 +235,8 @@
               <v-btn
                 text
                @click="affecter_pvs"
-              dark
-              class="my-2 green darken-1 "
+              lighten
+              class="my-2 green lightenen-1 "
               elevation="2"
               :loading="load2"
             >

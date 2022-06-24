@@ -79,8 +79,8 @@ background: linear-gradient(to rigsht, #bae8f2, #e9eff0) !important;
 background: linear-gradient(120deg, rgba(2,0,36,0.8799894957983193) 2%,rgba(2,0,36,0.8799894957983193) 2%, rgba(49,159,175,0.958420868347339) 48%, rgba(2,0,36,0.8127626050420168) 97%);
 } */
 .nvbar{
-background: rgb(0,238,248);
-background: linear-gradient(131deg, rgba(0,238,248,1) 0%, rgba(41,71,229,1) 100%);
+background: rgb(0,255,239);
+background: linear-gradient(131deg, rgba(0,255,239,1) 0%, rgba(0,244,236,1) 0%, rgba(102,252,255,1) 0%, rgba(31,232,255,1) 23%, rgba(117,214,230,1) 100%, rgba(0,255,247,1) 100%, rgba(11,214,201,1) 100%, rgba(46,33,145,1) 100%);
 
 }
 

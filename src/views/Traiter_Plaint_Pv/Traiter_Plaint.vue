@@ -23,7 +23,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>بحث</v-toolbar>
+     <v-toolbar light class="nvbar mb-3" flat height="34px" app>بحث</v-toolbar>
     <v-form class="px-5">
           <v-row  dense justify align-content-center no-gutters>
        <v-col
@@ -79,10 +79,11 @@
               <v-btn
                 text
                @click="chercher_plaint"
-              dark
+              light
               class="my-2 blue font-weight-bold"
               elevation="2"
               :loading="load"
+              height="30px"
             >
             <v-icon right >mdi-magnify</v-icon>             
                بحث
@@ -172,10 +173,11 @@
               <v-btn
                 text
                @click="affecter_plaints"
-              dark
-              class="my-2 green darken-1"
+              light
+              class="my-2 green lighten-1"
               elevation="2"
               :loading="load2"
+              height="30px"
             >
             <v-icon right >mdi-note-check-outline</v-icon>             
               إضافة

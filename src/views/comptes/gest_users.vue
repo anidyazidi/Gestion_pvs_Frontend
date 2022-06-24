@@ -12,8 +12,8 @@
   >
    
     <template v-slot:top>
-      <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
-        <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">المستخدمين</v-toolbar-title>
+      <v-toolbar lighten class="nvbar mb-3" flat height="34px" app>
+        <v-toolbar-title  class=" lightengrey--text text-h6">المستخدمين</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset
@@ -90,7 +90,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-              dark
+              lighten
               class="red lighten-3"
                 text
                 @click="close"
@@ -98,8 +98,8 @@
                 إلغاء
               </v-btn>
               <v-btn
-              class="blue darken-2"
-              dark
+              class="blue lightenen-2"
+              lighten
                 text
                 @click="save"
                 :loading="load_pop_edit"
@@ -115,10 +115,10 @@
             <v-card-title class="text-h5">هل ان متأكد من هذه العملية</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="red darken-1" dark text @click="closeDelete">إلغاء</v-btn>
-              <v-btn class="blue darken-3"
+              <v-btn class="red lightenen-1" lighten text @click="closeDelete">إلغاء</v-btn>
+              <v-btn class="blue lightenen-3"
               :loading="load_pop_delete"
-               dark text @click="deleteItemConfirm">نعم</v-btn>
+               lighten text @click="deleteItemConfirm">نعم</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -130,7 +130,7 @@
     <template v-slot:[`item.action`]="{ item }">
       <v-chip
         :color="getColor(item.active)"
-        dark
+        lighten
         small
         fab
       >   
@@ -191,7 +191,7 @@ import { mapMutations, Mutation } from 'vuex'
     methods: {
       ...mapMutations(["openSnackbar"]),
          getColor (active) {
-        if (active == false){ active="dis"; return 'red darken-3'}
+        if (active == false){ active="dis"; return 'red lightenen-3'}
         else return 'green lighten-1'
       },
       

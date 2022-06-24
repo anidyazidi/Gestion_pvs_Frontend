@@ -1,8 +1,8 @@
 <template>
  <div>
      <v-card>
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
-       <v-toolbar-title  class="font-weight-bold darkgrey--text text-h5">
+     <v-toolbar lighten class="nvbar mb-3" flat height="34px" app>
+       <v-toolbar-title  class=" lightengrey--text text-h6">
          إنشاء حساب جديد 
          </v-toolbar-title>
      </v-toolbar>

@@ -29,8 +29,8 @@
        <v-card elevation="2"
       outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
-  <v-toolbar-title  class="darkgrey--text text-h6">المرجع</v-toolbar-title>
+     <v-toolbar light class="nvbar mb-3" flat height="34px" app>
+  <v-toolbar-title  class="lightgrey--text text-h6">المرجع</v-toolbar-title>
   </v-toolbar>
         <v-form class="px-5" ref="pv1">
           <v-row  dense justify align-content-center no-gutters>
@@ -164,8 +164,8 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-5"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
-  <v-toolbar-title  class="darkgrey--text text-h6">النيابة العامة</v-toolbar-title>
+     <v-toolbar light class="nvbar mb-3" flat height="34px" app>
+  <v-toolbar-title  class="lightgrey--text text-h6">النيابة العامة</v-toolbar-title>
   </v-toolbar>
         <v-form class="px-5" ref="pv">
           <v-row  dense justify align-content-center>
@@ -265,7 +265,7 @@
             :value="!pv.contreInnconue"
             label="ضد شخص مجهول"
             class="mt-4  mr-8"
-            dark
+            light
             >
             </v-checkbox></v-toolbar-title>
         <v-divider
@@ -277,7 +277,7 @@
        
             <v-btn
             @click="enableform"
-             dark small
+             light small
               class="my-2 blue font-weight-black"
               elevation="2" :disabled="pv.contreInnconue" 
             >
@@ -309,7 +309,7 @@
               <v-btn
                 text
                @click="ajoutpv"
-              dark
+              light
               class="my-2 blue"
               elevation="2"
               :loading="load"  :disabled="!formIsValid"
@@ -320,7 +320,7 @@
                <v-btn
                 text
           @click="resetForm"
-          dark
+          light
               class="my-2 red font-weight-black"
               elevation="2"
         >
@@ -348,7 +348,7 @@
       <v-chip
         v-if="index < 2"
         color="blue accent-4"
-        dark
+        light
         label
         small
       >
@@ -357,7 +357,7 @@
 
       <span
         v-else-if="index === 2"
-        class="text-overline grey--text text--darken-3 mx-2"
+        class="text-overline grey--text text--lighten-3 mx-2"
       >
         +{{ files.length - 2 }} File(s)
       </span>
@@ -367,8 +367,8 @@
               <v-btn
               hidden
               text
-              dark
-              class="my-2 green darken-1"
+              light
+              class="my-2 green lighten-1"
               elevation="2"
             >
             <v-icon right >mdi-notebook-plus-outline</v-icon>             
@@ -385,9 +385,9 @@
             <v-card-title class="text-h5">هل تريد حذف هذا الطرف</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="red darken-1" dark text @click="closeDelete">إلغاء</v-btn>
-              <v-btn class="blue darken-3"
-               dark text @click="deleteItemConfirm">نعم</v-btn>
+              <v-btn class="red lighten-1" light text @click="closeDelete">إلغاء</v-btn>
+              <v-btn class="blue lighten-3"
+               light text @click="deleteItemConfirm">نعم</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>

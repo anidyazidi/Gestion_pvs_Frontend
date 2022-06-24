@@ -1,7 +1,7 @@
 <template>
 <nav>
-    <v-app-bar flat dense clipped-right dark class="nvbar" app height="52px"
-    tile>
+    <v-app-bar flat dense clipped-right class="nvbar" app height="52px"
+    >
         <v-app-bar-nav-icon 
            @click="drawer = !drawer"
             ></v-app-bar-nav-icon>
@@ -190,8 +190,8 @@ background: -webkit-linear-gradient(to right, #fbe5dd, #c4ebf8) !important;
 background: linear-gradient(to rigsht, #cdeef5, #f8f9fa) !important; 
 }
 .nvbar{
-background: rgb(0,238,248);
-background: radial-gradient(circle, rgba(0,238,248,1) 0%, rgba(0,14,187,1) 100%);/*hh*/
+background: rgb(0,255,239);
+background: radial-gradient(circle, rgba(0,255,239,1) 0%, rgba(1,240,246,1) 0%, rgba(0,197,247,1) 99%, rgba(0,255,247,1) 100%, rgba(46,33,145,1) 100%);
 }
 .act{
   background: #c1eaf4 !important; 

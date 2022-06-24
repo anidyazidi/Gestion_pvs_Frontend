@@ -3,7 +3,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
+     <v-toolbar  class="nvbar mb-3" flat height="34px" app>
        <v-toolbar-title  class="darkgrey--text text-h6">بحث عن شكاية</v-toolbar-title></v-toolbar>
     <v-form class="px-5">
           <v-row  dense justify align-content-center no-gutters>
@@ -20,10 +20,10 @@
               <v-btn
                 text
                @click="chercher_pl"
-              dark
               class="mt-1 blue"
               elevation="2"
                :loading="load"
+               height="30px"
             >
             <v-icon right >mdi-magnify</v-icon>             
                بحث
