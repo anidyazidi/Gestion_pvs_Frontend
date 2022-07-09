@@ -10,10 +10,11 @@
     <v-toolbar 
       flat
       color="cssgrad"
+      class="py-200"
       
     >
       <v-icon right>mdi-account</v-icon>
-      <v-toolbar-title>تسجيل الدخول
+      <v-toolbar-title >تسجيل الدخول
       </v-toolbar-title>
       
     </v-toolbar>
@@ -21,7 +22,6 @@
     <v-card-text>
       <v-text-field
         dense
-        class="font-weight-black"
         prepend-inner-icon="mdi-email"
         label="البريد الإلكتروني"
         v-model="email" outlined 
@@ -30,7 +30,6 @@
       <v-text-field
         type="password"
         prepend-inner-icon="mdi-lock"
-        class="font-weight-black"
         label="كلمة السر" dense
         v-model="pass" outlined
       ></v-text-field>
@@ -71,7 +70,7 @@ export default({
         model: null,
         email:"admin@gmail.com",
         pass:"admin",
-        message:"password or email incorrect" ,
+        message:"" ,
         loading:false
       }
     },
@@ -92,7 +91,7 @@ export default({
 
                    switch(response.data.user.role.nom) {
                     case "user": { this.profile(true,true,false,false,false,false);
-                                  this.$router.push('Plaint/Ajout');  
+                                  this.$router.push('Plaint/Ajout'); 
                                   break;
                                   }
 
@@ -137,7 +136,7 @@ export default({
 </script>
 <style>
 .cssgrad{
-background: rgb(165,243,255);
-background: radial-gradient(circle, rgba(165,243,255,1) 5%, rgba(36,57,209,1) 100%);
+background: rgb(255,255,255);
+background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(123,239,255,1) 0%);
 }
 </style>

@@ -25,7 +25,7 @@
      <v-card elevation="2"
   outlined  class="mx-auto my-auto mb-2"
      >
-     <v-toolbar dark class="nvbar mb-3" flat height="34px" app>
+     <v-toolbar light class="nvbar mb-3" flat height="34px" app>
        <v-toolbar-title>بحث</v-toolbar-title>
      </v-toolbar>
     <v-form class="px-5">
@@ -125,24 +125,26 @@
         </v-date-picker>
       </v-menu>
     </v-col>
-    <v-col cols="12" sm="4">
-          </v-col>
-          
-         <v-card-actions>
+    </v-row>
+          <v-row no-gutters>
+            <v-col cols="12" sm="4"></v-col>
+             <v-card-actions class="pa-0 ma-0">
               <v-btn
                 text
                @click="chercher_pvs"
-              dark
+             height="30px"
               class="my-2 blue"
-              elevation="2"
-               :loading="load"
+              elevation="2" 
+              :loading="load"
             >
             <v-icon right >mdi-magnify</v-icon>             
                بحث
               </v-btn>
               
               </v-card-actions>
-    </v-row>
+          </v-row>
+        
+    
     </v-form>
      </v-card>
 
@@ -226,13 +228,18 @@
     </v-tab-item>
      </v-tabs-items>
       <v-dialog v-model="dialogTraite" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5">  هل تم معالجة هذا المحضر  </v-card-title>
+          <v-card :loading="loaddialog">
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="red darken-1" dark text @click="dialogTraite = false">إلغاء</v-btn>
-              <v-btn class="blue darken-3"
-               dark text @click="validtraited">نعم</v-btn>
+              <v-btn class="green lighten-1" height="30px"
+              dark text @click="value_traitID=3;validtraited()">إحالة المعالجة</v-btn>
+
+              <v-btn class="blue darken-1" height="30px"
+               dark text @click="value_traitID=2;validtraited()">حفظ المحضر</v-btn>
+
+              <v-btn class="blue lighten-3"
+              height="30px" @click="value_traitID=1;validtraited()"
+               dark text >متابعة المحضر</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -264,7 +271,7 @@ export default {
           a:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
          },
           headers: [
-          { text: 'نوع المحضر', value: 'typepvsID' },
+          { text: 'نوع المحضر', value: 'typepvs.nom' },
           { text: ' تاريخ التسجيل', value: 'dateEnregPvs' },
           { text: '  رقم الإرسالية', value: 'numEnvoi' },
           { text: 'موضوع المحضر', value: 'sujetpvs' },
@@ -283,11 +290,13 @@ export default {
           { text: ' تحميل الملف', value: 'action', sortable: false },
       ],
           showInfo:false,
+          loaddialog:false,
            tab:null,
            fichiers:[],
            datapartie:[],
            traitedItem:{},
        dialogTraite:false,
+       value_traitID:2,
         }
     },
     computed:{
@@ -304,14 +313,9 @@ export default {
             { headers:{ Authorization: `Bearer ${token}` }
           })
                 .then(response => {
-                  let pvv= response.data.data;
-                  for(let i=0;i<pvv.length;i++){
-                    pvv[i].TypeSourcePvsID = pvv[i].typesourcepvs.nom;
-                    pvv[i].typepvsID = pvv[i].typepvs.nom;
-                    pvv[i].typePoliceJudicID = pvv[i].typepolicejudiciaire.nom;
-                  }
-                  
-                  this.pvs=pvv;    this.load=false; this.cherche=true;
+                  this.pvs=response.data.data;
+                      this.load=false; 
+                      this.cherche=true;
                   
                     this.pagination.current = response.data.current_page;
                     this.pagination.total = response.data.last_page;
@@ -388,14 +392,19 @@ export default {
           this.traitedItem = Object.assign({},item);
         },
         validtraited(){
+          this.loaddialog=true;
           let token = localStorage.getItem("token");
           axios.put(`http://127.0.0.1:8000/api/users/haspvs/update/${this.traitedItem.id}`,
           {
-            userhaspvs:{traitID:true}
+            userhaspvs:{traitID:this.value_traitID}
           },{headers:{ Authorization:`Bearer ${token}`} 
-          }).then(reponser=>{
-            this.getPvs();
-            this.dialogTraite = false
+          }).then(response=>{
+            //await this.getPvs();
+            this.loaddialog = false;
+            this.dialogTraite = false;
+          }).catch(erreur => {
+            this.openSnackbar("هناك خطأ حاول مرة اخرى");
+            this.loaddialog = false;
           })
           
           },

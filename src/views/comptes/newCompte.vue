@@ -49,6 +49,7 @@
             type="password"
           v-model="user.password"
           label="كلمة السر"
+          :rules="Rulepass"
           required
         ></v-text-field>
         </v-col>
@@ -59,8 +60,8 @@
           type="password"
           label="تأكيد كلمة السر "
           :rules="[
-              () => !!password || ' required',
-              () => password == this.user.password || 'mismatch',
+              () => !!password || 'ضروري',
+              () => password == this.user.password || 'خطأ',
               
             ]"
           required
@@ -115,17 +116,21 @@ import { mapMutations, Mutation } from 'vuex';
       },
       name: '',
       nameRules: [
-        v => !!v || 'Name is required',
+        v => !!v || 'ضروري',
         v => (v && v.length <= 20) || 'Name must be less than 10 characters',
       ],
       email: '',
       emailRules: [
-        v => !!v || 'E-mail is required',
-         v =>  /.+@.+\..+/.test(v) || 'شكل غير صحيح',
+        v => !!v || 'ضروري ',
+         v =>  /.+@.+\..+/.test(v) || ' غير صحيح',
       ],
       numberRules: [
-        v => !!v || 'number is required' ,
-        v => /[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/.test(v) || 'عشرأرقام فما فوق',
+        v => !!v || 'ضروري' ,
+        v => /[0-9][0-9][0-9]/.test(v) || 'خطأ',
+      ],
+      Rulepass: [
+        v => !!v || 'ضروري ',
+         v =>  (v && v.length >= 6) || 'ضعيف',
       ],
 
       items: [],

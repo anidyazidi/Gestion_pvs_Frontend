@@ -1,7 +1,7 @@
 class vide { 
     static vider_data(datap){
       {
-          datap.PersonneMoraleID= null;
+          datap.PersonneMoraleID= {id:null,nom:""};
           datap.TypeCarteIdentsID= null;
           datap.SituationFamillID= null;
           datap.VilleDeNaissID= null;
@@ -11,7 +11,7 @@ class vide {
   
           datap.soi= true;
           datap.morale= true;
-          datap.genreID= null;
+          datap.genreID= {id:null,nom:""};
           datap.minor=false;
           datap.nom= "";
           datap.prenom= "";

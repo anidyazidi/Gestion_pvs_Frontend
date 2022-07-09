@@ -6,10 +6,12 @@
       
     </v-main>
   <v-snackbar
+  light
       :value="snackbar.value"
       :timeout="snackbar.timeout"
       top
-      height="60"
+      height="40"
+      color="light-green lighten-4"
       class="mt-12"
       dark
     >

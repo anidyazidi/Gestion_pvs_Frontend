@@ -67,9 +67,9 @@
               <v-btn
                 text
                @click="chercher_pl"
-              dark
-              class="my-2 blue font-weight-bold"
-              elevation="2"
+              height="30px"
+              class="my-2 blue"
+              elevation="2" 
               :loading="load"
             >
             <v-icon right >mdi-magnify</v-icon>             
@@ -144,13 +144,18 @@
     </v-tab-item>
     </v-tabs-items>
     <v-dialog v-model="dialogTraite" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5"> هل تم معالجة هذه الشكاية   </v-card-title>
+          <v-card :loading="loaddialog">
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="red darken-1" dark text @click="dialogTraite = false">إلغاء</v-btn>
-              <v-btn class="blue darken-3"
-               dark text @click="validtraited">نعم</v-btn>
+              <v-btn class="green lighten-1" height="30px"
+              dark text @click="value_traitID=3;validtraited()">إحالة المعالجة</v-btn>
+
+              <v-btn class="blue darken-1" height="30px"
+               dark text @click="value_traitID=2;validtraited()">حفظ المحضر</v-btn>
+
+              <v-btn class="blue lighten-3"
+              height="30px" @click="value_traitID=1;validtraited()"
+               dark text >متابعة المحضر</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -167,6 +172,8 @@ export default {
         return {
           load:false,
           tab:null,
+          value_traitID:null,
+          loaddialog:false,
           
           table_show:false,
         headers: [
@@ -227,7 +234,7 @@ export default {
           }).then(response => {
                   let plnt = response.data;
                   for(let i=0;i<plnt.length;i++){
-                    plnt[i].TypePlaintID = plnt[i].type_source_plaint.nom;
+                    plnt[i].TypePlaintID = plnt[i].type_plaint.nom;
                     plnt[i].SourcePlaintID = plnt[i].source_plaint.nom;
                   }     this.plaint = plnt;
                   this.load=false;
@@ -258,13 +265,15 @@ export default {
           this.traitedItem = Object.assign({},item);
         },
         validtraited(){
+          this.loaddialog = true;
           let token = localStorage.getItem("token");
           axios.put(`http://127.0.0.1:8000/api/users/hasplaints/update/${this.traitedItem.id}`,{
-            userhasplaint:{traitID:true}
+            userhasplaint:{traitID:this.value_traitID}
           },{headers:{ Authorization:`Bearer ${token}`} 
           }).then(reponser=>{
-            this.getPlaint();
-            this.dialogTraite = false
+            //this.getPlaint();
+            this.loaddialog = false;
+            this.dialogTraite = false;
           })
           
           },

@@ -2,10 +2,10 @@
 <div class="data_partie">
     <v-card class="mt-3" flat>
       <v-toolbar
-        flat dark class="nvbar mb-3" height="34px" app
+        flat light class="nvbar mb-3" height="34px" app
       ><v-icon right>mdi-account-plus</v-icon>
        <v-toolbar-title  class=" darkgrey--text text-h6">طرف الشكاية</v-toolbar-title></v-toolbar>
-      
+      <form ref="form">
       <v-row  dense justify align-content-center no-gutters class="ma-0 pa-0">
         <v-col cols="12" sm="6">
         <v-radio-group
@@ -87,7 +87,6 @@
             </v-text-field>
           </v-col>
           <v-col cols="12" sm="3">
-            
             <v-select
             v-model="datap.TypeCarteIdentsID"
             :items="data_part[1]"
@@ -99,6 +98,7 @@
             >
             </v-select>
           </v-col>
+          
           <v-col cols="12" sm="3">
             <v-text-field
             v-model="datap.NumCarte"
@@ -298,7 +298,7 @@
                @click="add_data_to_store"
               dark
               class="my-2 blue"
-              elevation="2" 
+              elevation="2"
             >
             <v-icon left >mdi-plus</v-icon>
                 حفظ
@@ -312,6 +312,7 @@
                إلغاء
               </v-btn>
             </v-card-actions>
+            </form>
     </v-card>
 </div>
 </template>
@@ -345,19 +346,21 @@ export default{
   },
 
     methods:{
-      ...mapMutations(["add_data"]),
+      ...mapMutations(["add_data","show_form"]),
       ...mapActions(["getall_serv_data"]),
 
        add_data_to_store(){
          this.add_data(this.datap);
-        this.$store.state.showForm=false;
+         this.$store.state.showForm=false;
+         
         vide.vider_data(this.datap);
+        
       },
       
       close(){
+               
               vide.vider_data(this.datap);
               this.$store.state.showForm=false;
-
       }
 
       

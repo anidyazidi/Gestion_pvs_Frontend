@@ -142,10 +142,10 @@
      
      
      <!-- <app-statpl v-show="display"></app-statpl> -->
-      <v-row class="mt-5" v-show="!loading">
+       <v-row class="mt-5" v-show="!loading">
    <v-col cols="13" sm="4">
-    <v-card class="elevation-5"
-    color="green lighten-1">
+    <v-card class="elevation-1"
+    color="green lighten-3">
       <v-card-title class="text-h6"> الشكايات المعالجة
         <v-icon
         class="shrink ma-2"
@@ -160,7 +160,7 @@
       العدد الاجمالي
       <v-spacer></v-spacer>
       <span class="text-h6 ml-10">
-        ({{ 2339373737 }})
+        ({{ 3 }})
       </span>
       
     </v-card-actions>
@@ -168,8 +168,8 @@
    </v-col>
 
     <v-col cols="13" sm="4">
-    <v-card class="elevation-5" 
-    color="orange lighten-1"
+    <v-card class="elevation-1" 
+    color="orange lighten-3"
     >
       <v-card-title class="text-h6">   الشكايات
               في طور
@@ -187,7 +187,7 @@
       العدد الاجمالي
       <v-spacer></v-spacer>
       <span class="text-h6 ml-10">
-        ({{ 23 }})
+        ({{ 3 }})
       </span>
       
     </v-card-actions>
@@ -196,8 +196,8 @@
 
    <!--- fin stat-->
     <v-col cols="13" sm="4">
-    <v-card class="elevation-5"
-    color="red lighten-1"
+    <v-card class="elevation-1"
+    color="red lighten-2"
    >
       <v-card-title class="text-h6"> الشكايات 
             غير
@@ -214,13 +214,13 @@
       العدد الاجمالي
       <v-spacer></v-spacer>
       <span class="text-h6 ml-10">
-        ({{ 2339373737 }})
+        ({{ 9 }})
       </span>
       
     </v-card-actions>
     </v-card>
    </v-col>
-  </v-row>
+  </v-row> 
 </div>
 </template>
 

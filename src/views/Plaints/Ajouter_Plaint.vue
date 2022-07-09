@@ -2,6 +2,29 @@
 <div class="ajout">
 <p class="subheading dark--text mb-0 mt-0">إضافة شكاية</p>
   <v-spacer></v-spacer>
+   <v-tabs
+      v-model="tab"
+       active-class="active1"
+       height="35px"
+    >
+      <v-tab
+      class="text-h7 mx-10"
+      
+      >
+      <v-icon right>mdi-police-badge-outline</v-icon>
+        الاجراءات
+      </v-tab>
+       <v-tab
+      class="text-h6 mx-10"
+      >
+      <v-icon right>mdi-note-multiple-outline</v-icon>
+        إضافة المرفقات
+      </v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-tab-item
+      >
      <v-card elevation="2" 
   outlined  class="mx-auto my-auto justify-center"
      >
@@ -328,6 +351,56 @@
               </v-card-actions></v-row>
           </v-form>
   </v-card>
+  </v-tab-item>
+  <v-tab-item
+      >
+        <template><v-card flat  class="mt-9 mr-4">
+          <v-form><v-row  dense justify align-content-center><v-col cols="12" sm="4">
+ <v-file-input
+    color="blue accent-4"
+    counter class="mt-3"
+    label="أضف المُرفق"
+    multiple
+    placeholder="أضف المُرفق"
+    prepend-icon="mdi-file-plus"
+    outlined dense
+    :show-size="1000"
+  >
+    <template v-slot:selection="{ index, text }">
+      <v-chip
+        v-if="index < 2"
+        color="blue accent-4"
+        light
+        label
+        small
+      >
+        {{ text }}
+      </v-chip>
+
+      <span
+        v-else-if="index === 2"
+        class="text-overline grey--text text--lighten-3 mx-2"
+      >
+        +{{ files.length - 2 }} File(s)
+      </span>
+    </template>
+  </v-file-input></v-col><v-col cols="12" sm="4">
+     <v-card-actions>
+              <v-btn
+              hidden
+              text
+              light
+              class="my-2 green lighten-1"
+              elevation="2"
+            >
+            <v-icon right >mdi-notebook-plus-outline</v-icon>             
+              حفظ
+              </v-btn>     
+              </v-card-actions></v-col>
+      </v-row></v-form></v-card>
+</template>
+      </v-tab-item>
+  </v-tabs-items>
 
   <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
@@ -375,6 +448,7 @@ export default {
       select2: [(v) =>  v.length>0 || ''],
       
     },
+    tab:null,
         snackbar: false,
          load:false,
 
@@ -485,7 +559,7 @@ export default {
 
       deleteItem (item) {
         this.$store.state.editedIndex = this.datapartie_tab.indexOf(item)
-       this.$store.state.datap = Object.assign({}, item)
+        // this.$store.state.datap = Object.assign({}, item)
         this.dialogDelete = true
       },
 

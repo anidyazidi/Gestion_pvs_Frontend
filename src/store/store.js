@@ -110,8 +110,8 @@ const store = new Vuex.Store({
     openSnackbar:(state,msg,colors)=>{
       state.snackbar.value=true;
       state.snackbar.text = msg;
-     
    },
+
       closeSnackbar:(state)=>{state.snackbar.value=false;},
 
     //mutation  plaint
@@ -123,12 +123,13 @@ const store = new Vuex.Store({
   // mutation of DATA PARTIE
      delete_one_data:(state)=>{state.datapartie.splice(state.editedIndex, 1);
                                  state.editedIndex = -1
-                                 vide.vider_data(state.datap)},
+                                 vide.vider_data(state.datap);
+                                },
       add_data:(state,data)=> {
         if(state.editedIndex > -1){
           var data1 = rempli_nom(data,state.serv_data);
-         Object.assign(state.datapartie[state.editedIndex],data)
-         state.editedIndex = -1
+         Object.assign(state.datapartie[state.editedIndex],data1)
+         state.editedIndex = -1;
         }else{
           var data1 = rempli_nom(data,state.serv_data);
            state.datapartie.push(Object.assign({}, data1));
@@ -218,7 +219,8 @@ const store = new Vuex.Store({
           headers:{
             Authorization:`Bearer ${token}`
            }
-      }); this.state.serv_data.push(ville.data);
+      }); 
+       this.state.serv_data.push(ville.data);
 
          const nation = await axios.get('http://127.0.0.1:8000/api/dataparties/nation/index',{
           headers:{

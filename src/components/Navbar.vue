@@ -164,7 +164,6 @@ export default{
        
       // window.history.back();
       //window.location.replace('');
-    
    }
     }
 }
