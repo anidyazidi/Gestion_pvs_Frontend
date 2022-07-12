@@ -152,6 +152,7 @@ const store = new Vuex.Store({
       this.state.viceProc = response.data;
       return response;
     },
+
     changePassword(ctx, payload) {
       return new Promise((resolve, reject) => {
           axios
@@ -280,11 +281,14 @@ const store = new Vuex.Store({
     },
 
       ////////////////////////---------------PVs-------------------------\\\\\\\\\\\\\\\
-      async addpv({commit},newpv){
+      async addpv({commit},obj){
         let token = localStorage.getItem("token");
         const response = await axios.post('http://127.0.0.1:8000/api/pvs/store',{
-          pv:newpv,
-          datapart:this.state.datapartie
+          pv:obj.pv,
+          datapart:this.state.datapartie,
+          pvs:obj.pvsid,
+          plainte:obj.plaintid
+
         },{headers:
           {Authorization: `Bearer ${token}`}
         }).catch(er=>{

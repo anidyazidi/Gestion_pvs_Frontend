@@ -1,6 +1,6 @@
 <template>
 <div id="ajoutPv">
-    <p class="ma-0">إضافة محضر</p>
+    <p class="ma-0" v-show="text_p">إضافة محضر</p>
     <v-spacer/>
      <v-card>
     <v-tabs
@@ -405,6 +405,17 @@ export default {
   components:{
     DataPartie
   },
+  props:{
+        pvsid: {
+          default: null
+        },
+        plaintid : {
+          default:null
+        },
+        text_p:{
+          default:true
+        }
+  },
    data () {
    const defaultForm = Object.freeze({
             typepvsID: null,
@@ -545,7 +556,8 @@ export default {
      async ajoutpv(){
         this.load =true;
         try{
-         var  resp = await this.addpv(this.pv);
+          let obj={ pv:this.pv,  pvsid:this.pvsid,  plaintid:this.plaintid}
+         var  resp = await this.addpv(obj);
          if(this.files[0] != null){
           await this.addFile(resp.data);
          }
