@@ -125,6 +125,7 @@
     </div>
     
      </v-card>
+
     </v-tab-item> 
 
     <v-tab-item>
@@ -140,6 +141,26 @@
             hide-default-footer
             
             ></v-data-table>
+      </v-card>
+      <v-card>
+         <v-card-title class="blue lighten-5">االمرفقات</v-card-title>
+         <v-data-table
+            :headers="headfichiers" 
+            no-data-text=" لا توجد مرفقات "
+            :items="fichiers"
+            class="elevation-1"
+            hide-default-footer>
+            <template v-slot:[`item.action`]="{ item }">
+              <v-btn 
+             @click="download(item)"
+              color="primary"
+              dark
+            >
+            <v-icon>mdi-download</v-icon>
+              تحميل
+            </v-btn>
+    </template>
+            </v-data-table>
       </v-card>
     </v-tab-item>
     </v-tabs-items>
@@ -191,6 +212,11 @@ export default {
         { text: ' رقم بطاقة التعريف', value: 'NumCarte', sortable: false},
         { text: 'المقاطعة', value: 'provinces.nom', sortable: false}
       ],
+      headfichiers:[
+         { text: ' إسم الملف', value: 'name' },
+          { text: ' تحميل الملف', value: 'action', sortable: false },
+      ],
+      fichiers:[],
         plaint: [],
         dateErg:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         pagination: {
@@ -248,7 +274,7 @@ export default {
                   return err;
                 })
         },
-         ViewItem(item){
+          async ViewItem(item){
            let token = localStorage.getItem("token");
           axios.post(`http://127.0.0.1:8000/api/dataparties/index/${item.id}`,
           {type:'plaint'},
@@ -256,9 +282,15 @@ export default {
             headers:{ Authorization:`Bearer ${token}`}
         }).then(rep =>{
           this.datapartie = rep.data;
-          document.getElementById("vieww").click();
+        });
+        let pvfiles = await axios.get(`http://127.0.0.1:8000/api/plaint/File_index/${item.id}`,
+          { 
+            headers:{ Authorization:`Bearer ${token}`} });
+            this.fichiers = pvfiles.data;
+            
+            document.getElementById("vieww").click();
           this.showInfo=true;
-        })
+
         },
         traiterItem(item){
           this.dialogTraite = true;
@@ -277,7 +309,22 @@ export default {
           })
           
           },
-       
+       async download(item){
+          let token = localStorage.getItem("token");
+         await axios.post("http://127.0.0.1:8000/api/plaint/File_download",{lien:item.lien},{
+         responseType: "blob",
+          headers:{ Authorization:`Bearer ${token}`}
+        }).then((response) => {
+       var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', item.name);
+       document.body.appendChild(fileLink);
+       fileLink.click();
+                });;
+
+
+        },
         
     },
     mounted(){

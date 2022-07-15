@@ -358,6 +358,7 @@
           <v-form><v-row  dense justify align-content-center><v-col cols="12" sm="4">
  <v-file-input
     color="blue accent-4"
+    v-model="files"
     counter class="mt-3"
     label="أضف المُرفق"
     multiple
@@ -423,6 +424,7 @@
 import { mapMutations ,mapActions, mapGetters } from 'vuex'
  import DataPartie from '../../components/Data_Partie.vue'
  import vide from '../../store/vider_form'
+ import axios from 'axios'
 export default {
   components:{
     DataPartie
@@ -481,6 +483,7 @@ export default {
         { text: 'تغيير', value: 'action', sortable: false },
       ],
       data_partie:[],
+      files:[]
        }
        },
     computed: {
@@ -524,18 +527,46 @@ export default {
 
         },
 
+        async addFile(idpv){
+           let token = localStorage.getItem("token");
+           let formData = new FormData();
+
+          for( var i = 0; i < this.files.length; i++ ){
+                    let file = this.files[i];
+                    formData.append('files[' + i + ']', file);
+                   }
+               await axios.post(`http://127.0.0.1:8000/api/plaint/File_store/${idpv}`,
+                 formData, 
+                 {headers: {   Authorization: `Bearer ${token}`,
+                               'Content-Type': 'multipart/form-data'
+                           }
+                    });
+      },
 
       enableform(){
         this.show_form();
       },
 
       async ajoutplaint(){
+        let resp;
          this.load =true;
-         let resp = await this.addplaint(this.plaint);
-                   this.load=false;
+         try{
+          resp = await this.addplaint(this.plaint);
+
+         if(this.files[0] != null){
+          await this.addFile(resp.data);
+         }
+         
+         }catch(err){
+          resp.status = 500;
+         }
+         this.load=false;
+         
+                   
          if(resp.status==201 || resp.status==200){
            this.openSnackbar("لقد تم تسجيل الشكاية بنجاح");
            //vide.vider_plaint(this.plaint);
+           this.files=[];
            this.resetForm();
            let last = this.$store.state.datapartie.length - 1;
            

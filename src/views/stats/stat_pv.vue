@@ -19,14 +19,14 @@
         ref="menu1"
         v-model="menu1"
         :close-on-content-click="false"
-        :return-value.sync="date1"
+        :return-value.sync="cher.de"
         transition="scale-transition"
         offset-y
         min-width="auto"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
-            v-model="date1"
+            v-model="cher.de"
             prepend-icon="mdi-calendar"
             readonly dense
             label="من"
@@ -36,7 +36,7 @@
           ></v-text-field>
         </template>
         <v-date-picker
-          v-model="date1"
+          v-model="cher.de"
           no-title
           scrollable
         >
@@ -51,7 +51,7 @@
           <v-btn
             text
             color="primary"
-            @click="$refs.menu1.save(date1)"
+            @click="$refs.menu1.save(cher.de)"
           >
             OK
           </v-btn>
@@ -67,14 +67,14 @@
         ref="menu2"
         v-model="menu2"
         :close-on-content-click="false"
-        :return-value.sync="date2"
+        :return-value.sync="cher.a"
         transition="scale-transition"
         offset-y
         min-width="auto"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
-            v-model="date2"
+            v-model="cher.a"
             prepend-icon="mdi-calendar"
             readonly
             label="إلى"
@@ -84,7 +84,7 @@
           ></v-text-field>
         </template>
         <v-date-picker
-          v-model="date2"
+          v-model="cher.a"
           no-title
           scrollable
         >
@@ -99,7 +99,7 @@
           <v-btn
             text
             color="primary"
-            @click="$refs.menu2.save(date2)"
+            @click="$refs.menu2.save(cher.a)"
           >
             OK
           </v-btn>
@@ -112,11 +112,12 @@
          <v-card-actions class="ma-0 pa-0">
               <v-btn
                 text
-               @click="display = !display"
+               @click="stat"
               lighten
               class="mb-2 blue"
               elevation="2"
               height="30px"
+              :loading="loading"
                
             >
             <v-icon right >mdi-magnify</v-icon>             
@@ -129,17 +130,11 @@
   
     </v-form>
      </v-card>
-     <v-progress-linear
-        :active="loading"
-        :indeterminate="loading"
-        absolute
-        bottom
-        color="deep-purple accent-4"
-      ></v-progress-linear>
+     
     <!-- <app-stpv v-show="display"></app-stpv> --> 
 
 
-      <v-row class="mt-5" v-show="!loading">
+      <v-row class="mt-5" v-show="display">
    <v-col cols="13" sm="4">
     <v-card class="elevation-1"
     color="green lighten-3">
@@ -157,7 +152,7 @@
       العدد الاجمالي
       <v-spacer></v-spacer>
       <span class="text-h6 ml-10">
-        ({{ 3 }})
+        ({{ statistic.Traiter }})
       </span>
       
     </v-card-actions>
@@ -184,7 +179,7 @@
       العدد الاجمالي
       <v-spacer></v-spacer>
       <span class="text-h6 ml-10">
-        ({{ 3 }})
+        ({{ statistic.enCours }})
       </span>
       
     </v-card-actions>
@@ -211,7 +206,7 @@
       العدد الاجمالي
       <v-spacer></v-spacer>
       <span class="text-h6 ml-10">
-        ({{ 9 }})
+        ({{ statistic.NonTraiter }})
       </span>
       
     </v-card-actions>
@@ -223,32 +218,40 @@
 </template>
 
 <script>
-import statPv from '../../components/stats/statsPv.vue'
+import { mapMutations } from 'vuex';
+import axios from 'axios';
 export default {
     data(){
         return {
-        date1: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        menu1: false, modal1: false, menu2: false, modal2: false,
-        display: true,
-        loading:false
-         
+          cher:{
+        de: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        a: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+          },
+        display: false,
+        loading:false,
+         statistic:{}
         }
     },
 
-    components:{
-      'app-stpv': statPv
+     methods:{
+      ...mapMutations['openSnackbar'],
+      stat(){
+        this.loading=true;
+        let token = localStorage.getItem("token");
+              axios.post('http://127.0.0.1:8000/api/pvs/statistique',{
+                cher:this.cher
+              },{
+              headers:  { Authorization: `Bearer ${token}` }
+          }).then(response => {
+            this.statistic = response.data;
+            this.loading=false;
+            this.display=true;
+          }).catch(er=>{
+                  this.openSnackbar("حاول مرة أخرى");
+              this.loading=false;
+            });
+      }
     },
 
-    watch: {
-      loading () {
-        if (this.loading) return  setTimeout(() => (this.loading = false), 2000);
-      },
-    },
-
-    created(){
-      this.loading = true;
-    }
 }
-
 </script>
