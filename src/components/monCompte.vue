@@ -18,12 +18,12 @@
                             dark
                             flat
                     >
-                        <v-toolbar-title>Details</v-toolbar-title>
+                        <v-toolbar-title>المعطيات الشخصية</v-toolbar-title>
                         <v-spacer/>
                     </v-toolbar>
                     <v-card-text>
-                        <p><strong>Name:</strong> <!-- {{userDetails.name}} --></p>
-                        <p><strong>Email:</strong> <!-- {{userDetails.email}} --></p>
+                        <p><strong>الاسم الكامل:</strong> <!-- {{userDetails.name}} --></p>
+                        <p><strong>البريدالالكتروني:</strong> <!-- {{userDetails.email}} --></p>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -43,24 +43,25 @@
                             dark
                             flat
                     >
-                        <v-toolbar-title>Change details</v-toolbar-title>
+                        <v-toolbar-title>تغيير الإسم</v-toolbar-title>
                         <v-spacer/>
                     </v-toolbar>
                     <v-card-text>
-                        <v-form ref="changeDetailsForm">
+                        <!-- <v-form ref="changeDetailsForm"> -->
+                            <v-form>
                             <v-text-field
-                                    :rules="requiredRules"
-                                    label="Name"
+                                    
+                                    label="الاسم الكامل"
                                     name="name"
                                     type="text"
-                                    v-model="userDetails.name"
                             />
-
+                            <!-- :rules="requiredRules" -->
+                             <!-- v-model="userDetails.name" -->
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer/>
-                        <v-btn @click="changeDetails" color="primary">Save</v-btn>
+                        <v-btn  color="primary"><!-- @click="changeDetails" -->حفظ</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -80,40 +81,45 @@
                             dark
                             flat
                     >
-                        <v-toolbar-title>Change password</v-toolbar-title>
+                        <v-toolbar-title>تغيير كلمة السر</v-toolbar-title>
                         <v-spacer/>
                     </v-toolbar>
                     <v-card-text>
-                        <v-form ref="changePasswordForm">
+                        <!-- <v-form ref="changePasswordForm"> -->
+                            <v-form>
                             <v-text-field
-                                    :rules="[...requiredRules, ...passwordRules]"
-                                    label="Old Password"
+                                    
+                                    label="كلمة السر القديمة"
                                     name="oldPassword"
                                     type="password"
-                                    v-model="user.oldPassword"
+                                    
                             />
+                            <!-- :rules="[...requiredRules, ...passwordRules]" -->
+                            <!-- v-model="user.oldPassword" -->
                             <v-text-field
-                                    :rules="[...requiredRules, ...passwordRules, newPasswordValidator]"
-                                    label="New Password"
+                                    
+                                    label="كلمة السر الحديثة"
                                     name="newPassword"
                                     ref="newPasswordInput"
                                     type="password"
-                                    v-model="user.newPassword"
                             />
+                            <!-- :rules="[...requiredRules, ...passwordRules, newPasswordValidator]" -->
+                                    <!-- v-model="user.newPassword" -->
                             <v-text-field
-                                    :rules="[...requiredRules, ...passwordRules, newPasswordValidator]"
-                                    label="New Password Confirmation"
+                                    
+                                    label="تأكيد كلمة السر الحديثة"
                                     name="newPasswordConfirmation"
-                                    ref="newPasswordConfirmationInput"
                                     type="password"
-                                    v-model="user.newPasswordConfirmation"
                             />
+                            <!-- :rules="[...requiredRules, ...passwordRules, newPasswordValidator]" -->
+                                    <!-- ref="newPasswordConfirmationInput" -->
+                                    <!-- v-model="user.newPasswordConfirmation" -->
 
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer/>
-                        <v-btn @click="changePassword" color="primary">Change password</v-btn>
+                        <v-btn color="primary"><!-- @click="changePassword" -->تغيير كلمة السر</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -122,21 +128,21 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from "vuex";
+    /* import {mapActions, mapGetters} from "vuex"; */
     /* import PasswordValidationMixin from '../../mixins/passwordValidationMixin'; */
 
     export default {
        /*  mixins: [PasswordValidationMixin], */
         data() {
             return {
-                user: {
+               /*  user: {
                     oldPassword: '',
                     newPassword: '',
                     newPasswordConfirmation: '',
-                }
+                } */
             }
         },
-        computed: {
+       /*  computed: {
             ...mapGetters({
                 userDetails: "user/userDetails"
             })
@@ -189,7 +195,7 @@
             },
             newPasswordValidator() {
                 return (this.user.newPasswordConfirmation === this.user.newPassword) || 'New password is not confirmed';
-            }
-        }
+            } */
+        
     }
 </script>
